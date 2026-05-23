@@ -1,0 +1,17 @@
+name = "CNTFormal"
+version = "0.1.0"
+defaultTargets = ["CNTFormal", "CNTConjectures"]
+
+[[lean_lib]]
+name = "CNTFormal"
+
+[[lean_lib]]
+name = "CNTConjectures"
+
+[[require]]
+name = "mathlib"
+path = ".lake/packages/mathlib"
+
+[[require]]
+name = "physlib"
+path = ".lake/packages/physlib"

@@ -1,0 +1,16 @@
+# Lean / Lake
+.lake/
+lake-manifest.json
+lakefile.olean
+
+# Build artifacts
+/build/
+/.lake/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
