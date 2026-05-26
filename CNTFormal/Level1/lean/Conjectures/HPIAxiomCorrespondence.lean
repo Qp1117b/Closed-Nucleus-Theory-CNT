@@ -23,6 +23,7 @@ namespace Level1.lean.Conjectures
 
 open Real
 open CategoryTheory
+open Foundations.lean.Proven
 
 /-
 1. HPI修正项与DCNC公理的对应表
@@ -178,8 +179,89 @@ theorem hpi_idempotency_deviation_magnitude
   (μ + hpi_total_correction standard_hpi_correction) *
   (μ + hpi_total_correction standard_hpi_correction) ≠
   μ + hpi_total_correction standard_hpi_correction := by
-  -- HPI研究暂停，标记为猜想
-  sorry
+  intro h_eq
+  let c := hpi_total_correction standard_hpi_correction
+  have hc_pos : c > 0 := hpi_total_correction_pos
+  
+  -- 展开 (μ + c)² = μ + c
+  have h_expanded : μ + 2 * μ * c + c * c = μ + c := by
+    have h1 : (μ + c) * (μ + c) = μ + c := h_eq
+    have h2 : (μ + c) * (μ + c) = μ * μ + 2 * μ * c + c * c := by ring
+    rw [h2] at h1
+    rw [hμ] at h1
+    exact h1
+  
+  -- 消去 μ
+  have h_2μc_c2 : 2 * μ * c + c * c = c := by linarith
+  
+  -- 因式分解
+  have h_c_factor : c * (2 * μ + c - 1) = 0 := by linarith
+  
+  -- 由于 c > 0，必须有 2μ + c - 1 = 0
+  have h_2μc_1 : 2 * μ + c - 1 = 0 := by
+    apply mul_left_cancel₀ (show (c : ℝ) ≠ 0 by linarith)
+    linarith
+  
+  -- 分情况讨论 μ = 0 或 μ = 1
+  have hμ_cases : μ = 0 ∨ μ = 1 := by
+    have h : μ * (μ - 1) = 0 := by linarith
+    have h' : μ = 0 ∨ μ - 1 = 0 := eq_zero_or_eq_zero_of_mul_eq_zero h
+    cases h' with
+    | inl h0 => exact Or.inl h0
+    | inr h1 => exact Or.inl (by linarith)
+  
+  cases hμ_cases with
+  | inl h0 =>
+    -- μ = 0 时：c - 1 = 0，即 c = 1
+    rw [h0] at h_2μc_1
+    have h_c_eq_1 : c = 1 := by linarith
+    -- 但 c ≈ 0.498 ≠ 1
+    have h_c_lt_1 : c < 1 := by
+      have h1 : boundary_fluctuation_4simplex < 0.3 := by
+        have h : boundary_fluctuation_4simplex = 1 / Real.sqrt ((70 : ℝ) / 5) := by
+          rw [boundary_fluctuation_4simplex, boundary_fluctuation_model]; norm_num [Nat.choose]
+        rw [h]
+        have h_sqrt : Real.sqrt ((70 : ℝ) / 5) > 3.7 := by
+          apply Real.lt_sqrt_of_sq_lt
+          norm_num
+        have h_inv : 1 / Real.sqrt ((70 : ℝ) / 5) < 1 / 3.7 := by
+          apply one_div_lt_one_div_of_lt
+          positivity
+          exact h_sqrt
+        have h_norm : (1 : ℝ) / 3.7 < 0.3 := by norm_num
+        linarith [h_inv, h_norm]
+      have h2 : topological_defect_4simplex < 0.1 := by
+        rw [topological_defect_4simplex, topological_defect_model]
+        have h_pi : π > 3 := Real.pi_gt_three
+        have h_denom : 4 * π > 12 := by nlinarith [h_pi]
+        have h_inv : 1 / (4 * π) < 1 / 12 := by
+          apply one_div_lt_one_div_of_lt
+          positivity
+          exact h_denom
+        have h_norm : (1 : ℝ) / 12 < 0.1 := by norm_num
+        linarith [h_inv, h_norm]
+      have h3 : multi_path_interference_eprr < 0.2 := by
+        have h : multi_path_interference_eprr = cos (5 * dihedral_angle) / (2 * π) := by
+          rw [multi_path_interference_eprr, multi_path_interference_model]
+        rw [h]
+        have h_cos : cos (5 * dihedral_angle) = 61 / 64 := cos_five_dihedral
+        rw [h_cos]
+        have h_pi : π > 3.14 := Real.pi_gt_d2
+        have h_frac : (61 / 64 : ℝ) / (2 * π) < 0.2 := by
+          apply (div_lt_iff₀ (by positivity)).mpr
+          nlinarith [h_pi]
+        exact h_frac
+      have h4 : running_correction inv_alpha_0 1.0 1.0 = 0 := running_correction_zero
+      dsimp only [c] at *
+      rw [hpi_total_correction, standard_hpi_correction, h4]
+      linarith [h1, h2, h3]
+    linarith [h_c_eq_1, h_c_lt_1]
+  | inr h1 =>
+    -- μ = 1 时：2 + c - 1 = 0，即 c = -1
+    rw [h1] at h_2μc_1
+    have h_c_eq_neg1 : c = -1 := by linarith
+    -- 但 c > 0，矛盾
+    linarith [hc_pos, h_c_eq_neg1]
 
 /-- 公理4与HPI修正的对应尝试（负结论）
 

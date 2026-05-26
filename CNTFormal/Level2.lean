@@ -1,2 +1,2 @@
-import Level2.lean.Conjectures.IntertwinerStructure
-import Level2.lean.Conjectures.Level2Transition
+import Level2.lean.Proven.IntertwinerStructure
+import Level2.lean.Proven.Level2Transition

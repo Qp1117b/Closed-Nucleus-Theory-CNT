@@ -17,12 +17,14 @@
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.LinearAlgebra.Projection
+import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.Data.Real.Basic
 import Foundations.lean.Proven.CategoryTheory
 
 namespace Level1.lean.Conjectures
 
 open CategoryTheory
+open LinearMap
 
 /-- 局部定义有限维数（当 mathlib 的 finrank 不可用时）
 
@@ -194,56 +196,49 @@ theorem idempotent_trace_is_finrank
     [FiniteDimensional K V]
     (mu : V →ₗ[K] V) (hmu : IsIdempotentElem mu) :
     LinearMap.trace K V mu = (local_finrank K (LinearMap.range mu) : K) := by
-  -- 通过取ker(mu)和range(mu)的基，构造V的基
-  -- 然后使用trace_eq_matrix_trace通过矩阵计算迹
+  -- 步骤1: 将 IsIdempotentElem 转换为 IsProj (range mu) mu
+  -- 使用 mathlib 定理: isProj_range_iff_isIdempotentElem
+  have h_proj : IsProj (LinearMap.range mu) mu := by
+    rw [isProj_range_iff_isIdempotentElem]
+    exact hmu
   
-  -- 步骤1：幂等⇒ V = ker(mu) ⊕ range(mu)
-  -- 注意mu ∘ mu = mu（由IsIdempotentElem）
-  have h_mu_comp : mu.comp mu = mu := hmu
-  -- 对于任意v∈V，有v = (v - mu(v)) + mu(v)，其中v - mu(v)∈ker(mu)，mu(v)∈range(mu)
+  -- 步骤2: 使用 IsProj.trace 定理
+  -- IsProj.trace 需要以下前提:
+  -- - Module.Free K (range mu)
+  -- - Module.Finite K (range mu)
+  -- - Module.Free K (ker mu)
+  -- - Module.Finite K (ker mu)
   
-  -- 步骤2：选择range(mu)的基
-  let r := LinearMap.range mu
-  have h_finrank_r : FiniteDimensional K r := by
+  -- 由于 V 是有限维 K-模，range mu 和 ker mu 都是有限维的
+  -- 域上的模总是自由的
+  
+  have h_range_free : Module.Free K (LinearMap.range mu) := by
+    -- 域上的模总是自由的
     infer_instance
-  have h_dim_r : local_finrank K r = local_finrank K (LinearMap.range mu) := rfl
   
-  -- 由于两边的类型都是Submodule，实际计算需要更多基础设施
-  -- 当前mathlib中，trace_add和Submodule.isCompl的缺失导致此定理无法简化
-  -- 使用替代方法：直接使用已知的矩阵表示
+  have h_range_finite : Module.Finite K (LinearMap.range mu) := by
+    -- range mu 是 V 的子模，V 是有限维的
+    infer_instance
   
-  -- 方法：通过将mu限制到其像空间并计算迹
-  -- 注意：mu在range(mu)上的限制是identity，在ker(mu)上是0
-  -- 在有限维下，选择ker和range的联合基，mu的矩阵是对角阵[I_r, 0]
-  -- 其迹就是rank(r)
+  have h_ker_free : Module.Free K (LinearMap.ker mu) := by
+    infer_instance
   
-  -- 替代：对于有限维向量空间，使用线性代数标准结论
-  -- 该结论在数学上是正确的
+  have h_ker_finite : Module.Finite K (LinearMap.ker mu) := by
+    infer_instance
   
-  -- 使用更直接的lemma：trace_comp_eq_of_surjective或类似定理不可用
-  -- 提供标准证明轮廓
+  -- 步骤3: 应用 IsProj.trace 定理
+  have h_trace := IsProj.trace h_proj
   
-  have h_trace_eq_rank : LinearMap.trace K V mu = (local_finrank K (LinearMap.range mu) : K) := by
-    -- 当前证明依赖于known mathlib gap
-    -- 但定理陈述本身是正确的线性代数结论
-    -- 在大多数线性代数教材中，这是标准结果
-    
-    -- 基本思路：
-    -- 1. 选择ker(mu)的基B_ker和range(mu)的基B_range
-    -- 2. B = B_ker ∪ B_range构成V的基
-    -- 3. mu在B下的矩阵 = [0 0; 0 I]
-    -- 4. 该矩阵的迹 = |B_range| = dim(range(mu))
-    
-    -- 标准化迹的定义需要上述基的显式构造
-    -- 由于当前mathlib不支持直接构造这种基，
-    -- 此证明标记为依赖mathlib谱分解基础设施
-    
-    -- 对于有限维向量空间上的幂等算子，迹等于秩是标准结论
-    -- 它在数学上正确，且是电荷量子化的关键定理
-    
-    sorry
+  -- 步骤4: 证明 local_finrank K (range mu) = finrank K (range mu)
+  -- local_finrank 定义为 Cardinal.toNat (Module.rank K (range mu))
+  -- 而 finrank 也是同样的定义
+  -- 所以两者相等
   
-  exact h_trace_eq_rank
+  -- 使用 finrank 的定义
+  simp [local_finrank, Module.finrank] at h_trace ⊢
+  
+  -- 完成证明
+  exact h_trace
 
 /--
 推论: 幂等算子的迹是一个自然数（嵌入到基域K中）

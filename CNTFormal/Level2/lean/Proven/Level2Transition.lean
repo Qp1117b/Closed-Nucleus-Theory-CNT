@@ -32,9 +32,9 @@ import Mathlib.Tactic
 import Foundations.lean.Proven.SimplexGeometry
 import Foundations.lean.Proven.AlphaDerivation
 import Foundations.lean.Proven.Dimensions
-import PreLevel1.lean.Proven.KernelPerspective
+import PreLevel1.lean.Conjectures.KernelPerspective
 import Level1.lean.Conjectures.PhysicalMapping
-import Level1.lean.Conjectures.Level1Transition
+import Level1.lean.Proven.Level1Transition
 
 namespace Level2.Conjectures
 

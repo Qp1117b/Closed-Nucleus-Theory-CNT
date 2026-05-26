@@ -18,12 +18,12 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.Real.Pi.Bounds
 import Foundations.lean.Proven.CategoryTheory
 import Foundations.lean.Proven.AlphaDerivation
-import Level1.lean.Conjectures.HPICorrection
 
 namespace Level1.lean.Conjectures
 
 open Real
 open CategoryTheory
+open Foundations.lean.Proven
 
 /-
 1. 公理系统的自洽性定义

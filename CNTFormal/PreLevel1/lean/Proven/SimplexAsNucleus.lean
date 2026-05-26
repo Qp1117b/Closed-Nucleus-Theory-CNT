@@ -23,6 +23,7 @@ import Foundations.lean.Proven.SimplexGeometry
 namespace PreLevel1.lean.Proven
 
 open CategoryTheory
+open Foundations.lean.Proven
 
 /- ======================================================================
   4-单纯形的范畴结构定义

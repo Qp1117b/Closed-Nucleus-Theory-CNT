@@ -28,13 +28,18 @@ import Foundations.lean.Proven.Dimensions
 import Foundations.lean.Proven.ReproductionPeriod
 import Foundations.lean.Proven.SimplexGeometry
 import PreLevel1.lean.Proven.SimplexDominance
-import Level1.lean.Conjectures.Level1Transition
+import Level1.lean.Proven.Level1Transition
 import Level1.lean.Conjectures.OntologicalMechanics
 
-namespace Level1.Conjectures
+namespace PostLevel1PreLevel2.lean.Conjectures
 
-open Foundations.Strict
+open Real
 open CategoryTheory
+open Foundations.lean.Proven
+open Foundations.Strict
+open Level1.lean.Proven
+open Level1.lean.Conjectures
+open PostLevel1PreLevel2.lean.Proven
 
 /- ======================================================================
   §1 HPI 公理约束的严格形式化
@@ -49,7 +54,7 @@ open CategoryTheory
 
 section HPI_Monotonicity
 
-variable {C : Type} [Category C] [Foundations.Strict.CNTCategory C]
+variable {C : Type} [Category C]
   (hpi : HPISystem C)
 
 /-- [引理] 单事件历史的 HPI 严格为正
@@ -60,7 +65,11 @@ lemma hpi_single_event_pos
     (S : C) (e : ReproductiveEvent S) :
     hpi.hpi_fn S { events := [e] } > 0 := by
   have h_pos : hpi.backaction_fn S e > 0 := hpi.backaction_positivity S e
-  sorry
+  -- 根据 HPI 的定义，单事件历史的 HPI 等于该事件的 backaction
+  have h_single : hpi.hpi_fn S { events := [e] } = hpi.backaction_fn S e :=
+    hpi.hpi_single_event S e
+  rw [h_single]
+  exact h_pos
 
 /-
   [工作假设] HPI 与 backaction 的对应
@@ -88,7 +97,7 @@ lemma hpi_single_event_pos
 
   结论：HPI_{K+1} > HPI_K -/
 theorem hpi_strictly_increasing
-    (n_k : ℕ) (f_k : DiscreteFrequency) (K : ℕ)
+    (n_k : ℕ) (f_k : DiscreteFrequency)
     (hn_pos : n_k ≥ 1) (hf_pos : f_k ≥ 1) :
     let L_k := (n_k : ℝ) * h_planck * (f_k : ℝ) * hpi_geom_factor
     L_k > 0 := by
@@ -309,40 +318,7 @@ end RepRadioVelocity
 
 section HPIToPhaseToVelocity
 
-variable {C : Type} [Category C] [Foundations.Strict.CNTCategory C]
-
-/-- [定义] 量变累积与 HPI 的关系
-
-  从 CategoryTheory.lean accumulation_nonnegative:
-    accumulation ≥ 0（量变累积非负）
-
-  从量变单调递增假设:
-    每一步再生产增加量变累积
-
-  若使用 HPI Lagrangian L_k = n_k·h·f_k·sin²φ:
-    accumulation 由 HPI 驱动:
-    Δ(accumulation) ∝ L_k = n_k·h·f_k·sin²φ
-
-  因此 accumulation 到达阈值所需的步数 K_c 满足:
-    Σ_{k=0}^{K_c-1} n_k·f_k 达到某个临界值。
-
-  临界条件 (Level1Transition §2.3):
-    Φ(N_c, f_c) = (N_c·f_c) mod 2 - 1 = 0
-    ↔ N_c·f_c 是奇数
-
-  在常数 f 模型下:
-    N_K = K·f (若 n_k = f)
-    N_K·f = K·f²
-
-  临界条件:
-    K_c·f² 是奇数
-
-  由于 f² 的奇偶性由 f 决定:
-    - 若 f 是奇数: f² 是奇数 → K_c 是奇数时临界
-    - 若 f 是偶数: f² 是偶数 → K_c·f² 永远是偶数 → 永不临界
-
-  因此: f 必须是奇数，否则系统永不发生相变。
--/
+variable {C : Type} [Category C] [CNTCategory C]
 
 /-- [定理] 频率奇偶性选择规则
 
@@ -504,17 +480,24 @@ section PhaseTransitionTiming
   f 是奇数 → f² 是奇数 → Φ=0 → 临界 ✓ -/
 theorem first_step_critical_for_odd_f (f : ℕ) (hf_odd : f % 2 = 1) :
     order_parameter_phi_guess (1*f) f = 0 := by
-  dsimp [order_parameter_phi_guess]
-  have h : ((1*f*f) : ℤ) % 2 = 1 := by
-    norm_cast
-    have : (f * f) % 2 = 1 := by
-      rw [Nat.mul_mod]
-      simp [hf_odd]
-    exact_mod_cast this
-  have : ((1*f*f) : ℤ) % 2 - 1 = 0 := by
-    rw [h]
-    norm_num
-  exact this
+  rw [order_parameter_phi_guess]
+  norm_cast
+  -- 目标: ((1 * f * f : ℕ) % 2 : ℤ) - 1 = 0
+  -- 1 * f * f = f * f
+  rw [Nat.one_mul]
+  -- f * f % 2 = 1
+  -- 使用 hf_odd: f = 2k + 1
+  have h_exists_k : ∃ k, f = 2 * k + 1 := by
+    use f / 2
+    have h := Nat.mod_add_div f 2
+    rw [hf_odd] at h
+    omega
+  rcases h_exists_k with ⟨k, hk⟩
+  rw [hk]
+  -- (2k+1) * (2k+1) = 4k² + 4k + 1
+  ring_nf
+  -- (4*k^2 + 4*k + 1) % 2
+  simp [Nat.add_mod, Nat.mul_mod]
 
 /-- [定理] 偶数频率永不临界
 
@@ -617,4 +600,4 @@ theorem velocity_eq_hop_times_freq
       hopDistanceWithDim.val * (f : ℝ) := by
   simp [reproductionRadiationVelocityWithDim, hopDistanceWithDim]
 
-end Level1.Conjectures
+end PostLevel1PreLevel2.lean.Conjectures

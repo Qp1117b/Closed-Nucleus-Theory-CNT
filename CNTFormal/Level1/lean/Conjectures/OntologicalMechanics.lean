@@ -32,6 +32,7 @@ namespace Level1.lean.Conjectures
 
 open Real
 open CategoryTheory
+open Foundations.lean.Proven
 
 /- ============================================================
 1. 再生产事件与再生产历史
@@ -112,6 +113,10 @@ structure HPISystem (C : Type) [Category C] extends BackactionSystem C where
     hpi_fn S (h₁.concat h₂) = hpi_fn S h₁ + hpi_fn S h₂
   /-- [定义] 空历史的HPI为0 -/
   hpi_empty : ∀ (S : C), hpi_fn S (.empty) = 0
+  /-- [定义] 单事件历史的HPI等于该事件的backaction
+      这是积分的基本性质：单点积分等于被积函数值 -/
+  hpi_single_event : ∀ (S : C) (e : ReproductiveEvent S),
+    hpi_fn S { events := [e] } = backaction_fn S e
 
 /- ============================================================
 3. 条件债务的形式化
@@ -382,7 +387,7 @@ theorem backaction_lagrangian_correspondence_conjecture
     {C : Type} [Category C] [CNTCategory C]
     (om : OntologicalMechanics C) (S : C)
     (_cd : ConditionDebt S) :
-    ∃ (limit_rule : ℝ → ℝ → ℝ),
+    ∃ (_limit_rule : ℝ → ℝ → ℝ),
       (∀ (e : ReproductiveEvent S),
         om.backaction_system.backaction_fn S e ≥ 0) := by
   -- 由BackactionSystem.backaction_positivity，反作用严格为正，因此≥0

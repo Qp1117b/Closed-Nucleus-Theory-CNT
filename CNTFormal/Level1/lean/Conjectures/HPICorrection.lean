@@ -28,10 +28,13 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
 import Foundations.lean.Proven.AlphaDerivation
 import Foundations.lean.Proven.CategoryTheory
+import Foundations.lean.Proven.SimplexGeometry
+import Level1.lean.Proven.AxiomConsistency
 
 namespace Level1.lean.Conjectures
 
 open Real
+open Foundations.lean.Proven
 
 /-
 1. HPI修正的基本框架
@@ -175,10 +178,117 @@ theorem original_deviation_value :
 这意味着精细结构常数的理论计算需要额外的物理机制（如能标跑动中的负贡献、
 或干涉项中的相消干涉）来使修正后的值接近实验值。
 -/
+lemma boundary_fluctuation_pos : boundary_fluctuation_4simplex > 0 := by
+  have h1 : boundary_fluctuation_4simplex = 1 / Real.sqrt ((70 : ℝ) / 5) := by
+    rw [boundary_fluctuation_4simplex, boundary_fluctuation_model]
+    norm_num [Nat.choose]
+  rw [h1]
+  have h2 : 0 < Real.sqrt ((70 : ℝ) / 5) := by
+    apply Real.sqrt_pos.2
+    norm_num
+  have h3 : 0 < 1 / Real.sqrt ((70 : ℝ) / 5) := by
+    apply div_pos
+    norm_num
+    exact h2
+  linarith [h3]
+
+lemma topological_defect_pos : topological_defect_4simplex > 0 := by
+  rw [topological_defect_4simplex, topological_defect_model]
+  have h : 0 < 1 / (4 * π) := by
+    apply one_div_pos.mpr
+    nlinarith [Real.pi_pos]
+  exact h
+
+lemma multi_path_interference_pos : multi_path_interference_eprr > 0 := by
+  have h1 : multi_path_interference_eprr = cos (5 * dihedral_angle) / (2 * π) := by
+    rw [multi_path_interference_eprr, multi_path_interference_model]
+  rw [h1]
+  have h2 : cos (5 * dihedral_angle) = 61 / 64 := cos_five_dihedral
+  rw [h2]
+  have h3 : 0 < 2 * π := by nlinarith [Real.pi_pos]
+  positivity
+
+lemma running_correction_zero : running_correction inv_alpha_0 1.0 1.0 = 0 := by
+  rw [running_correction, running_coupling_model]
+  have h1 : log ((1.0 : ℝ) ^ 2 / (1.0 : ℝ) ^ 2) = 0 := by
+    norm_num [log_one]
+  rw [h1]
+  ring_nf
+
+lemma hpi_total_correction_pos : hpi_total_correction standard_hpi_correction > 0 := by
+  rw [hpi_total_correction, standard_hpi_correction]
+  have h1 : boundary_fluctuation_4simplex > 0 := boundary_fluctuation_pos
+  have h2 : topological_defect_4simplex > 0 := topological_defect_pos
+  have h3 : multi_path_interference_eprr > 0 := multi_path_interference_pos
+  have h4 : running_correction inv_alpha_0 1.0 1.0 = 0 := running_correction_zero
+  rw [h4]
+  linarith [h1, h2, h3]
+
 theorem hpi_correction_moves_away_from_experiment :
   corrected_deviation > relative_deviation := by
-  -- HPI研究暂停，标记为猜想
-  sorry
+  -- 证明思路：
+  -- 1. 由 axiom_system_experiment_compatibility 知 inv_alpha_0 > experimental_inv_alpha_codata
+  -- 2. hpi_total_correction > 0
+  -- 3. 因此 corrected_inv_alpha = inv_alpha_0 + correction > inv_alpha_0 > experimental
+  -- 4. 从而 corrected_deviation > relative_deviation
+  
+  have h1 : inv_alpha_0 > experimental_inv_alpha_codata := by
+    -- 使用数值估计：inv_alpha_0 = 16384*π/375
+    -- 当 π > 3.1415 时，16384*π/375 > 137.035
+    -- experimental_inv_alpha_codata = 137.035999084
+    -- 由 axiom_system_experiment_compatibility 知偏差 < 1%
+    -- 这意味着 inv_alpha_0 和 experimental 很接近
+    -- 但 inv_alpha_0 的理论值确实大于 experimental 值
+    
+    -- 使用已知的不等式：π > 3.14
+    have hpi : 3.14 < π := Real.pi_gt_d2
+    have h_inv : inv_alpha_0 = 16384 * π / 375 := inv_alpha_0_eq
+    rw [h_inv]
+    -- 16384 * 3.14 / 375 ≈ 137.20，而 experimental = 137.035...
+    -- 所以 16384*π/375 > 137.035...
+    have h_exp : experimental_inv_alpha_codata = 137.035999084 := by unfold experimental_inv_alpha_codata; rfl
+    rw [h_exp]
+    -- 使用数值验证
+    nlinarith [hpi, Real.pi_lt_d2]
+  
+  have h2 : hpi_total_correction standard_hpi_correction > 0 := hpi_total_correction_pos
+  have h3 : corrected_inv_alpha > inv_alpha_0 := by
+    rw [corrected_inv_alpha]
+    linarith [h2]
+  have h4 : corrected_inv_alpha > experimental_inv_alpha_codata := by
+    linarith [h1, h3]
+  
+  -- 由于 corrected_inv_alpha > inv_alpha_0 > experimental，偏差更大
+  have h5 : corrected_inv_alpha - experimental_inv_alpha_codata > inv_alpha_0 - experimental_inv_alpha_codata := by
+    linarith [h3]
+  
+  have h6 : abs (corrected_inv_alpha - experimental_inv_alpha_codata) > abs (inv_alpha_0 - experimental_inv_alpha_codata) := by
+    have h_sub_pos1 : 0 < corrected_inv_alpha - experimental_inv_alpha_codata := by linarith [h4]
+    have h_sub_pos2 : 0 < inv_alpha_0 - experimental_inv_alpha_codata := by linarith [h1]
+    rw [abs_of_pos h_sub_pos1, abs_of_pos h_sub_pos2]
+    linarith [h5]
+  
+  have h7 : abs (corrected_inv_alpha - experimental_inv_alpha_codata) / experimental_inv_alpha_codata > 
+    abs (inv_alpha_0 - experimental_inv_alpha_codata) / experimental_inv_alpha_codata := by
+    have h_exp_pos : 0 < experimental_inv_alpha_codata := by unfold experimental_inv_alpha_codata; norm_num
+    have h_num : abs (corrected_inv_alpha - experimental_inv_alpha_codata) > abs (inv_alpha_0 - experimental_inv_alpha_codata) := h6
+    -- 将除法转换为乘法：a/b > c/b ↔ a > c (当 b > 0)
+    have h_mul : abs (corrected_inv_alpha - experimental_inv_alpha_codata) / experimental_inv_alpha_codata > 
+      abs (inv_alpha_0 - experimental_inv_alpha_codata) / experimental_inv_alpha_codata := by
+      have h1 : abs (corrected_inv_alpha - experimental_inv_alpha_codata) / experimental_inv_alpha_codata = 
+        abs (corrected_inv_alpha - experimental_inv_alpha_codata) * (1 / experimental_inv_alpha_codata) := by ring
+      have h2 : abs (inv_alpha_0 - experimental_inv_alpha_codata) / experimental_inv_alpha_codata = 
+        abs (inv_alpha_0 - experimental_inv_alpha_codata) * (1 / experimental_inv_alpha_codata) := by ring
+      rw [h1, h2]
+      have h3 : 0 < 1 / experimental_inv_alpha_codata := by
+        apply div_pos
+        norm_num
+        exact h_exp_pos
+      nlinarith [h_num, h3]
+    exact h_mul
+  
+  rw [corrected_deviation, relative_deviation]
+  exact h7
 
 /-
 8. 物理意义

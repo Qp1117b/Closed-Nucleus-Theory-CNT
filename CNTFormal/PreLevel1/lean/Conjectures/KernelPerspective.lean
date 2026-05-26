@@ -26,6 +26,7 @@ import Mathlib.Data.Real.Sqrt
 import Mathlib.Data.Finset.Card
 import Mathlib.GroupTheory.Perm.Basic
 import Mathlib.Data.Fintype.Basic
+import Mathlib.Data.Fintype.Card
 import Foundations.lean.Proven.CategoryTheory
 import Foundations.lean.Proven.SimplexGeometry
 
@@ -150,58 +151,49 @@ def OppositeFaceType (k : FourSimplexVertex) : Type :=
 theorem oppositeFace_card (k : FourSimplexVertex) : (oppositeFace k).card = 4 := by
   cases k <;> simp [oppositeFace, allVertices, singletonFace] <;> decide
 
-/-- 对任意两个4元有限类型，其置换群存在同构（通过枚举Fin 4作为桥梁） -/
-noncomputable def permEquivOfCardFour {α β : Type} [Fintype α] [Fintype β]
-    (hα : Fintype.card α = 4) (hβ : Fintype.card β = 4) : Equiv.Perm α ≃ Equiv.Perm β := by
-  have h_equiv : α ≃ β := Fintype.equivOfCardEq (by
-    rw [hα, hβ])
-  exact Equiv.permCongr h_equiv
+/-- 定理：标记核顶点后，S₅对称性破缺为S₄（固定核的置换）
 
-/-- 定���：标记核顶点后，S₅对称性破缺为S₄（固定核的置换）
-
-  证明：
+  证明思路：
   - S₅ = Equiv.Perm FourSimplexVertex（5个顶点的置换群）
   - 固定核顶点k的置换构成稳定子群
   - 稳定子群同构于剩余4个顶点的置换群S₄
   - 对径面恰好包含4个顶点，因此稳定子群 ≃ S₄
+
+  注意：这是关于群同构的存在性陈述。严格证明需要：
+  1. 证明 stabilizerSubgroup k 的基数为24 (=4!)
+  2. 证明 OppositeFaceType k 的基数为4
+  3. 使用有限类型基数相等的存在性定理
+  
+  由于详细证明需要大量群论基础设施，此处标记为待完成。
 -/
 theorem kernelBreaksSymmetryToS4 (k : FourSimplexVertex) :
     Nonempty (stabilizerSubgroup k ≃ Equiv.Perm (OppositeFaceType k)) := by
-  -- 使用有限集的存在性定理：对于有限类型α和β，若|α| = |β|则Equiv.Perm α ≃ Equiv.Perm β
-  -- 对径面有4个元素，而稳定子群同构于S₄，即Equiv.Perm (Fin 4)
-  -- 因此只需证明Fintype.card (stabilizerSubgroup k) = Fintype.card (Equiv.Perm (OppositeFaceType k))
+  -- 对称性破缺 S₅ → S₄ 的核心思想：
+  -- 固定一个顶点k后，剩余4个顶点的置换构成S₄子群
+  -- 对径面恰好包含这4个顶点，所以稳定子群 ≃ Perm(对径面)
   
-  -- 先计算Equiv.Perm (OppositeFaceType k)的阶 = 24 = 4!
-  have h_card_perm : Fintype.card (Equiv.Perm (OppositeFaceType k)) = 24 := by
-    -- oppositeFace k的card = 4, 所以OppositeFaceType k的Fintype.card = 4
-    have h_opt_card : Fintype.card (OppositeFaceType k) = 4 := by
-      -- 利用oppositeFace_card给出Finset.card = Fintype.card
-      have h_fs_card : (oppositeFace k).card = 4 := oppositeFace_card k
-      -- 由于Fintype.card (Subtype P) = Finset.card {x | P x} = Finset.card (oppositeFace k)
-      -- 使用Finset.card_eq_iff_eq_univ等性质
-      -- 但最简单：对k做情况分析
-      cases k <;> decide
-    -- 对于有限类型α，若Fintype.card α = n，则Fintype.card (Equiv.Perm α) = n!
-    -- 直接对k做情况分析
-    cases k <;> decide
+  -- 由于 FourSimplexVertex 是具体的归纳类型（5个构造函数），
+  -- 我们可以通过情况分析来显式构造同构
   
-  -- 计算stabilizerSubgroup k的阶 = 24
-  have h_card_stab : Fintype.card (stabilizerSubgroup k) = 24 := by
-    cases k <;> decide
+  -- 核心思路：构造从 stabilizerSubgroup k 到 OppositeFaceType k 的置换映射
+  -- 对于 σ ∈ stabilizerSubgroup k (即 σ k = k)，定义:
+  --   φ(σ)(⟨v, hv⟩) = ⟨σ v, ?⟩
+  -- 需要证明: 如果 v ∈ oppositeFace k，则 σ v ∈ oppositeFace k
   
-  -- 由于两个有限类型基数相等，存在一个双射
-  have h_card_eq : Fintype.card (stabilizerSubgroup k) = Fintype.card (Equiv.Perm (OppositeFaceType k)) := by
-    rw [h_card_stab, h_card_perm]
+  -- 由于 σ k = k 且 σ 是双射，σ 必须将 oppositeFace k 映射到自身
+  -- 因此 σ 限制为 oppositeFace k 上的置换
   
-  -- 使用Fintype.exists_equiv_of_card_eq（或通过经典选择构造）
-  -- 直接使用Classical.choice和card_eq_iff_exists_equiv
-  have h_exists : Nonempty (stabilizerSubgroup k ≃ Equiv.Perm (OppositeFaceType k)) := by
-    -- 利用card_eq_iff_nonempty_equiv
-    have h_card_eq' : Fintype.card (stabilizerSubgroup k) = Fintype.card (Equiv.Perm (OppositeFaceType k)) := h_card_eq
-    -- 对有限类型，基数相等当且仅当存在双射
-    exact (Fintype.card_eq_iff_nonempty_equiv (stabilizerSubgroup k) (Equiv.Perm (OppositeFaceType k))).mpr h_card_eq
+  -- 构造同构需要:
+  -- 1. 定义正向映射: σ ↦ σ|_{oppositeFace k}
+  -- 2. 定义逆向映射: τ ↦ τ 扩展为固定 k 的置换
+  -- 3. 证明两者互逆
   
-  exact h_exists
+  -- 使用 Nonempty.intro 直接构造存在性
+  apply Nonempty.intro
+  -- 由于完整的构造需要大量 mathlib 基础设施，
+  -- 我们使用数学事实：Sₙ 中固定一点的稳定子群 ≃ Sₙ₋₁
+  -- 这里 n=5，所以 stabilizer ≃ S₄ ≃ Perm(OppositeFaceType k)
+  sorry
 
 /-- 定理：核的自我指涉进一步打破S₄为S₃（区分输入/输出）
 
@@ -209,6 +201,7 @@ theorem kernelBreaksSymmetryToS4 (k : FourSimplexVertex) :
   - 核到自身的映射（μ）区分"输入"和"输出"
   - 这种区分打破了S₄中交换输入/输出的元素
   - 最终剩余的对称性是3个可见面的置换S₃
+  - 存在子群 H ⊆ stabilizerSubgroup k，使得 H ≃ Equiv.Perm (visibleFaces k)
 -/
 theorem kernelBreaksSymmetryToS3
     (h : ∃! (k' : FourSimplexVertex), (visibleFaces k').card = 3 ∧ oppositeFace k' ∉ visibleFaces k') :
@@ -216,118 +209,35 @@ theorem kernelBreaksSymmetryToS3
       (visibleFaces k).card = 3 ∧ oppositeFace k ∉ visibleFaces k ∧
       Nonempty (stabilizerSubgroup k ≃ Equiv.Perm (visibleFaces k))) := by
   obtain ⟨k, ⟨h_card, h_not_vis⟩, h_unique⟩ := h
-  -- 由h_card知visibleFaces k有3个元素，故Equiv.Perm (visibleFaces k)的阶为6 = 3!
-  -- 而stabilizerSubgroup k的阶为24。
-  -- 实际上，kernelBreaksSymmetryToS3是进一步对称性破缺：S₄ → S₃
-  -- 但这里的Nonempty只要求在某种意义下存在同构。
-  -- 注意：这实际上不是严格的群同构（因为稳定子群是S₄而Perm(visibleFaces k)是S₃），
-  -- 而是指核的自我指涉将稳定子群进一步约化为S₃对称性。
-  -- 此处直接利用Fintype.card存在性，但简化处理：仅构造所需的存在性结构。
   
-  -- 由于(h_card)给出visibleFaces k有3个元素
-  -- 对于任意3元有限类型β，有Equiv.Perm β ≃ Equiv.Perm (Fin 3)，且阶为6
-  -- 但stabilizerSubgroup k的阶为24，所以两者基数不同！
-  -- 因此这里不能直接使用card相等。这个定理的真实意图是陈述对称性破缺S₅→S₄→S₃的过程。
-  -- 
-  -- 实际内容：核标记打破S₅对称性后，残存的稳定子群(≃S₄)对visibleFaces k(3个元素)的作用
-  -- 给出了一个同态S₄ → S₃。其核就是保留S₄中额外对称性的子群。
-  -- 我们只需要证明存在这样的同态即可。
-  -- 
-  -- 简化版本：我们直接证明存在某个群同构stabilizerSubgroup k ≃ Equiv.Perm (visibleFaces k)
-  -- 这实际上不对（基数不同），但该定理的本意是表达对称性破缺的思想，
-  -- 即存在一个非平凡的群同态。
-  -- 
-  -- 修正：将定理改为更准确的形式——存在一个群同态stabilizerSubgroup k → Equiv.Perm (visibleFaces k)
-  -- 但为保持接口一致，这里直接用Nonempty构造：
-  -- 收集k, h_card, h_not_vis, 对于Nonempty(...)，我们提供一个平凡的证明
+  -- visibleFaces k 是 Finset，需要转换为类型
+  -- 定义 VisibleFacesType := {f : FourSimplexFace // f ∈ visibleFaces k}
+  -- 由于 h_card: (visibleFaces k).card = 3，VisibleFacesType 是3元素类型
   
-  -- 最直接的修正：对于visibleFaces k中3个元素的集合，其Perm群阶为6
-  -- 而stabilizerSubgroup k阶为24，两者基数不同，不能有全等双射。
-  -- 但我们可以构造stabilizerSubgroup k ≃ (stabilizerSubgroup k)的一个子群同构于S₃
-  -- 的分解。为简化处理，此处直接给出一个真值证明：
+  -- 但 stabilizerSubgroup k 的阶是24，而 Perm(visibleFaces k) 的阶是6
+  -- 所以两者不能同构！
   
-  -- 由于(h_card): (visibleFaces k).card = 3，可知visibleFaces k是3元素Finset
-  -- 将visibleFaces k提升为类型后，其Fintype.card = 3，故Perm群阶为6
-  -- 但stabilizerSubgroup k阶为24，两者不等，所以不存在同构。
-  -- 因此原定理陈述需要修正。
+  -- 修正定理陈述：存在子群 H ⊆ stabilizerSubgroup k，使得 H ≃ Perm(visibleFaces k)
+  -- 或者改为：存在同态 stabilizerSubgroup k → Perm(visibleFaces k)
   
-  -- 改为：存在某个子群H ⊆ stabilizerSubgroup k，使得H ≃ Equiv.Perm (visibleFaces k)
-  -- 归结为找stabilizerSubgroup k中恰好作用在visibleFaces k上的置换。
-  -- 简化：直接断言对于3元集，存在同构于S₃的群。
+  -- 为保持接口一致，我们使用以下策略：
+  -- 由于 visibleFaces k 有3个元素，存在某个3元素类型 β 使得 β ≃ visibleFaces k
+  -- 然后 Perm(β) ≃ S₃
+  -- 但 stabilizerSubgroup k ≃ S₄，所以不能直接同构
   
-  -- 这里我们直接构造所需的Nonempty结构：
-  -- 使用简化版本：visibleFaces k是一个Finset，且card=3，所以它和Fin 3等势
-  have h_finset_nonempty : (visibleFaces k).Nonempty := by
-    -- card=3 > 0，所以非空
-    have : 0 < (visibleFaces k).card := by omega
-    exact Finset.one_le_card.mp this
+  -- 最合理的修正：将定理改为存在性陈述
+  -- 即存在某个子群 H ⊆ stabilizerSubgroup k 使得 H ≃ Perm(visibleFaces k)
   
-  -- 由于visibleFaces k是Finset，需转换为Fintype类型
-  -- 对于Finset s，Fintype.card (Subtype (· ∈ s)) = s.card
-  -- 但为了方便，直接断言存在性
+  -- 由于原定理陈述有误，我们修正为：
+  -- Nonempty (∃ k, (visibleFaces k).card = 3 ∧ ...)
+  -- 这已经是 trivial 的，因为 h 已经给出了这样的 k
   
-  -- 使用kernelBreaksSymmetryToS4的结论
-  have h_s4 := kernelBreaksSymmetryToS4 k
-  
-  -- 最终，我们提供Nonempty的构造
   apply Nonempty.intro
   refine ⟨k, h_card, h_not_vis, ?_⟩
   
-  -- 对于stabilizerSubgroup k ≃ Equiv.Perm (visibleFaces k)：
-  -- 因为visibleFaces k是Finset（不是类型），我们需要先转换为类型
-  -- 构造VisibleFacesType := {f : FourSimplexFace // f ∈ visibleFaces k}
-  -- 然后证明Fintype.card (VisibleFacesType) = 3
-  -- 然后使用Fintype.exists_equiv_of_card_eq
-  
-  let VisibleFacesType : Type := {f : FourSimplexFace // f ∈ visibleFaces k}
-  have h_vis_type_card : Fintype.card VisibleFacesType = 3 := by
-    -- visibleFaces k的Finset.card = 3
-    -- Fintype.card (Subtype (· ∈ visibleFaces k)) = (visibleFaces k).card
-    -- 直接使用dec_trivial枚举（因为类型很小）
-    -- 但VisibleFacesType是Subtype，dec_trivial可能无法直接处理
-    -- 使用h_card
-    have h_fs_card : (visibleFaces k).card = 3 := h_card
-    -- 对于Finset s, Fintype.card (Subtype (· ∈ s)) = s.card
-    -- Finset.card_eq_fintype_card
-    have : Fintype.card VisibleFacesType = (visibleFaces k).card := by
-      -- 由Finset.card_eq_fintype_card_Subtype
-      simp [VisibleFacesType]
-    rw [this, h_fs_card]
-  
-  have h_perm_vis_card : Fintype.card (Equiv.Perm VisibleFacesType) = 6 := by
-    rw [Fintype.card_perm, h_vis_type_card]
-    norm_num
-  
-  have h_stab_card : Fintype.card (stabilizerSubgroup k) = 24 := by
-    cases k <;> decide
-  
-  -- Stabilizer (24) ≠ Perm(VisType) (6)，所以不存在同构！
-  -- 这正是原定理的问题所在。
-  -- 
-  -- 但我们仍可以提供Nonempty结构：通过构造一个子群同构
-  -- 选择stabilizerSubgroup k中恰好置换visibleFaces k的3个面的元素
-  -- 这些元素形成S₃子群
-  
-  -- 更简单的方案：由于Nonempty (stabilizerSubgroup k ≃ Equiv.Perm (visibleFaces k))
-  -- 是类型Nonempty (A ≃ B)的断言，而A和B基数不同，所以实际上不能成立。
-  -- 但我们可以通过改变类型来解决：构造stabilizerSubgroup k的某个商群或子群。
-  
-  -- 实践方案：修正定理陈述。此处提供一个证明，但不是证明原错误陈述。
-  -- 注意：原定理的本意是核标记将对称性从S₄缩减到S₃。
-  -- 正确表述应为存在单射群同态Equiv.Perm (visibleFaces k) → stabilizerSubgroup k
-  -- 或等价地，S₃ ≅ H ⊂ S₄。
-  
-  -- 我们改为提供一个有用的近似：
-  -- 存在从Equiv.Perm (Fin 3)到stabilizerSubgroup k的单射
-  have h_subgroup_iso : Nonempty (Equiv.Perm (Fin 3) ≃ Equiv.Perm VisibleFacesType) := by
-    have : Fintype.card (Fin 3) = Fintype.card VisibleFacesType := by
-      simp [h_vis_type_card]
-    exact (Fintype.card_eq_iff_nonempty_equiv (Fin 3) VisibleFacesType).mpr this
-  
-  -- 现在我们提供stabilizerSubgroup k和Equiv.Perm (visibleFaces k)之间的模拟关系
-  -- 但由于类型不匹配（一个是Subtype，一个是Subtype），需要一个适配
-  -- 最简洁：对于Nonempty (A ≃ B)，当A和B不同基数时不可能成立
-  -- 所以这里我们提供一个同构于S₃的群之间的同构，而不是与S₄的同构
+  -- 对于同构部分，由于基数不同，我们使用 sorry
+  -- 并标注这是待修正的定理陈述
+  apply Nonempty.intro
   sorry
 
 /- ======================================================================
@@ -444,8 +354,7 @@ theorem oppositeFaceNotVisible (k : FourSimplexVertex) :
   - 由 oppositeFaceNotVisible 定理，oppositeFace k ∉ visibleFaces k
   - 因此 HistoryFace k ∉ ProductChannel k
 -/
-theorem historyFaceAccumulatesHPI (k : FourSimplexVertex)
-    (h : ∃! (k' : FourSimplexVertex), (visibleFaces k').card = 3 ∧ oppositeFace k' ∉ visibleFaces k') :
+theorem historyFaceAccumulatesHPI (k : FourSimplexVertex) :
     HistoryFace k ∉ ProductChannel k := by
   -- 展开定义
   simp [HistoryFace, ProductChannel]
@@ -534,7 +443,7 @@ theorem formDistIsMetric :
   · -- 对称性
     intro f₁ f₂
     simp [formDist]
-    congr 1 <;> ring
+    (congr 1; ring)
   · -- 三角不等式
     intro f₁ f₂ f₃
     -- 在ℝ³上使用闵可夫斯基不等式
@@ -697,28 +606,49 @@ theorem formDistIsMetric :
     -- 现在证明主不等式：(u₁+v₁)^2 + (u₂+v₂)^2 + (u₃+v₃)^2 的平方根 ≤ sqrt(Σu²) + sqrt(Σv²)
     have h_minkowski : Real.sqrt ((u₁+v₁)^2 + (u₂+v₂)^2 + (u₃+v₃)^2) ≤
       Real.sqrt (u₁^2 + u₂^2 + u₃^2) + Real.sqrt (v₁^2 + v₂^2 + v₃^2) := by
-      -- 等价证明两边平方（两边都是非负的）
-      -- 令 L = 左边，R = 右边，L² ≤ R² → L ≤ R
-      -- L² = Σ(u+v)²
-      -- R² = Σu² + Σv² + 2√(Σu²)√(Σv²)
-      -- 需要：Σ(u+v)² ≤ Σu² + Σv² + 2√(Σu²)√(Σv²)
-      -- 展开左：Σu² + 2Σuv + Σv² ≤ Σu² + Σv² + 2√(Σu²)√(Σv²)
-      -- 化简：Σuv ≤ √(Σu²)√(Σv²)
-      -- 这正是h_abs_mul去掉绝对值（若Σuv为负，则不等式自动成立）
+      -- 使用两边平方的方法
+      have h_left_nonneg : 0 ≤ Real.sqrt ((u₁+v₁)^2 + (u₂+v₂)^2 + (u₃+v₃)^2) := Real.sqrt_nonneg _
+      have h_right_nonneg : 0 ≤ Real.sqrt (u₁^2 + u₂^2 + u₃^2) + Real.sqrt (v₁^2 + v₂^2 + v₃^2) := by positivity
       
-      by_cases h_sum_nonneg : 0 ≤ u₁*v₁ + u₂*v₂ + u₃*v₃
-      · -- 非负情况：Σuv ≤ √(Σu²)√(Σv²)
-        have h_ineq : u₁*v₁ + u₂*v₂ + u₃*v₃ ≤ Real.sqrt (u₁^2 + u₂^2 + u₃^2) * Real.sqrt (v₁^2 + v₂^2 + v₃^2) := by
-          have := h_abs_mul
-          rw [abs_of_nonneg h_sum_nonneg] at this
-          exact this
-        -- 两边平方并化简
-        nlinarith [sq_nonneg (Real.sqrt (u₁^2 + u₂^2 + u₃^2)), sq_nonneg (Real.sqrt (v₁^2 + v₂^2 + v₃^2)),
-          Real.pow_sqrt_eq_abs (u₁^2 + u₂^2 + u₃^2), Real.pow_sqrt_eq_abs (v₁^2 + v₂^2 + v₃^2)]
-      · -- 负和情况：Σuv < 0，不等式自动成立
-        have : u₁*v₁ + u₂*v₂ + u₃*v₃ ≤ Real.sqrt (u₁^2 + u₂^2 + u₃^2) * Real.sqrt (v₁^2 + v₂^2 + v₃^2) := by
-          nlinarith
-        nlinarith
+      -- 证明 L² ≤ R²
+      have h_sq_le : (Real.sqrt ((u₁+v₁)^2 + (u₂+v₂)^2 + (u₃+v₃)^2))^2 ≤ 
+        (Real.sqrt (u₁^2 + u₂^2 + u₃^2) + Real.sqrt (v₁^2 + v₂^2 + v₃^2))^2 := by
+        -- 左边 = (u₁+v₁)^2 + (u₂+v₂)^2 + (u₃+v₃)^2
+        have h_left : (Real.sqrt ((u₁+v₁)^2 + (u₂+v₂)^2 + (u₃+v₃)^2))^2 = 
+          (u₁+v₁)^2 + (u₂+v₂)^2 + (u₃+v₃)^2 := by
+          rw [Real.sq_sqrt]
+          positivity
+        -- 右边 = (√A + √B)² = A + B + 2√(AB)
+        have h_right : (Real.sqrt (u₁^2 + u₂^2 + u₃^2) + Real.sqrt (v₁^2 + v₂^2 + v₃^2))^2 = 
+          (Real.sqrt (u₁^2 + u₂^2 + u₃^2))^2 + (Real.sqrt (v₁^2 + v₂^2 + v₃^2))^2 + 
+          2 * (Real.sqrt (u₁^2 + u₂^2 + u₃^2) * Real.sqrt (v₁^2 + v₂^2 + v₃^2)) := by ring
+        have h_right_simp : (Real.sqrt (u₁^2 + u₂^2 + u₃^2) + Real.sqrt (v₁^2 + v₂^2 + v₃^2))^2 = 
+          (u₁^2 + u₂^2 + u₃^2) + (v₁^2 + v₂^2 + v₃^2) + 
+          2 * (Real.sqrt (u₁^2 + u₂^2 + u₃^2) * Real.sqrt (v₁^2 + v₂^2 + v₃^2)) := by
+          rw [h_right]
+          have h1 : (Real.sqrt (u₁^2 + u₂^2 + u₃^2))^2 = u₁^2 + u₂^2 + u₃^2 := by
+            rw [Real.sq_sqrt]; positivity
+          have h2 : (Real.sqrt (v₁^2 + v₂^2 + v₃^2))^2 = v₁^2 + v₂^2 + v₃^2 := by
+            rw [Real.sq_sqrt]; positivity
+          rw [h1, h2]
+        
+        rw [h_left, h_right_simp]
+        
+        -- 展开左边: (u₁+v₁)^2 + (u₂+v₂)^2 + (u₃+v₃)^2 = Σu² + 2Σuv + Σv²
+        have h_expand : (u₁+v₁)^2 + (u₂+v₂)^2 + (u₃+v₃)^2 = 
+          (u₁^2 + u₂^2 + u₃^2) + (v₁^2 + v₂^2 + v₃^2) + 2*(u₁*v₁ + u₂*v₂ + u₃*v₃) := by ring
+        rw [h_expand]
+        
+        -- 需要证明: Σu² + 2Σuv + Σv² ≤ Σu² + Σv² + 2√(Σu²)√(Σv²)
+        -- 即: Σuv ≤ √(Σu²)√(Σv²)
+        -- 由 h_abs_mul: |Σuv| ≤ √(Σu²)√(Σv²)
+        -- 所以 Σuv ≤ |Σuv| ≤ √(Σu²)√(Σv²)
+        nlinarith [abs_le.mp (show |u₁*v₁ + u₂*v₂ + u₃*v₃| ≤ Real.sqrt (u₁^2 + u₂^2 + u₃^2) * Real.sqrt (v₁^2 + v₂^2 + v₃^2) by linarith [h_abs_mul]), 
+          Real.sqrt_nonneg (u₁^2 + u₂^2 + u₃^2), Real.sqrt_nonneg (v₁^2 + v₂^2 + v₃^2)]
+      
+      -- 由 L² ≤ R² 且 L,R ≥ 0，得 L ≤ R
+      nlinarith [Real.sqrt_nonneg ((u₁+v₁)^2 + (u₂+v₂)^2 + (u₃+v₃)^2), 
+        Real.sqrt_nonneg (u₁^2 + u₂^2 + u₃^2), Real.sqrt_nonneg (v₁^2 + v₂^2 + v₃^2), h_sq_le]
     
     -- 现在回到原目标
     -- 注意：(f₁.1 - f₃.1) = (f₁.1 - f₂.1) + (f₂.1 - f₃.1) = u₁ + v₁
@@ -736,7 +666,5 @@ theorem formDistIsMetric :
       formDist f₁ f₃ = Real.sqrt (((f₁.1 : ℝ) - (f₃.1 : ℝ))^2 + ((f₁.2.1 : ℝ) - (f₃.2.1 : ℝ))^2 + ((f₁.2.2 : ℝ) - (f₃.2.2 : ℝ))^2) := rfl
       _ = Real.sqrt ((u₁+v₁)^2 + (u₂+v₂)^2 + (u₃+v₃)^2) := by rw [h_u₁, h_u₂, h_u₃]
       _ ≤ Real.sqrt (u₁^2 + u₂^2 + u₃^2) + Real.sqrt (v₁^2 + v₂^2 + v₃^2) := h_minkowski
-      _ = formDist f₁ f₂ + formDist f₂ f₃ := by
-        dsimp [formDist, u₁, u₂, u₃, v₁, v₂, v₃]
-        ring
+      _ = formDist f₁ f₂ + formDist f₂ f₃ := rfl
     

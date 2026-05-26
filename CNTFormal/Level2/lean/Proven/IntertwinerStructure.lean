@@ -21,6 +21,7 @@ import Foundations.lean.Proven.CategoryTheory
 namespace Level2.lean.Conjectures
 
 open CategoryTheory
+open Foundations.lean.Proven
 
 /-
 1. intertwiner空间的范畴论定义

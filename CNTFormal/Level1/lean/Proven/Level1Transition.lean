@@ -49,11 +49,16 @@ import Mathlib.Data.Nat.Basic
 import Foundations.lean.Proven.Dimensions
 import Foundations.lean.Proven.ReproductionPeriod
 import Foundations.lean.Proven.SimplexGeometry
-import PostLevel1PreLevel2.lean.Conjectures.ReproductionEnergy
+import PostLevel1PreLevel2.lean.Proven.ReproductionEnergy
 
-namespace Level1.Conjectures
+namespace Level1.lean.Proven
 
+open Foundations.lean.Proven
 open Foundations.Strict
+open PostLevel1PreLevel2.lean.Proven
+
+/-- 离散频率：自然数类型的别名 -/
+abbrev DiscreteFrequency := ℕ
 
 /- ======================================================================
   2.1 再生产微分方程猜测
@@ -1418,4 +1423,4 @@ structure GravityScaleHierarchy where
 
 end GravityEmergence
 
-end Level1.Conjectures
+end Level1.lean.Proven

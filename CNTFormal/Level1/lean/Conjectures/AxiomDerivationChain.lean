@@ -19,11 +19,12 @@ import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.CategoryTheory.Iso
 import Mathlib.Data.Real.Basic
 import Foundations.lean.Proven.CategoryTheory
-import Level1.lean.Conjectures.AxiomConsistency
+import Level1.lean.Proven.AxiomConsistency
 
 namespace Level1.lean.Conjectures
 
 open CategoryTheory
+open Foundations.lean.Proven
 
 /-
 1. 公理1→公理3的严格推导

@@ -23,6 +23,7 @@ import Foundations.lean.Proven.ReproductionPeriod
 namespace PreLevel1.lean.Proven
 
 open CategoryTheory
+open Foundations.lean.Proven
 
 /- ======================================================================
   历史依赖的再生产周期

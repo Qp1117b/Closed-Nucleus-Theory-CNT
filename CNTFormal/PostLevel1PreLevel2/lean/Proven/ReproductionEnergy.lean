@@ -24,9 +24,10 @@ import Foundations.lean.Proven.CategoryTheory
 set_option maxHeartbeats 400000
 set_option checkBinderAnnotations false
 
-namespace PostLevel1PreLevel2.lean.Conjectures
+namespace PostLevel1PreLevel2.lean.Proven
 
 open Real
+open Foundations.lean.Proven
 
 section PhysicalQuantities
 
@@ -125,8 +126,8 @@ end MaterialFormConservation
 
 section ReproductionBridge
 
-open CNTFormal
 open CategoryTheory
+open Foundations.lean.Proven
 
 /--
 桥接公理：闭合核 ↔ 物理量
@@ -994,4 +995,4 @@ theorem light_cone_emergence_framework : True := by
 
 end FormSpace
 
-end PostLevel1PreLevel2.lean.Conjectures
+end PostLevel1PreLevel2.lean.Proven
