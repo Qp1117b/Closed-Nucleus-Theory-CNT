@@ -1,0 +1,3 @@
+import PostLevel1PreLevel2.lean.Conjectures.RepRadioSpeed
+import PostLevel1PreLevel2.lean.Conjectures.ReproductionEnergy
+import PostLevel1PreLevel2.lean.Conjectures.ScaleEmergence

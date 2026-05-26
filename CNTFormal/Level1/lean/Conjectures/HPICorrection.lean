@@ -26,10 +26,10 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.Real.Pi.Bounds
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
-import CNTFormal.AlphaDerivation
-import CNTFormal.CategoryTheory
+import Foundations.lean.Proven.AlphaDerivation
+import Foundations.lean.Proven.CategoryTheory
 
-namespace CNTFormal
+namespace Level1.lean.Conjectures
 
 open Real
 
@@ -214,4 +214,4 @@ OPEN-4: HPI修正与DCNC公理的关系
   - 涉及历史沉淀判据的量化描述
 -/
 
-end CNTFormal
+end Level1.lean.Conjectures

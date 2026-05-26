@@ -18,10 +18,10 @@ DCNC公理体系的推导链尝试
 import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.CategoryTheory.Iso
 import Mathlib.Data.Real.Basic
-import CNTFormal.CategoryTheory
-import CNTConjectures.AxiomConsistency
+import Foundations.lean.Proven.CategoryTheory
+import Level1.lean.Conjectures.AxiomConsistency
 
-namespace CNTFormal
+namespace Level1.lean.Conjectures
 
 open CategoryTheory
 
@@ -269,4 +269,4 @@ OPEN-4: DCNC公理系统的完全自洽性证明
   - 涉及范畴论模型论的深层技术
 -/
 
-end CNTFormal
+end Level1.lean.Conjectures

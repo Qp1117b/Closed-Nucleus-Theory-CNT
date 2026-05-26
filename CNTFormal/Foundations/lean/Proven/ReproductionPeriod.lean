@@ -23,9 +23,9 @@
 -/
 
 import Mathlib.Data.Real.Basic
-import CNTFormal.CategoryTheory
+import Foundations.lean.Proven.CategoryTheory
 
-namespace CNTFormal
+namespace Foundations.lean.Proven
 
 open CategoryTheory
 
@@ -334,4 +334,4 @@ theorem irreversibility_requires_positive_time
   这些已超出六公理的推导范围，需作为工作假设引入。
   ======================================================================-/
 
-end CNTFormal
+end Foundations.lean.Proven

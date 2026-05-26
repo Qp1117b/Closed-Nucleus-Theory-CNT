@@ -15,7 +15,7 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.NormNum
 
-namespace CNTFormal
+namespace Foundations.lean.Proven
 
 /-
 1. 正则4-单纯形的定义
@@ -102,4 +102,4 @@ OPEN-3: 0.16%偏差的物理解释
   - 需要严格的微扰计算
 -/
 
-end CNTFormal
+end Foundations.lean.Proven

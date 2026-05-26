@@ -26,9 +26,9 @@
 -/
 
 import Mathlib.Data.Real.Basic
-import CNTFormal.CategoryTheory
+import Foundations.lean.Proven.CategoryTheory
 
-namespace CNTFormal
+namespace Level1.lean.Conjectures
 
 open Real
 open CategoryTheory
@@ -463,4 +463,4 @@ OPEN-OM-5: HPI参数(0.162%)的第一性原理推导
   关键原则: 此参数绝不能作为公理引入
 -/
 
-end CNTFormal
+end Level1.lean.Conjectures

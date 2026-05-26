@@ -18,9 +18,9 @@ import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.LinearAlgebra.Projection
 import Mathlib.Data.Real.Basic
-import CNTFormal.CategoryTheory
+import Foundations.lean.Proven.CategoryTheory
 
-namespace CNTFormal
+namespace Level1.lean.Conjectures
 
 open CategoryTheory
 
@@ -297,4 +297,4 @@ def physical_interpretation_of_idempotent_quantization : String :=
    在物理上，这对应于量子系统的二元性：粒子存在或不存在，
    能级占据或空穴。这是电荷量子化、自旋量子化等现象的数学基础。"
 
-end CNTFormal
+end Level1.lean.Conjectures

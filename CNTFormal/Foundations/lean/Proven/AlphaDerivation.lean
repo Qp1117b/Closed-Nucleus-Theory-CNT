@@ -22,7 +22,7 @@ import Mathlib.RingTheory.Polynomial.Chebyshev
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.Basic
 import Mathlib.Tactic.NormNum
 
-namespace CNTFormal
+namespace Foundations.lean.Proven
 
 open Real
 open Polynomial.Chebyshev
@@ -238,4 +238,4 @@ OPEN-3: 质子电磁演化历史的完整形式化
   - 电荷量子化的几何起源
 -/
 
-end CNTFormal
+end Foundations.lean.Proven

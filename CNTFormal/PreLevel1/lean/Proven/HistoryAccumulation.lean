@@ -17,10 +17,10 @@
 -/
 
 import Mathlib.Data.Real.Basic
-import CNTFormal.CategoryTheory
-import CNTFormal.ReproductionPeriod
+import Foundations.lean.Proven.CategoryTheory
+import Foundations.lean.Proven.ReproductionPeriod
 
-namespace CNTFormal
+namespace PreLevel1.lean.Proven
 
 open CategoryTheory
 
@@ -178,4 +178,4 @@ theorem reproduction_action_invariant
     - 周期序列与实验数据的比较
   ======================================================================-/
 
-end CNTFormal
+end PreLevel1.lean.Proven

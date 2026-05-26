@@ -16,9 +16,9 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Data.Fin.Basic
-import CNTFormal.CategoryTheory
+import Foundations.lean.Proven.CategoryTheory
 
-namespace CNTFormal
+namespace Level2.lean.Conjectures
 
 open CategoryTheory
 
@@ -93,4 +93,4 @@ OPEN-4: intertwiner再生产的量子效应
   - 涉及HPI修正与intertwiner动力学的耦合
 -/
 
-end CNTFormal
+end Level2.lean.Conjectures

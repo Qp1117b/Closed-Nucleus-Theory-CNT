@@ -17,11 +17,11 @@
 -/
 
 import Mathlib.Data.Real.Basic
-import CNTFormal.CategoryTheory
-import CNTFormal.ReproductionPeriod
-import CNTFormal.SimplexGeometry
+import Foundations.lean.Proven.CategoryTheory
+import Foundations.lean.Proven.ReproductionPeriod
+import Foundations.lean.Proven.SimplexGeometry
 
-namespace CNTFormal
+namespace PreLevel1.lean.Proven
 
 open CategoryTheory
 
@@ -235,4 +235,4 @@ theorem bare_coupling_simplex_relation :
     - 几何相位导致电磁耦合常数
   ======================================================================-/
 
-end CNTFormal
+end PreLevel1.lean.Proven

@@ -19,7 +19,7 @@ import Mathlib.CategoryTheory.NatTrans
 import Mathlib.CategoryTheory.Iso
 import Mathlib.Data.Real.Basic
 
-namespace CNTFormal
+namespace Foundations.lean.Proven
 
 open CategoryTheory
 
@@ -163,4 +163,4 @@ OPEN-4: 从CNT范畴到物理量的映射
   需要建立范畴论结构与物理可观测量之间的严格对应
 -/
 
-end CNTFormal
+end Foundations.lean.Proven

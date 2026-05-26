@@ -16,11 +16,11 @@ DCNC六公理系统的自洽性证明
 import Mathlib.Data.Real.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.Real.Pi.Bounds
-import CNTFormal.CategoryTheory
-import CNTFormal.AlphaDerivation
-import CNTConjectures.HPICorrection
+import Foundations.lean.Proven.CategoryTheory
+import Foundations.lean.Proven.AlphaDerivation
+import Level1.lean.Conjectures.HPICorrection
 
-namespace CNTFormal
+namespace Level1.lean.Conjectures
 
 open Real
 open CategoryTheory
@@ -166,4 +166,4 @@ OPEN-4: 公理系统的独立性证明
   - 涉及公理系统的极小性
 -/
 
-end CNTFormal
+end Level1.lean.Conjectures

@@ -1,12 +1,30 @@
 name = "CNTFormal"
 version = "0.1.0"
-defaultTargets = ["CNTFormal", "CNTConjectures"]
+defaultTargets = ["Foundations", "PreLevel1", "Level1", "PostLevel1PreLevel2", "Level2"]
 
 [[lean_lib]]
-name = "CNTFormal"
+name = "Foundations"
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
 
 [[lean_lib]]
-name = "CNTConjectures"
+name = "PreLevel1"
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
+
+[[lean_lib]]
+name = "Level1"
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
+
+[[lean_lib]]
+name = "PostLevel1PreLevel2"
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
+
+[[lean_lib]]
+name = "Level2"
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
+
+[[lean_lib]]
+name = "PostLevel2"
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
 
 [[require]]
 name = "mathlib"

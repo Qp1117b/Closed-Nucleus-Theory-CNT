@@ -26,12 +26,12 @@ import Mathlib.Data.Real.Sqrt
 import Mathlib.Data.Finset.Card
 import Mathlib.GroupTheory.Perm.Basic
 import Mathlib.Data.Fintype.Basic
-import CNTFormal.CategoryTheory
-import CNTFormal.SimplexGeometry
+import Foundations.lean.Proven.CategoryTheory
+import Foundations.lean.Proven.SimplexGeometry
 
 set_option maxHeartbeats 1000000
 
-namespace CNTFormal
+namespace PreLevel1.lean.Proven
 
 open CategoryTheory
 

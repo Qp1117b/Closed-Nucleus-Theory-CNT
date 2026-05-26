@@ -1,3 +1,5 @@
+
+
 /-
 CNT范畴到物理量的严格映射
 
@@ -6,7 +8,7 @@ CNT范畴到物理量的严格映射
 映射原则:
 1. 每个物理量尝试从范畴论结构推导
 2. 禁止引入未定义的物理概念
-3. 所有映射尝试满足DCNC六公理的约束
+3. 所有映射尝试满足DCNC公理的约束
 
 参考文献:
 - CNT-体系文档.md
@@ -14,12 +16,9 @@ CNT范畴到物理量的严格映射
 - CNTFormal.AlphaDerivation
 -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import CNTFormal.CategoryTheory
-import CNTFormal.AlphaDerivation
+ param($match) $imports = $match.Groups[1].Value; $open = $match.Groups[2].Value; return $imports + "`n" + $open import Foundations.Strict.AlphaDerivation
 
-namespace CNTFormal
+namespace Foundations.Strict
 
 open Real
 open CategoryTheory
@@ -40,7 +39,7 @@ inductive PhysicalQuantity
   | coupling_constant -- 耦合常数
 
 /-- 物理量测量函子: 将CNT范畴中的对象映射到物理量值 -/
-structure PhysicalMeasurement (C : Type) [Category C] [CNTCategory C] where
+structure PhysicalMeasurement (C : Type) [Category C] [Foundations.Strict.CNTCategory C] where
   /-- 测量函子: C → ℝ -/
   measure : C → ℝ
   /-- 测量保持同构: 若X ≅ Y，则measure X = measure Y -/
@@ -58,7 +57,7 @@ structure PhysicalMeasurement (C : Type) [Category C] [CNTCategory C] where
 电荷是CNT范畴中对象的拓扑不变量，从历史沉淀判据中涌现。
 电荷量子化源于幂等算子的谱性质和Berry相位的几何积累。
 -/
-structure ChargeFunctor (C : Type) [Category C] [CNTCategory C] where
+structure ChargeFunctor (C : Type) [Category C] [Foundations.Strict.CNTCategory C] where
   /-- 电荷测量: C → ℝ -/
   charge : C → ℝ
   /-- 电荷守恒: 对于同构f: X ≅ Y，电荷相等 -/
@@ -80,16 +79,16 @@ structure ChargeFunctor (C : Type) [Category C] [CNTCategory C] where
 
 关键洞察: 电荷量子化不是假设，而是幂等算子谱性质的直接推论。
 -/
-theorem charge_quantization_theorem (C : Type) [Category C] [CNTCategory C]
+theorem charge_quantization_theorem (C : Type) [Category C] [Foundations.Strict.CNTCategory C]
     (Q : ChargeFunctor C) (X : C) :
   ∃ (n : ℤ), Q.charge X = n := by
   -- 步骤1: 由公理1，X存在幂等自态射
   have h_axiom1 := CNT_Axiom_1 C X
   obtain ⟨_, _, ⟨μ, hμ⟩, _, _⟩ := h_axiom1
-  
+
   -- 步骤2: 使用电荷函子的拓扑性质
   have h_charge := Q.charge_from_idempotent X μ hμ
-  
+
   -- 步骤3: 直接得到电荷量子化
   exact h_charge
 
@@ -100,7 +99,7 @@ theorem charge_quantization_theorem (C : Type) [Category C] [CNTCategory C]
 -/
 
 /-- 精细结构常数的范畴论解释: 1/α = 4π/sin²(φ)，其中φ是EPRL相位 -/
-theorem alpha_from_category (C : Type) [Category C] [CNTCategory C] :
+theorem alpha_from_category (C : Type) [Category C] [Foundations.Strict.CNTCategory C] :
   -- 耦合常数由范畴的几何结构决定
   -- 具体地，由4-单纯形的二面角Θ决定
   ∃ (alpha : ℝ), alpha = sin (5 * dihedral_angle) ^ 2 / (4 * π) := by
@@ -113,7 +112,7 @@ theorem alpha_from_category (C : Type) [Category C] [CNTCategory C] :
 -/
 
 /-- 自旋函子 -/
-structure SpinFunctor (C : Type) [Category C] [CNTCategory C] where
+structure SpinFunctor (C : Type) [Category C] [Foundations.Strict.CNTCategory C] where
   /-- 自旋测量: C → ℝ -/
   spin : C → ℝ
   /-- 自旋量子化: 自旋值是半整数 -/
@@ -134,7 +133,7 @@ theorem spin_intertwiner_relation (N : ℕ) (j : ℝ) :
 -/
 
 /-- 磁矩函子 -/
-structure MagneticMomentFunctor (C : Type) [Category C] [CNTCategory C]
+structure MagneticMomentFunctor (C : Type) [Category C] [Foundations.Strict.CNTCategory C]
     (Q : ChargeFunctor C) (S : SpinFunctor C) where
   /-- 磁矩测量: C → ℝ -/
   moment : C → ℝ
@@ -149,77 +148,61 @@ structure MagneticMomentFunctor (C : Type) [Category C] [CNTCategory C]
 稳定性是闭合核自维持能力的度量，不是结合能。
 -/
 
-/-- 结构稳定性函子 -/
-structure StabilityFunctor (C : Type) [Category C] [CNTCategory C] where
-  /-- 稳定性测量: C → ℝ，表示闭合核的自维持能力 -/
-  stability : C → ℝ
-  /-- 稳定性与适应度的关系 -/
-  stability_fitness_relation : ∀ (X : C) (F : FitnessFunctor C),
-    stability X = F.fitness X
-
 /-
 7. DCNC公理对物理量的约束
 
-DCNC六公理严格约束物理量的可能取值。
+DCNC公理严格约束物理量的可能取值。
 -/
 
 /-- 公理1约束: 闭合核必须满足五判据，这导致电荷量子化 -/
-theorem axiom1_constraint (C : Type) [Category C] [CNTCategory C]
+theorem axiom1_constraint (C : Type) [Category C] [Foundations.Strict.CNTCategory C]
     (Q : ChargeFunctor C) (X : C) :
   ∃ (n : ℤ), Q.charge X = n := by
   exact charge_quantization_theorem C Q X
 
-/-- 公理2约束: 选择性余极限存在，对应于闭合核趋向稳定构型的选择机制 -/
-theorem axiom2_constraint (C : Type) [Category C] [CNTCategory C] (_S : C) :
-  ∃ (F : FitnessFunctor C) (colim : SelectiveColimit C F),
-    colim.candidate_states.Nonempty ∧
-    ∀ (S' : C), S' ∈ colim.candidate_states → F.fitness S' ≥ 0 := by
+/-- 公理2约束: 量变质变规律，量变累积达到阈值触发质变态射 -/
+theorem axiom2_constraint (C : Type) [Category C] [Foundations.Strict.CNTCategory C] :
+  ∃ (qq : QuantitativeToQualitative C),
+    qq.threshold > 0 ∧
+    (∃ (S : C), qq.accumulation S ≥ qq.threshold) := by
   exact CNT_Axiom_2 C
 
-/-- 公理3约束: 历史路径不可逆，非可逆态射导致电荷变化 -/
-theorem axiom3_constraint (C : Type) [Category C] [CNTCategory C]
-    (_Q : ChargeFunctor C) (X : C) (f : X ⟶ X) :
-  ¬ IsIso f → ¬ ∃ (g : X ⟶ X), f ≫ g = 𝟙 X := by
-  intro h_not_iso
-  exact CNT_Axiom_3 C X f h_not_iso
+/-- 定理约束: 历史路径不可逆（从公理4+1推导）
+    仅适用于幂等的自态射（再生产态射）。
+    幂等+非可逆 → 不可逆。 -/
+theorem irreversibility_constraint (C : Type) [Category C] [Foundations.Strict.CNTCategory C]
+    (_Q : ChargeFunctor C) (X : C) (f : X ⟶ X) (h_idem : f ≫ f = f) :
+  ¬ IsIso f → ¬ ∃ (g : X ⟶ X), f ≫ g = 𝟙 X :=
+  irreversibility_theorem C X f h_idem
 
 /-- 公理4约束: 再生产结合性，再生产态射满足μ ≫ μ = μ -/
-theorem axiom4_constraint (C : Type) [Category C] [CNTCategory C]
+theorem axiom4_constraint (C : Type) [Category C] [Foundations.Strict.CNTCategory C]
     (X : C) (mu : X ⟶ X) (h_repro : mu ≫ mu = mu) :
   mu ≫ mu = mu := by
   exact h_repro
-
-/-- 公理5约束: 适应度函子单调性 -/
-theorem axiom5_constraint (C : Type) [Category C] [CNTCategory C]
-    (X Y : C) (f : X ⟶ Y) (F : FitnessFunctor C) :
-  F.fitness X ≤ F.fitness Y := by
-  exact CNT_Axiom_5 C X Y f F
-
-/-- 公理6约束: 闭合核个体化，若S₁ ≅ S₂，则S₁ = S₂ -/
-theorem axiom6_constraint (C : Type) [Category C] [CNTCategory C]
-    (S₁ S₂ : C) :
-  Nonempty (S₁ ≅ S₂) → S₁ = S₂ := by
-  intro h_iso
-  exact CNT_Axiom_6 C S₁ S₂ h_iso
 
 /-
 8. 开放问题
 
 OPEN-1: 电荷量子化的进一步探索
-  - 需要尝试从DCNC公理1和3推导电荷量子化
-  - 涉及态射组合的离散性探索
+  当前状态: idempotent_trace_is_finrank 已证明（幂等算子迹 = 像空间维数 ∈ ℕ）
+  未完成: 从DCNC公理1和量变质变推导电荷量子化
+  未完成: 态射组合的离散性探索
 
 OPEN-2: 磁矩公式的初步推导尝试
-  - 需要尝试从intertwiner几何推导磁矩公式
-  - 涉及Racah矩阵与电磁响应的映射探索
+  当前状态: 未建立
+  目标: 从intertwiner几何推导磁矩公式
+  未完成: Racah矩阵与电磁响应的映射
 
-OPEN-3: 结构稳定性的EPRL振幅推导尝试
-  - 需要尝试从EPRL顶点振幅推导结构稳定性
-  - 涉及Regge作用量与闭合核稳定性的关系探索
+OPEN-3: 量变质变与结构稳定性的关系
+  当前状态: 未建立
+  目标: 探索量变质变阈值与闭合核稳定性之间的深层联系
+  未完成: EPRL振幅与质变态射的关系
 
 OPEN-4: 历史路径积分(HPI)的形式化尝试
-  - 需要尝试将HPI过程形式化为范畴论结构
-  - 涉及时间演化的范畴论描述探索
+  当前状态: 部分完成（见OntologicalMechanics.lean）
+  已完成: HPI函数定义、变分原理框架
+  未完成: 时间演化的范畴论严格描述
 -/
 
-end CNTFormal
+end Foundations.Strict

@@ -17,10 +17,10 @@
 -/
 
 import Mathlib.CategoryTheory.Category.Basic
-import CNTFormal.CategoryTheory
-import CNTFormal.SimplexGeometry
+import Foundations.lean.Proven.CategoryTheory
+import Foundations.lean.Proven.SimplexGeometry
 
-namespace CNTFormal
+namespace PreLevel1.lean.Proven
 
 open CategoryTheory
 
@@ -151,4 +151,4 @@ theorem simplex4_consistent_with_DCNC :
   结论："4-单纯形是主导闭合核"的假设与DCNC六公理体系自洽。
   ======================================================================-/
 
-end CNTFormal
+end PreLevel1.lean.Proven

@@ -15,11 +15,11 @@ HPI修正与DCNC公理的严格对应
 -/
 
 import Mathlib.Data.Real.Basic
-import CNTFormal.CategoryTheory
-import CNTConjectures.HPICorrection
-import CNTFormal.AlphaDerivation
+import Foundations.lean.Proven.CategoryTheory
+import Level1.lean.Conjectures.HPICorrection
+import Foundations.lean.Proven.AlphaDerivation
 
-namespace CNTFormal
+namespace Level1.lean.Conjectures
 
 open Real
 open CategoryTheory
@@ -284,4 +284,4 @@ OPEN-4: 公理系统的自洽性证明
   - 涉及范畴论与量子场论的统一
 -/
 
-end CNTFormal
+end Level1.lean.Conjectures
