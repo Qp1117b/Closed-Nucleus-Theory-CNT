@@ -16,7 +16,7 @@ CNT范畴到物理量的严格映射
 - CNTFormal.AlphaDerivation
 -/
 
- param($match) $imports = $match.Groups[1].Value; $open = $match.Groups[2].Value; return $imports + "`n" + $open import Foundations.Strict.AlphaDerivation
+ param($match) $imports = $match.Groups[1].Value; $open = $match.Groups[2].Value; return $imports + "`n" + $open import Foundations.lean.Proven.AlphaDerivation
 
 namespace Foundations.Strict
 

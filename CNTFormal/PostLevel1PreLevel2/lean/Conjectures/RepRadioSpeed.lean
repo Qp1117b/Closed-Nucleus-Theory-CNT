@@ -23,13 +23,13 @@
 
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Nat.Basic
-import Foundations.Strict.CategoryTheory
-import Foundations.Strict.Dimensions
-import Foundations.Strict.ReproductionPeriod
-import Foundations.Strict.SimplexGeometry
-import PreLevel1.Strict.SimplexDominance
-import Level1.Conjectures.Level1Transition
-import Level1.Conjectures.OntologicalMechanics
+import Foundations.lean.Proven.CategoryTheory
+import Foundations.lean.Proven.Dimensions
+import Foundations.lean.Proven.ReproductionPeriod
+import Foundations.lean.Proven.SimplexGeometry
+import PreLevel1.lean.Proven.SimplexDominance
+import Level1.lean.Conjectures.Level1Transition
+import Level1.lean.Conjectures.OntologicalMechanics
 
 namespace Level1.Conjectures
 

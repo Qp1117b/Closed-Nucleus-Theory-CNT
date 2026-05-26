@@ -46,10 +46,10 @@ Wolfram 数值验证结果（Mathematica 14.0）：
 
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Nat.Basic
-import Foundations.Strict.Dimensions
-import Foundations.Strict.ReproductionPeriod
-import Foundations.Strict.SimplexGeometry
-import PostLevel1PreLevel2.Conjectures.ReproductionEnergy
+import Foundations.lean.Proven.Dimensions
+import Foundations.lean.Proven.ReproductionPeriod
+import Foundations.lean.Proven.SimplexGeometry
+import PostLevel1PreLevel2.lean.Conjectures.ReproductionEnergy
 
 namespace Level1.Conjectures
 

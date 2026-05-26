@@ -29,12 +29,12 @@ import Mathlib.Data.Real.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.Real.Pi.Bounds
 import Mathlib.Tactic
-import Foundations.Strict.SimplexGeometry
-import Foundations.Strict.AlphaDerivation
-import Foundations.Strict.Dimensions
-import PreLevel1.Strict.KernelPerspective
-import Level1.Conjectures.PhysicalMapping
-import Level1.Conjectures.Level1Transition
+import Foundations.lean.Proven.SimplexGeometry
+import Foundations.lean.Proven.AlphaDerivation
+import Foundations.lean.Proven.Dimensions
+import PreLevel1.lean.Proven.KernelPerspective
+import Level1.lean.Conjectures.PhysicalMapping
+import Level1.lean.Conjectures.Level1Transition
 
 namespace Level2.Conjectures
 

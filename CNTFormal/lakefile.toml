@@ -1,4 +1,4 @@
-﻿name = "CNTFormal"
+name = "CNTFormal"
 version = "0.1.0"
 defaultTargets = ["Foundations", "PreLevel1", "Level1", "PostLevel1PreLevel2", "Level2"]
 
