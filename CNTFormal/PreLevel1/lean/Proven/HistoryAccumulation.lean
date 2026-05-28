@@ -140,10 +140,7 @@ theorem reproduction_action_invariant
     reproductionActionAt h ν_seq n = h := by
   dsimp [reproductionActionAt, reproductionEnergyAt, frequencyAt]
   have hν : (ν_seq n).val ≠ 0 := ne_of_gt ((ν_seq n).property)
-  rw [mul_assoc, mul_comm (h * (ν_seq n).val), ← mul_assoc]
-  have : (ν_seq n).val * (1 / (ν_seq n).val) = 1 := by
-    field_simp [hν]
-  rw [this, mul_one]
+  field_simp [hν]
 
 /- ======================================================================
   物理诠释

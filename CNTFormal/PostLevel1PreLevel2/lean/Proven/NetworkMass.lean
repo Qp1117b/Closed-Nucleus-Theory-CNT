@@ -1003,7 +1003,7 @@ theorem nucleusSurfaceArea_pos (ℓ₀ : ℝ) (hℓ₀ : ℓ₀ > 0) : nucleusSu
   positivity
 
 /-- [定理] 闭合核表面面积 = 可见边界面积 -/
-theorem nucleusSurfaceArea_eq_visibleArea (ℓ₀ : ℝ) (hℓ₀ : ℓ₀ > 0) :
+theorem nucleusSurfaceArea_eq_visibleArea (ℓ₀ : ℝ) (_hℓ₀ : ℓ₀ > 0) :
     nucleusSurfaceArea ℓ₀ = kernelVisibleArea ℓ₀ := rfl
 
 /-- [定义] 信息表面密度 σ(ρ) = ρ·I / A_surface
@@ -1036,6 +1036,7 @@ theorem infoSurfaceCompressionDiffEq
     (networkRigidity E₀ ρ - networkRigidity E₀ 0) / ρ = E₀ := by
   dsimp [networkRigidity]
   field_simp [hρ]
+  ring
 
 /-- [定义] 总束缚能量 E₀ = P · h · f
 
@@ -1089,7 +1090,7 @@ theorem rigidity_filling_relation
     全部显式参与推导 -/
 theorem mass_energy_from_surface_compression
     (P : ℕ) (ν_val ℓ₀ : ℝ)
-    (hP : P > 0) (hν : ν_val > 0) (hℓ₀ : ℓ₀ > 0) :
+    (_hP : P > 0) (hν : ν_val > 0) (hℓ₀ : ℓ₀ > 0) :
     let E₀ := totalBoundEnergy P ν_val
     let R_sat := networkRigidity E₀ 1
     let c := radiationSpeed ℓ₀ ν_val
@@ -1157,17 +1158,16 @@ noncomputable def nucleusSyncTime (ℓ₀ c : ℝ) : ℝ :=
     E₀ = m · c²  ✓ -/
 theorem syncTime_mass_energy_consistency
     (P : ℕ) (ν_val ℓ₀ : ℝ)
-    (hP : P > 0) (hν : ν_val > 0) (hℓ₀ : ℓ₀ > 0) :
+    (_hP : P > 0) (hν : ν_val > 0) (hℓ₀ : ℓ₀ > 0) :
     let E₀ := totalBoundEnergy P ν_val
     let c := radiationSpeed ℓ₀ ν_val
     let m := E₀ / (c ^ 2)
     E₀ = m * c ^ 2 := by
   intro E₀ c m
   dsimp [m]
-  have hc_sq_ne_zero : (radiationSpeed ℓ₀ ν_val) ^ 2 ≠ 0 := by
-    have hpos : radiationSpeed ℓ₀ ν_val > 0 := radiationSpeed_pos ℓ₀ ν_val hℓ₀ hν
-    positivity
-  field_simp [hc_sq_ne_zero]
+  have hc_pos : c > 0 := radiationSpeed_pos ℓ₀ ν_val hℓ₀ hν
+  have hc_ne_zero : c ≠ 0 := by linarith
+  field_simp [hc_ne_zero]
 
 /- ======================================================================
   总结
