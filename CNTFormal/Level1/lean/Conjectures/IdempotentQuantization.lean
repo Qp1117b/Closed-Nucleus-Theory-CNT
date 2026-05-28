@@ -258,23 +258,6 @@ theorem idempotent_trace_is_nat
   have h := idempotent_trace_is_finrank mu hmu
   refine ⟨local_finrank K (LinearMap.range mu), h⟩
 
-/--
-原猜想（已解决）: 幂等算子的迹是整数
-注意: 原定理表述存在数学错误（断言trace = dim(V)，仅对恒等算子成立）。
-已修正为正确形式 idempotent_trace_is_finrank。
-保留此名称以维持向后兼容。
--/
-@[deprecated "Use idempotent_trace_is_finrank and idempotent_trace_is_nat instead" (since := "2026-05")]
-theorem idempotent_trace_is_integer_conjecture
-    {K : Type} [Field K] {V : Type} [AddCommGroup V] [Module K V]
-    [FiniteDimensional K V]
-    (mu : V →ₗ[K] V) (hmu : mu.comp mu = mu) :
-    ∃ (n : ℕ), LinearMap.trace K V mu = (n : K) := by
-  have h_idem : IsIdempotentElem mu := by
-    rw [IsIdempotentElem, Module.End.mul_eq_comp]
-    exact hmu
-  exact idempotent_trace_is_nat mu h_idem
-
 /-
 4. 物理意义
 

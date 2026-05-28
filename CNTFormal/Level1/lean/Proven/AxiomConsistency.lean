@@ -1,10 +1,10 @@
 /-
-DCNC六公理系统的自洽性证明
+DCNC公理系统的自洽性证明
 
-本文件证明DCNC六公理系统的逻辑自洽性。
+本文件证明DCNC公理系统的逻辑自洽性。
 
 核心目标:
-- 证明六公理之间不存在矛盾
+- 证明公理之间不存在矛盾
 - 证明公理系统有模型（即存在满足所有公理的结构）
 - 证明公理系统与已知物理理论兼容
 
@@ -43,14 +43,14 @@ def axiom_system_consistent (C : Type) [Category C] [CNTCategory C] : Prop :=
   (∀ (X Y : C), Nonempty (X ≅ Y) → X = Y)
 
 /-
-2. 公理1与公理3的兼容性
+2. 公理1与不可逆定理的兼容性
 
-公理1（闭合核充要条件）与公理3（历史路径不可逆）
+公理1（闭合核充要条件）与不可逆定理
 必须兼容，即存在非可逆的自态射。
 -/
 
-/-- 公理1与公理3的兼容性定理 -/
-theorem axiom1_axiom3_compatibility
+/-- 公理1与不可逆定理的兼容性定理 -/
+theorem axiom1_irreversibility_compatibility
     (C : Type) [Category C] [CNTCategory C]
     (X : C) :
   (∃ (f : X ⟶ X), f ≫ f = f) →
@@ -101,13 +101,13 @@ theorem axiom4_category_associativity_consistency
 theorem axiom_system_experiment_compatibility :
   abs (inv_alpha_0 - experimental_inv_alpha_codata) / experimental_inv_alpha_codata < 0.01 := by
   rw [inv_alpha_0_eq]
-  
+
   have hπ_upper : π < 3.15 := Real.pi_lt_d2
   have hπ_lower : 3.14 < π := Real.pi_gt_d2
-  
+
   have h_ineq1 : 16384 * 3.14 / 375 < 16384 * π / 375 := by nlinarith
   have h_ineq2 : 16384 * π / 375 < 16384 * 3.15 / 375 := by nlinarith
-  
+
   have h_upper_bound : 16384 * π / 375 - experimental_inv_alpha_codata <
     0.01 * experimental_inv_alpha_codata := by
     -- 由h_ineq2知 16384*π/375 < 16384*3.15/375
@@ -116,20 +116,20 @@ theorem axiom_system_experiment_compatibility :
       0.01 * experimental_inv_alpha_codata := by
       unfold experimental_inv_alpha_codata; norm_num
     nlinarith
-  
+
   have h_exp_pos : 0 < experimental_inv_alpha_codata := by
     unfold experimental_inv_alpha_codata; norm_num
-  
+
   have h_sub_pos : 0 < 16384 * π / 375 - experimental_inv_alpha_codata := by
     have h_lower_val : experimental_inv_alpha_codata < 16384 * 3.14 / 375 := by
       unfold experimental_inv_alpha_codata; norm_num
     nlinarith
-  
+
   have h_abs_eq : abs (16384 * π / 375 - experimental_inv_alpha_codata) = 16384 * π / 375 - experimental_inv_alpha_codata :=
     abs_of_pos h_sub_pos
-  
+
   rw [h_abs_eq]
-  
+
   -- 目标: (a - b)/b < 0.01  where a = 16384*π/375, b = experimental
   -- 使用div_lt_iff₀：a/b < c ↔ a < c*b (当b>0时)
   have h_num : 16384 * π / 375 - experimental_inv_alpha_codata < 0.01 * experimental_inv_alpha_codata := h_upper_bound
@@ -162,7 +162,7 @@ OPEN-3: 公理系统与标准模型的对应
   - 涉及粒子物理与范畴论的统一
 
 OPEN-4: 公理系统的独立性证明
-  - 需要证明六公理相互独立
+  - 需要证明公理相互独立
   - 涉及公理系统的极小性
 -/
 

@@ -510,7 +510,7 @@ theorem formDistIsMetric :
     -- 在具体数值计算中，三角不等式自动成立
     -- 实际上可以直接使用positivity策略
     
-    -- 直接方��：使用Mathlib中EuclideanSpace的norm三角不等式
+    -- 直接方法：使用Mathlib中EuclideanSpace的norm三角不等式
     -- 通过norm_num进行数值验证
     
     -- 简化：直接断言三角不等式在欧几里得空间中成立

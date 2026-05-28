@@ -96,48 +96,6 @@ theorem simplex4_is_compact : True := by
     D_max/τ 是辐射速度的上限，候选为光速 c。
   ======================================================================-/
 
-/-- 形式空间的最大距离（直径）
-
-由于4-单纯形紧致，其直径有限。
--/
-structure CompactFormSpace where
-  /-- 空间直径 -/
-  diameter : ℝ
-  /-- 直径为正 -/
-  diameter_pos : diameter > 0
-
-/-- 辐射速度有上界
-
-从4-单纯形紧致性推导：
-  v_rad = d/τ ≤ D_max/τ
--/
-theorem radiative_velocity_bounded
-    (τ : ReproductionPeriodStrict)
-    (space : CompactFormSpace) :
-    ∃ (c_max : ℝ), c_max > 0 ∧
-      ∀ (d : ℝ), d ≤ space.diameter →
-        d / τ.val ≤ c_max := by
-  use space.diameter / τ.val
-  constructor
-  · apply div_pos
-    · exact space.diameter_pos
-    · exact τ.property
-  · intro d hd
-    -- d ≤ D → d/τ ≤ D/τ (since τ > 0)
-    have hτ_pos : 0 < τ.val := τ.property
-    -- Use: a/c ≤ b/c ↔ a ≤ b when c > 0
-    rw [div_le_div_iff_of_pos_right hτ_pos]
-    exact hd
-
-/-- 光速候选
-
-定义 c_candidate = D_max/τ 为光速的候选值。
--/
-noncomputable def speedOfLightCandidate
-    (τ : ReproductionPeriodStrict)
-    (space : CompactFormSpace) : ℝ :=
-  space.diameter / τ.val
-
 /- ======================================================================
   与LQG自旋网络/自旋泡沫的对接
 
@@ -217,11 +175,7 @@ theorem bare_coupling_simplex_relation :
   2. 4-单纯形紧致性 ✓
      - 有限点集的凸包是紧致的
 
-  3. 辐射速度上限存在性 ✓
-     - v_rad ≤ D_max/τ = c_candidate
-     - 光速候选: c = D_max/τ
-
-  4. 与LQG的对接 ✓
+  3. 4-单纯形几何与LQG对应关系 ✓
      - 4-单纯形二面角: cos(θ) = 1/4
      - EPRL相位: cos(φ) = 61/64
      - 自旋泡沫对应: 2-面 → 自旋泡沫面
@@ -230,9 +184,15 @@ theorem bare_coupling_simplex_relation :
      - 1/α₀ = 4/sin²(φ)
      - α的起源与4-单纯形几何相位有关
 
+  ★ 重要澄清 ★
+  辐射速度是网络化（一级质变）后涌现的物理量。
+  前网络阶段只有4-单纯形几何和能量子频率，不存在辐射速度概念。
+  正确的光速涌现公式：c = √2·ℓ₀·f
+
   物理意义:
     - 4-单纯形是CNT与LQG的桥接结构
-    - 紧致性导致光速上限
+    - 紧致性是网络化的前提，但不直接导致光速上限
+    - 光速上限是网络化后涌现的物理量
     - 几何相位导致电磁耦合常数
   ======================================================================-/
 

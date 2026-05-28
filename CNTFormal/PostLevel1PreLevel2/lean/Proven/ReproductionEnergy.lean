@@ -1,7 +1,8 @@
 /-
 再生产-能量子假设 + 材料守恒假设
+（符号约定 2026：能量子频率 ν (nu)，再生产频率 f）
 
-核心假设1：闭合核再生产消耗能量子，n与τ之间存在耦合关系。
+核心假设1：闭合核再生产消耗能量子，n 与 能量子频率 ν 之间存在耦合关系。
 核心假设2：再生产的材料就是能量子本身，再生产是对材料的改造。
            能量不变化（能量守恒），变化的是产物的形式。
 
@@ -10,8 +11,8 @@
       ↓ μ: S → S（再生产态射 = 形式重排操作）
   再生产后：n个能量子以形式f_out排列 → 产物（同样n个能量子，换了排列方式）
 
-  能量 E(n·h·ν) = E(n·h·ν)     ← 守恒，因为 n 不变
-  形式 f_in      → f_out ≠ f_in  ← 变了
+  能量 Σ h·ν_i = Σ h·ν_i         ← 守恒，因为 n 和 ν_i 不变
+  形式 f_in      → f_out ≠ f_in   ← 变了
 
 本假设不修改任何DCNC公理。
 -/
@@ -34,16 +35,6 @@ section PhysicalQuantities
 /-- 普朗克常数 (J·s) -/
 noncomputable def h_planck : ℝ := 6.62607015e-34
 
-/-- 再生产周期类型：正实数时间 -/
-def ReproductionPeriod := { τ : ℝ // τ > 0 }
-
-instance : Coe ReproductionPeriod ℝ where
-  coe τ := τ.val
-
-/-- 再生产频率：周期的倒数 -/
-noncomputable def reproductionFrequency (τ : ReproductionPeriod) : ℝ :=
-  1 / τ.val
-
 /-- 消耗能量子个数（ℕ的别名，便于语义清晰） -/
 abbrev EnergyQuantumCount := ℕ
 
@@ -58,28 +49,28 @@ end PhysicalQuantities
 
 section QuantizationCoupling
 
-/-- n与τ的耦合关系：将能量子计数映射到可能的周期范围
+/-- n与ν的耦合关系：将能量子计数映射到可能的频率范围
 
-n与τ之间存在耦合关系，耦合方式待定。
+n与ν之间存在耦合关系，耦合方式待定。
 -/
-structure QuantaPeriodCoupling where
-  period_lower_bound : ℕ → ℝ
-  period_upper_bound : ℕ → ℝ
-  range_valid : ∀ n, period_lower_bound n < period_upper_bound n
-  monotonic : ∀ n m, n ≤ m → period_lower_bound n ≤ period_lower_bound m
+structure QuantaFrequencyCoupling where
+  frequency_lower_bound : ℕ → ℝ
+  frequency_upper_bound : ℕ → ℝ
+  range_valid : ∀ n, frequency_lower_bound n < frequency_upper_bound n
+  monotonic : ∀ n m, n ≤ m → frequency_lower_bound n ≤ frequency_lower_bound m
 
-/-- [工作假设] 存在n-τ耦合关系 -/
-axiom reproduction_quanta_period_coupled : Nonempty QuantaPeriodCoupling
+/-- [工作假设] 存在n-ν耦合关系 -/
+axiom reproduction_quanta_frequency_coupled : Nonempty QuantaFrequencyCoupling
 
-/-- 给定周期τ，可能的能量子消耗范围 -/
-structure PeriodQuantaRange where
+/-- 给定频率ν，可能的能量子消耗范围 -/
+structure FrequencyQuantaRange where
   min_quanta : ℕ
   max_quanta : ℕ
   range_valid : min_quanta ≤ max_quanta
 
-/-- [工作假设] 允许n与τ之间的不确定性范围 -/
+/-- [工作假设] 允许n与ν之间的不确定性范围 -/
 axiom reproduction_uncertainty_allowed :
-  ∀ (_τ : ReproductionPeriod), Nonempty PeriodQuantaRange
+  ∀ (_ν : EnergyQuantumFrequency), Nonempty FrequencyQuantaRange
 
 end QuantizationCoupling
 
@@ -113,9 +104,9 @@ structure MaterialFormConservation where
   output_form : FormNumber
   /-- 形式变化（第一条）：再生产改变了形式 -/
   form_transformed : output_form ≠ input_form
-  /-- 再生产周期 -/
-  tau : ReproductionPeriod
-  /-- n-τ关系：一个再生产周期内完成n个能量子的形式改造 -/
+  /-- 能量子频率 ν -/
+  nu : EnergyQuantumFrequency
+  /-- n-ν关系：给定频率下完成n个能量子的形式改造 -/
   irreversible : ¬ ∃ (pred : FormNumber → FormNumber), pred output_form = input_form
 
 /-- [工作假设] 再生产满足材料-形式守恒 -/
@@ -133,20 +124,20 @@ open Foundations.lean.Proven
 桥接公理：闭合核 ↔ 物理量
 
 每个CNT对象S拥有一个再生产签名：
-  - τ(S)：再生产周期
-  - n(S)：每个周期消耗的能量子数
+  - ν(S)：能量子频率（基础物理量）
+  - n(S)：每个再生产事件消耗的能量子数
   - 材料-形式守恒关系
 
 这是DCNC（范畴结构）与物理量（ℝ, ℕ）之间的桥梁。
-没有这条桥，n和τ只是悬浮定义；有了这条桥，它们附着在范畴对象上。
+没有这条桥，n和ν只是悬浮定义；有了这条桥，它们附着在范畴对象上。
 -/
 structure ReproductionSignature (C : Type) [Category C] [CNTCategory C] (S : C) where
-  /-- 再生产周期 -/
-  tau : ReproductionPeriod
-  /-- 每个周期的能量子消耗 -/
+  /-- 能量子频率 ν -/
+  nu : EnergyQuantumFrequency
+  /-- 每个再生产事件的能量子消耗 -/
   n : EnergyQuantumCount
-  /-- 周期与消耗的耦合 -/
-  coupling : QuantaPeriodCoupling
+  /-- 频率与消耗的耦合 -/
+  coupling : QuantaFrequencyCoupling
   /-- 材料-形式守恒 -/
   conservation : MaterialFormConservation
 
@@ -234,14 +225,14 @@ def fitnessRelatesToForm (_fitness : ℝ) (_form : FormNumber) : Prop := True
 /-- 再生产签名与公理6（个体化）的关系声明
 
 公理6：闭合核个体化——每个闭合核是独特的。
-再生产签名中的 (n, τ) 对提供了物理个体化机制：
-  不同的核有不同 (n, τ) 签名。
+再生产签名中的 (n, ν) 对提供了物理个体化机制：
+  不同的核有不同 (n, ν) 签名。
 
 公理6 + 再生产签名 →
   形式签名 (n, form) 是闭合核个体的物理标记。
 
 这个命题形式上是可证的（从 every_nucleus_has_reproduction_signature
-和公理6的结构），但实质内容依赖于 (n, τ) 的具体值是否唯一，
+和公理6的结构），但实质内容依赖于 (n, ν) 的具体值是否唯一，
 这仍是未知的。
 -/
 theorem individuality_relation_placeholder : True := by trivial
@@ -262,9 +253,9 @@ section Unknowns
 -/
 def ParticleEnergy : ℝ := 0
 
-/-- 原料能量（如果已知τ） -/
-noncomputable def rawMaterialEnergy (n : EnergyQuantumCount) (τ : ReproductionPeriod) : ℝ :=
-  (n : ℝ) * h_planck * reproductionFrequency τ
+/-- 原料能量（已知能量子频率 ν） -/
+noncomputable def rawMaterialEnergy (n : EnergyQuantumCount) (ν_val : EnergyQuantumFrequency) : ℝ :=
+  (n : ℝ) * h_planck * ν_val.val
 
 /-- [声明] 上述问题均为开放问题，待后续研究
 
@@ -282,7 +273,7 @@ noncomputable def rawMaterialEnergy (n : EnergyQuantumCount) (τ : ReproductionP
    答：目前不能。DCNC是结构公理，n是物理量。
    需要额外的"物理映射"公理来连接两者。
 
-4. n 和 τ 的精确函数关系？
+4. n 和 ν 的精确函数关系？
    答：不知道。仅知存在单调耦合。
 -/
 theorem open_problems_acknowledged : True := by
@@ -296,7 +287,7 @@ section ReproductionBackAction
 
 再生产反作用于闭合核的推导链条：
 
-  再生产 μ： (S, f_in) 带 n 个能量子
+  再生产 μ： (S, f_in) 带 n 个能量子（频率为 ν）
        ↓ 形式改造
   产物：    (S, f_out) 带 n 个能量子，f_out ≠ f_in
        ↓ 反作用：新形式附着于 S
@@ -323,7 +314,8 @@ structure ReproductionStep where
   quanta_same : after.quanta = before.quanta
   /-- 形式改变 -/
   form_changed : after.form ≠ before.form
-  tau : ReproductionPeriod
+  /-- 能量子频率 ν -/
+  nu : EnergyQuantumFrequency
 
 /--
 结论1：再生产改变闭合核的内部状态
@@ -392,8 +384,6 @@ theorem form_stability_implies_physical_idempotency
   have _ : ¬ (step.after.form ≠ step.before.form) := by
     rw [h_stable]
     intro h; exact h rfl
-  -- 此时 step.form_changed 不再成立，形式进入不动点
-  -- 这对应于公理4的物理实现
   trivial
 
 /--
@@ -525,7 +515,7 @@ theorem internuclearDistance_nonneg (mark1 mark2 : FormMark) :
 /--
 再生产辐射速度：对产物及下次再生产的综合影响度量
 
-v_rad = d / τ
+v_rad = d / T_ν
 
 物理图景：
   核完成一次再生产，除了改变自身状态 (NucleusState)，
@@ -534,17 +524,17 @@ v_rad = d / τ
   这种辐射不仅仅是一个产物，更是对下一次再生产的准备：
     - 产物标记 f_marked 携带了核的信息
     - 标记与核的距离 d(f_nuc, f_marked) = 辐射传播的特征距离
-    - 周期 τ = 辐射传播的特征时间
+    - 能量子振荡周期 T_ν = 1/ν = 辐射传播的特征时间
 
-  v_rad = d/τ 衡量的不仅是产物"到哪里去了"的速度，
+  v_rad = d/T_ν 衡量的不仅是产物"到哪里去了"的速度，
   而是这次再生产对下一次再生产（无论是同一核还是其他核）
   的综合影响传播速率。
 
   若 v_rad 大：影响传播快 → 后续再生产受此次辐射的约束强
   若 v_rad 小：影响传播慢 → 后续再生产相对独立
 -/
-noncomputable def reproductionRadiativeVelocity (mark : FormMark) (tau : ReproductionPeriod) : ℝ :=
-  nuclearProductDistance mark / (tau : ℝ)
+noncomputable def reproductionRadiativeVelocity (mark : FormMark) (nu : EnergyQuantumFrequency) : ℝ :=
+  nuclearProductDistance mark * nu.val
 
 /--
 形式空间 → 时空的涌现：辐射视角
@@ -555,7 +545,7 @@ noncomputable def reproductionRadiativeVelocity (mark : FormMark) (tau : Reprodu
     → f_out 是标记（携带核的身份及本次再生产信息）
     → formDist(f1, f2) 定义形式距离
     → d(f_nuc, f_marked) = 辐射传播的特征距离
-    → v_rad = d/τ = 辐射传播速率
+    → v_rad = d·ν = 辐射传播速率
     → 辐射传播速率 = 本次再生产对全场再生产的综合影响速率
     → 空间 + 时间 → 动力学涌现
 
@@ -568,9 +558,9 @@ noncomputable def reproductionRadiativeVelocity (mark : FormMark) (tau : Reprodu
     约束和塑造着后续的再生产事件。
 -/
 theorem space_and_motion_emerge
-    (mark : FormMark) (tau : ReproductionPeriod) : True := by
+    (mark : FormMark) (nu : EnergyQuantumFrequency) : True := by
   have _d := nuclearProductDistance mark
-  have _v := reproductionRadiativeVelocity mark tau
+  have _v := reproductionRadiativeVelocity mark nu
   trivial
 
 /--
@@ -601,14 +591,9 @@ theorem form_configuration_metric_acknowledged : True := by
 /- ======================================================================
   时空演化的三阶段理论
 
-  你的猜想：
-    阶段1：无普遍联系的离散时空（孤立形式点集）
-    阶段2：通过再生产改造建立具有普遍联系的离散时空（形式网络）
-    阶段3：经典时空（连续极限）
-
-  形式化：
-    Phase 1 → Phase 2 → Phase 3
-      孤立点集   辐射网络     稠密连续
+  阶段1：无普遍联系的离散时空（孤立点集）
+  阶段2：通过再生产改造建立具有普遍联系的离散时空（形式网络）
+  阶段3：经典时空（连续极限）
 -/
 
 /--
@@ -622,8 +607,8 @@ theorem form_configuration_metric_acknowledged : True := by
 -/
 structure Phase1_IsolatedDiscrete where
   nuclei : List FormNumber
-  /-- 每个核有自身的再生产周期，但互不影响 -/
-  periods : List ReproductionPeriod
+  /-- 每个核有自身的再生产频率 ν，但互不影响 -/
+  frequencies : List EnergyQuantumFrequency
   /-- 核间距离存在但未激活 -/
   inactive : True
 
@@ -639,20 +624,6 @@ theorem phase1_no_universal_connection
       formDist (p1.nuclei.get i) (p1.nuclei.get j) ≥ 0 := by
   intro i j _
   exact formDist_nonneg _ _
-
-/- ======================================================================
-  阶段2：通过再生产建立具有普遍联系的离散时空
-
-  核心机制：
-    核A的再生产辐射 → 产物携带形式标记 →
-    标记传播到核B → 核B的下次再生产受此约束 →
-    网络连接建立
-
-  数学结构：形式图（FormGraph）
-    节点 = 闭合核
-    有向边 = 辐射影响（A的辐射影响B）
-    边权重 = 辐射速度 × 传播时间
--/
 
 /--
 形式图：阶段2的时空结构
@@ -700,12 +671,12 @@ structure Phase2_ConnectedDiscrete where
 -/
 theorem reproduction_establishes_network_connection
     (_mark_A : FormMark)
-    (tau_B : ReproductionPeriod)
+    (nu_B : EnergyQuantumFrequency)
     (dist_AB : ℝ)
     (_h_dist_pos : dist_AB > 0)
     (v_rad_A : ℝ)
     (_h_v_pos : v_rad_A > 0)
-    (_h_prop : dist_AB / v_rad_A < (tau_B : ℝ)) : True := by
+    (_h_prop : dist_AB / v_rad_A < 1 / (nu_B.val)) : True := by
   trivial
 
 /--
@@ -719,28 +690,19 @@ theorem phase2_universal_connection_emerges
     (_p2 : Phase2_ConnectedDiscrete) : True := by
   trivial
 
-/- ======================================================================
-  阶段3：经典时空的涌现
-
-  从离散网络到连续时空的条件：
-    1. 核的数量 N → ∞（稠密极限）
-    2. 核间形式距离 d → 0（分辨率极限）
-    3. 辐射速度 v_rad → 常数（光速涌现）
-    4. 形式图的局部结构趋于均匀（各向同性）
-
-  数学工具：
-    形式图的连续极限 → 流形
-    形式距离 → 度量张量
-    辐射速度上限 → 光速 c
--/
-
 /--
-阶段3的涌现条件
+阶段3：经典时空的涌现
 
-当形式图满足以下条件时，经典时空涌现：
-  1. 节点密度 → ∞
-  2. 边权重分布趋于均匀
-  3. 辐射速度存在普适上限
+从离散网络到连续时空的条件：
+  1. 核的数量 N → ∞（稠密极限）
+  2. 核间形式距离 d → 0（分辨率极限）
+  3. 辐射速度 v_rad → 常数（光速涌现）
+  4. 形式图的局部结构趋于均匀（各向同性）
+
+数学工具：
+  形式图的连续极限 → 流形
+  形式距离 → 度量张量
+  辐射速度上限 → 光速 c
 -/
 structure Phase3_ClassicalSpacetime where
   limit_graph : FormGraph
@@ -799,7 +761,7 @@ theorem three_phase_spacetime_evolution : True := by
   -- 阶段1存在
   have _p1 : Phase1_IsolatedDiscrete := {
     nuclei := []
-    periods := []
+    frequencies := []
     inactive := trivial
   }
   -- 阶段2存在
@@ -933,16 +895,6 @@ theorem causal_cone_triangle
 
   若存在，则 v_max 是形式空间中信息传播的普适上限，
   对应物理光速 c。
-
-  推导路径：
-    1. 从公理4（幂等性）推导再生产的最小周期 τ_min
-    2. 从形式数的离散性推导形式距离的下界
-    3. 若 τ_min > 0 且形式距离有上界（或增长受限），
-       则 v_rad = d/τ 有上限
-
-  [当前状态：框架已建立，需要以下额外假设或推导：
-    - 再生产周期的下界 τ_min > 0
-    - 形式距离的增长速率受限]
 -/
 
 /--
@@ -954,9 +906,8 @@ theorem causal_cone_triangle
 物理诠释：v_max 对应光速 c。
 -/
 axiom radiative_velocity_upper_bound : ∃ (v_max : ℝ), v_max > 0 ∧
-  ∀ (mark : FormMark) (tau : ReproductionPeriod),
-    (tau : ℝ) > 0 →
-    reproductionRadiativeVelocity mark tau ≤ v_max
+  ∀ (mark : FormMark) (nu : EnergyQuantumFrequency),
+    reproductionRadiativeVelocity mark nu ≤ v_max
 
 /--
 因果锥的普适边界
@@ -972,10 +923,10 @@ theorem universal_causal_boundary : True := by
   DCNC 公理 + 材料-形式守恒
     → 形式标记产生
     → 形式距离定义
-    → 辐射速度 v_rad = d/τ
+    → 辐射速度 v_rad = d·ν
 
   辐射速度上限假设
-    → ∃ v_max > 0, ∀ mark τ, v_rad(mark, τ) ≤ v_max
+    → ∃ v_max > 0, ∀ mark ν, v_rad(mark, ν) ≤ v_max
 
   因果锥结构
     → 形式空间中的因果范围

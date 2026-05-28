@@ -1,7 +1,7 @@
 /-
 存在论力学 - Ontological Mechanics
 
-基于DCNC六公理构建存在论力学体系。
+基于DCNC公理体系构建存在论力学体系。
 按指导.md提示词二的要求，将核心对应关系严格形式化：
 
 核心对应:
@@ -12,14 +12,14 @@
 - 条件债务(Condition Debt) ⟷ 广义力/驱动力(Generalized Force)
 
 == DCNT指导原则 ==
-- HPI原理应从六条公理推导（作为定理目标）
+- HPI原理应从公理体系推导（作为定理目标）
 - HPI形式目前作为非公理假设（工作假设）
 - HPI参数（如0.162%）绝不能作为公理引入
 - 每个定义/定理必须标注其证明状态
 
 证明状态标注规范:
   [定义]     : 纯定义，不从任何东西推导
-  [公理推导] : 从DCNC六公理严格推导的定理
+  [公理推导] : 从DCNC公理体系严格推导的定理
   [工作假设] : 非公理假设，待从公理推导
   [猜想]     : 声明为猜想，未证明（使用sorry）
   [待证明]   : 声明了目标但证明缺失（使用sorry）
@@ -52,7 +52,7 @@ structure ReproductiveEvent {C : Type} [Category C] (S : C) where
 /-- [定义] 再生产历史: 再生产事件的有限时间序列
     列表顺序模拟时间箭头（不可逆方向）
     时间方向性: 事件顺序模拟不可逆再生产的方向
-    从公理3（历史路径不可逆性）出发 -/
+    从不可逆定理（公理1+公理4推导）出发 -/
 structure ReproductiveHistory {C : Type} [Category C] (S : C) where
   /-- 按时间顺序排列的再生产事件序列 -/
   events : List (ReproductiveEvent S)
@@ -84,8 +84,8 @@ def ReproductiveHistory.nonempty {C : Type} [Category C] {S : C}
     对应标准力学中的拉格朗日密度
     
     该定义目前是工作假设:
-    - 未从DCNC六公理严格推导backaction的具体形式
-    - 严格正性尝试从公理1（条件债务ε: 非可逆）和公理3（不可逆性）推导
+    - 未从DCNC公理体系严格推导backaction的具体形式
+    - 严格正性尝试从公理1（条件债务ε: 非可逆）和不可逆定理推导
     - backaction的具体数值形式待定 -/
 structure BackactionSystem (C : Type) [Category C] where
   /-- 反作用量函数: 再生产事件 → 实数 -/
@@ -101,9 +101,9 @@ structure BackactionSystem (C : Type) [Category C] where
     
     当前状态:
     - HPI的可加性: 定义性公理（来自积分的基本性质）
-    - HPI与公理2（选择性余极限）的对应: 工作假设
+    - HPI与公理2（量变质变存在性）的对应: 工作假设
     - HPI的具体参数值: 工作假设，绝不能作为公理
-    - HPI从DCNC六公理的推导: 目标任务，尚未完成 -/
+    - HPI从DCNC公理体系的推导: 目标任务，尚未完成 -/
 structure HPISystem (C : Type) [Category C] extends BackactionSystem C where
   /-- HPI函数: 再生产历史 → 实数 -/
   hpi_fn : (S : C) → ReproductiveHistory S → ℝ
@@ -121,26 +121,25 @@ structure HPISystem (C : Type) [Category C] extends BackactionSystem C where
 /- ============================================================
 3. 条件债务的形式化
    对应: 广义力/驱动力
-   来源: 从公理1+公理3推导
+   来源: 从公理1推导
    ============================================================ -/
 
 /-- [定义] 条件债务: 闭合条件不在场驱动的再生产压力
-    数学表达: 存在非可逆态射ε: S→S，且ε没有右逆
+    数学表达: 存在非可逆态射ε: S→S
     物理意义: 系统必须持续再生产（行动）以维持闭合，否则解体
     
     推导依据:
     - 公理1: ∀S, ∃(ε: S→S), ¬IsIso ε  (条件债务存在)
-    - 公理3: ∀S, ∀f, ¬IsIso f → ¬∃g, f≫g = 1S  (不可逆性) -/
+    注意: 根据指导.md，ε不一定幂等，因此不可逆定理不直接适用
+    debt_no_retraction字段已移除，因为无法从当前公理严格证明 -/
 structure ConditionDebt {C : Type} [Category C] [CNTCategory C] (S : C) where
   /-- 债务算子: 非可逆的自态射 -/
   debt_morphism : S ⟶ S
   /-- 非可逆性: 债务不能通过同构消除 -/
   debt_irreversible : ¬ IsIso debt_morphism
-  /-- 无右逆: 从公理3推导，没有态射可以消除债务 -/
-  debt_no_retraction : ¬ ∃ (g : S ⟶ S), debt_morphism ≫ g = 𝟙 S
 
 /-- [公理推导] 每个闭合核都存在条件债务
-    直接从公理1和公理3推导
+    直接从公理1推导
     注意: 使用def而非theorem，因为ConditionDebt是structure（Type），非Prop -/
 noncomputable def every_nucleus_has_condition_debt
     {C : Type} [Category C] [CNTCategory C] (S : C) :
@@ -149,11 +148,9 @@ noncomputable def every_nucleus_has_condition_debt
   let h_debt : ∃ (ε : S ⟶ S), ¬ IsIso ε := h_ax1.2.2.2.1
   let ε := Classical.choose h_debt
   have h_not_iso : ¬ IsIso ε := Classical.choose_spec h_debt
-  have h_no_ret : ¬ ∃ (g : S ⟶ S), ε ≫ g = 𝟙 S := CNT_Axiom_3 C S ε h_not_iso
   {
     debt_morphism := ε
     debt_irreversible := h_not_iso
-    debt_no_retraction := h_no_ret
   }
 
 /- ============================================================
@@ -405,11 +402,11 @@ theorem backaction_lagrangian_correspondence_conjecture
    ============================================================ -/
 
 /-- [定义] 时间箭头范畴: 带有不可逆方向的范畴
-    再生产是本质不可逆的（从公理3），
+    再生产是本质不可逆的（从不可逆定理），
     时间箭头的引入使再生产历史具备方向性
     
     当前状态: 定义
-    来自: 公理3（历史路径不可逆性） -/
+    来自: 不可逆定理（公理1+公理4推导） -/
 structure TimeArrowedClosedNucleus {C : Type} [Category C] [CNTCategory C] (S : C) where
   /-- 再生产历史的起始（诞生事件） -/
   birth_event : ReproductiveEvent S
@@ -421,11 +418,11 @@ structure TimeArrowedClosedNucleus {C : Type} [Category C] [CNTCategory C] (S : 
     True := by intro _ _; trivial
 
 /-- [公理推导] 时间箭头的存在性
-    从公理3（历史路径不可逆）直接推导
+    从不可逆定理直接推导
     不可逆态射 → 不可逆历史 → 时间箭头
     
     当前状态: 定理（从公理推导） -/
-theorem time_arrow_from_axiom3
+theorem time_arrow_from_irreversibility
     {C : Type} [Category C] [CNTCategory C] (S : C) :
     ∃ (_birth : ReproductiveEvent S), True := by
   have h_axiom1 := CNT_Axiom_1 C S
@@ -439,9 +436,9 @@ theorem time_arrow_from_axiom3
    ============================================================ -/
 
 /-
-OPEN-OM-1: HPI从DCNC六公理的严格推导
+OPEN-OM-1: HPI从DCNC公理体系的严格推导
   当前状态: 工作假设
-  目标: 将hpi_fn的具体形式从公理2（选择性余极限）和公理5（适应度单调性）推导
+  目标: 将hpi_fn的具体形式从公理2（量变质变存在性）和公理5（质变的形式新立）推导
   关键困难: HPI的积分测度需要额外的数学结构（可能需引入测度范畴）
 
 OPEN-OM-2: 历史沉淀锁定的充分必要条件
@@ -464,7 +461,7 @@ OPEN-OM-4: 诺特定理的对应
 
 OPEN-OM-5: HPI参数(0.162%)的第一性原理推导
   当前状态: 数值观察，非公理
-  目标: 从DCNC公理+HPI工作假设推导具体数值
+  目标: 从DCNC公理体系+HPI工作假设推导具体数值
   关键原则: 此参数绝不能作为公理引入
 -/
 

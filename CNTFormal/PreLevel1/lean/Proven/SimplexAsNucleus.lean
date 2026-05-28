@@ -1,11 +1,11 @@
 /-
 4-单纯形与闭合核公理体系的自洽性证明
 
-本文件证明：4-单纯形作为主导闭合核的假设与DCNC六公理自洽。
+本文件证明：4-单纯形作为主导闭合核的假设与DCNC公理体系自洽。
 
 证明策略：
   1. 定义4-单纯形的范畴结构
-  2. 验证该结构满足DCNC六公理的要求
+  2. 验证该结构满足DCNC公理体系的要求
   3. 证明不与公理体系产生矛盾
 
 注意：本文件不证明4-单纯形是闭合核（这是假设），
@@ -112,7 +112,7 @@ def simplex4_colim : SelectiveColimit Unit simplex4_fitness where
       trivial
 
 /- ======================================================================
-  主定理：4-单纯形与DCNC六公理自洽
+  主定理：4-单纯形与DCNC公理体系自洽
   ======================================================================-/
 
 theorem simplex4_consistent_with_DCNC :
@@ -120,11 +120,11 @@ theorem simplex4_consistent_with_DCNC :
     (∀ (f g h : Simplex4Hom), simplex4Comp (simplex4Comp f g) h = simplex4Comp f (simplex4Comp g h)) ∧
     -- 幂等态射存在（公理4）
     (∃ (μ : Simplex4Hom), simplex4Comp μ μ = μ) ∧
-    -- 非同构态射存在（公理3）
+    -- 非同构态射存在（公理1条件债务）
     (∀ (g : Simplex4Hom), simplex4Comp g Simplex4Hom.eps ≠ Simplex4Hom.id) ∧
-    -- 适应度函子可定义且单调（公理5）
+    -- 适应度函子可定义且单调（公理1历史沉淀）
     (∃ (F : FitnessFunctor Unit), ∀ (_f : Simplex4Hom), F.fitness () ≤ F.fitness ()) ∧
-    -- 选择性余极限可定义且收敛（公理2）
+    -- 选择性余极限可定义且收敛（公理1历史沉淀）
     (∃ (colim : SelectiveColimit Unit simplex4_fitness), ∀ (S : Set Unit), S.Nonempty → colim.selection S ∈ S) := by
   constructor
   · exact simplex4_assoc
@@ -144,12 +144,12 @@ theorem simplex4_consistent_with_DCNC :
 
   已完成的自洽性验证：
     ✓ 范畴律：结合律、单位律成立
-    ✓ 幂等态射：μ ≫ μ = μ（公理4：再生产的结合性）
-    ✓ 非同构态射：ε 没有左逆（公理3：历史路径的不可逆性）
-    ✓ 适应度函子：可定义且单调（公理5：适应度函子的单调性）
-    ✓ 选择性余极限：可定义且收敛（公理2：选择性余极限的存在性）
+    ✓ 幂等态射：μ ≫ μ = μ（公理4：再生产的幂等性）
+    ✓ 非同构态射：ε 没有左逆（公理1：条件债务）
+    ✓ 适应度函子：可定义且单调（公理1：历史沉淀）
+    ✓ 选择性余极限：可定义且收敛（公理1：历史沉淀）
 
-  结论："4-单纯形是主导闭合核"的假设与DCNC六公理体系自洽。
+  结论："4-单纯形是主导闭合核"的假设与DCNC公理体系自洽。
   ======================================================================-/
 
 end PreLevel1.lean.Proven

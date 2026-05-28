@@ -3,6 +3,11 @@
 /-
 CNT 一级质变联立方程唯一自洽解搜索
 
+> ★ 符号约定 (2026) ★
+> Lean代码中参数 `ν_c` 表示能量子频率 ν（前网络基础量）。
+> "再生产周期" T_rep = 1/f_rep 是网络稳定后的解释。
+> 电子是二级质变产物，ℓ₀ 通过CNT自洽条件确定。
+
 本文件根据 指导.md 的搜索策略，系统遍历参数空间，
 寻找从普朗克常数 h 导出全部物理量（c, l_min, j, m）的唯一自洽解。
 
@@ -38,7 +43,10 @@ namespace Foundations.Strict
 open Foundations.Strict
 
 /- ======================================================================
-  第一部分：参数空间定义
+  第一部分：参数空间定义（指导.md 第五节）
+
+  Lean注：代码中 f_c 表示能量子频率 ν（前网络基础量 E = h·ν）。
+  参数名 f_c 是历史遗留，物理含义已更新。
   ======================================================================-/
 
 /-- 标记增量形式枚举（指导.md §2.1） -/
@@ -515,7 +523,7 @@ noncomputable def generateReport (sol : SearchSolution) (g2 g3 : ℝ) : Solution
   -- 此处 c_normalized 和 l_min_normalized 是无量纲归一化值，通过 ℓ₀ 和 f_unit 变为有量纲量
   let c_si := c_normalized
   let l_min_si := l_min_normalized
-  -- m = Nn·h·f_c / c²
+  -- m = Nn·h·ν_c / c²
   let m_si := planck_constant * (sol.Nn : ℝ) * (sol.f_c : ℝ) / (c_si * c_si)
   -- t_P = √(hG/c⁵) 但 G 未知，用 l_min/c 近似
   let tP_si := l_min_si / c_si

@@ -1,7 +1,7 @@
 /-
 HPI修正与DCNC公理的严格对应
 
-本文件建立历史路径积分(HPI)修正与DCNC六公理之间的严格对应关系。
+本文件建立历史路径积分(HPI)修正与DCNC公理体系之间的严格对应关系。
 
 核心思想:
 - HPI修正不是任意的量子修正，而是由DCNC公理严格约束的
@@ -30,35 +30,35 @@ open Foundations.lean.Proven
 
 | HPI修正项 | 对应DCNC公理 | 物理机制 |
 |-----------|-------------|----------|
-| 边界标记涨落 | 公理3: 历史路径不可逆 | 非可逆态射导致的历史记忆 |
+| 边界标记涨落 | 不可逆定理: 历史路径不可逆 | 非可逆态射导致的历史记忆 |
 | 拓扑缺陷 | 公理1: 闭合核充要条件 | 五判据约束的拓扑结构 |
-| 多路径干涉 | 公理2: 选择性余极限 | 不同演化路径的相干叠加 |
-| 能标跑动 | 公理5: 适应度函子单调性 | 能标选择的单调演化 |
+| 多路径干涉 | 公理2: 量变质变存在性 | 不同演化路径的相干叠加 |
+| 能标跑动 | 公理5: 质变的形式新立 | 能标选择的单调演化 |
 -/
 
 /-- HPI修正项与DCNC公理的映射 -/
 inductive HPIAxiomMapping
-  | boundary_to_axiom3
+  | boundary_to_irreversibility
   | topological_to_axiom1
   | interference_to_axiom2
   | running_to_axiom5
 
 /-
-2. 边界标记涨落与公理3的对应
+2. 边界标记涨落与不可逆定理的对应
 
-公理3（历史路径不可逆）确保非可逆态射导致的历史记忆，
+不可逆定理（公理1+公理4推导）确保非可逆态射导致的历史记忆，
 这直接对应边界标记涨落的物理机制。
 -/
 
-/-- 边界标记涨落与公理3的对应定理 -/
-theorem boundary_fluctuation_axiom3_correspondence
+/-- 边界标记涨落与不可逆定理的对应定理 -/
+theorem boundary_fluctuation_irreversibility_correspondence
     (C : Type) [Category C] [CNTCategory C]
     (X : C) (f : X ⟶ X) :
-  ¬ IsIso f →
+  (f ≫ f = f) → ¬ IsIso f →
   ∃ (fluctuation : ℝ),
     fluctuation = boundary_fluctuation_model 4 := by
-  intro h_not_iso
-  have h := CNT_Axiom_3 C X f h_not_iso
+  intro h_idem h_not_iso
+  have h := irreversibility_theorem C X f h_idem h_not_iso
   use boundary_fluctuation_model 4
 
 /-
@@ -119,7 +119,7 @@ theorem running_coupling_axiom5_correspondence
 - 修正项不能破坏再生产幂等性(μ ≫ μ = μ)
 
 注意（遵循DCNT指导原则）:
-- 以下conjecture不是公理，而是待从六公理推导的工作假设
+- 以下conjecture不是公理，而是待从公理体系推导的工作假设
 - HPI修正保持幂等性的命题尚未从公理4严格证明
 - 0.162%量级的HPI修正作为数值观察，不能直接作为公理
 -/
@@ -152,7 +152,7 @@ structure Axiom4ConstrainedCorrection where
   (μ + c)² = μ + c 仅在 c = 0 时精确成立。
   正确的物理理解是HPI修正在一阶微扰下近似保持幂等性，
   且修正的幅度 c 远小于 μ 的特征尺度。
-  
+
   此处给出修正后的严格代数分析:
   (μ + c)² = μ + (2μc + c²)
   因此幂等性偏差为 δ = 2μc + c² - c = c(2μ - 1 + c)
@@ -182,7 +182,7 @@ theorem hpi_idempotency_deviation_magnitude
   intro h_eq
   let c := hpi_total_correction standard_hpi_correction
   have hc_pos : c > 0 := hpi_total_correction_pos
-  
+
   -- 展开 (μ + c)² = μ + c
   have h_expanded : μ + 2 * μ * c + c * c = μ + c := by
     have h1 : (μ + c) * (μ + c) = μ + c := h_eq
@@ -190,18 +190,18 @@ theorem hpi_idempotency_deviation_magnitude
     rw [h2] at h1
     rw [hμ] at h1
     exact h1
-  
+
   -- 消去 μ
   have h_2μc_c2 : 2 * μ * c + c * c = c := by linarith
-  
+
   -- 因式分解
   have h_c_factor : c * (2 * μ + c - 1) = 0 := by linarith
-  
+
   -- 由于 c > 0，必须有 2μ + c - 1 = 0
   have h_2μc_1 : 2 * μ + c - 1 = 0 := by
     apply mul_left_cancel₀ (show (c : ℝ) ≠ 0 by linarith)
     linarith
-  
+
   -- 分情况讨论 μ = 0 或 μ = 1
   have hμ_cases : μ = 0 ∨ μ = 1 := by
     have h : μ * (μ - 1) = 0 := by linarith
@@ -209,7 +209,7 @@ theorem hpi_idempotency_deviation_magnitude
     cases h' with
     | inl h0 => exact Or.inl h0
     | inr h1 => exact Or.inl (by linarith)
-  
+
   cases hμ_cases with
   | inl h0 =>
     -- μ = 0 时：c - 1 = 0，即 c = 1
@@ -267,7 +267,7 @@ theorem hpi_idempotency_deviation_magnitude
 
   本定理证明：不存在具有非零base_correction的Axiom4ConstrainedCorrection，
   因为HPI修正破坏了精确幂等性。
-  
+
   这反映了重要的物理事实：HPI量子修正不可避免地破坏再生产态射的精确幂等性，
   修正后的再生产仅在一阶近似下保持幂等性。
 -/
@@ -286,9 +286,9 @@ theorem axiom4_hpi_correspondence_impossible
   exact hpi_idempotency_deviation_magnitude μ hμ h_preserving
 
 /-
-7. 公理6（闭合核个体化）与HPI修正的对应
+7. 个体化与HPI修正的对应
 
-公理6（闭合核个体化）确保同构的闭合核是相等的，
+个体化机制确保同构的闭合核是相等的，
 这约束了不同闭合核的HPI修正必须唯一确定。
 
 核心物理机制:
@@ -297,8 +297,8 @@ theorem axiom4_hpi_correspondence_impossible
 - 修正不能破坏个体化判据
 -/
 
-/-- 公理6约束的HPI修正形式 -/
-structure Axiom6ConstrainedCorrection where
+/-- 个体化约束的HPI修正形式 -/
+structure IndividuationConstrainedCorrection where
   /-- 闭合核特定的修正值 -/
   closed_nucleus_specific_correction : ℝ
   /-- 个体化保持条件: 同构核有相同修正 -/
@@ -306,11 +306,11 @@ structure Axiom6ConstrainedCorrection where
     cn₁ = cn₂ →
     closed_nucleus_specific_correction = closed_nucleus_specific_correction
 
-/-- 公理6与HPI修正的对应定理 -/
-theorem axiom6_hpi_correspondence
+/-- 个体化与HPI修正的对应定理 -/
+theorem individuation_hpi_correspondence
     (C : Type) [Category C] [CNTCategory C]
     (X Y : C) (_h_iso : Nonempty (X ≅ Y)) :
-  ∃ (correction : Axiom6ConstrainedCorrection),
+  ∃ (correction : IndividuationConstrainedCorrection),
     correction.closed_nucleus_specific_correction = hpi_total_correction standard_hpi_correction ∧
     (X = Y → correction.closed_nucleus_specific_correction = correction.closed_nucleus_specific_correction) := by
   use {
@@ -349,20 +349,16 @@ theorem hpi_correction_axiom_constraint
 /-
 7. 开放问题
 
-OPEN-1: 公理4（再生产结合性）与HPI修正的关系
+OPEN-1: 公理4（再生产幂等性）与HPI修正的关系
   - 需要建立再生产动力学与量子修正的对应
   - 涉及intertwiner再生产对修正项的影响
 
-OPEN-2: 公理6（闭合核个体化）与HPI修正的关系
-  - 需要建立个体化约束与修正项唯一性的对应
-  - 涉及不同闭合核的修正差异
-
-OPEN-3: HPI修正的高阶项与公理系统
+OPEN-2: HPI修正的高阶项与公理系统
   - 需要建立高阶修正项与公理约束的对应
   - 涉及多圈图贡献的公理描述
 
-OPEN-4: 公理系统的自洽性证明
-  - 需要证明DCNC六公理与HPI修正的自洽性
+OPEN-3: 公理系统的自洽性证明
+  - 需要证明DCNC公理体系与HPI修正的自洽性
   - 涉及范畴论与量子场论的统一
 -/
 

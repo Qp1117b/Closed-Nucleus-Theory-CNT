@@ -9,6 +9,12 @@
 所有内容标记为 工作假设（working hypotheses），
 待阶段3的形式化自洽性检验。
 
+★ 符号约定 (2026) ★
+  ν 是前网络能量子固有频率（不是网络化产物）
+  c = √2·ℓ₀·ν 是网络化涌现量（由 ℓ₀ 和 ν 共同决定）
+  "再生产频率"f_rep = ν 是 ν 在网络化层面上的同义表达
+  电子是二级质变后产物，不能用 m_e 标定 ℓ₀ 或 ν
+
 约束条件：
   - N, f, k ∈ ℕ（整数约束）
   - 4-单纯形几何常数（5顶点, 3可见面, cosΘ=1/4, 375/4096/16384）可参与耦合
@@ -26,19 +32,19 @@ Wolfram 数值验证结果（Mathematica 14.0）：
   │  sin²(φ) = 375/4096 = 0.091552734375               │
   │  1/α₀ = 16384π/375 ≈ 137.25827743044045978         │
   ├─────────────────────────────────────────────────────┤
-  │ 涌现属性（临界点 (N_c, f_c) where N_c·f_c odd）      │
+  │ 涌现属性（临界点 (N_c, f) where N_c·f odd）         │
   │  l_min = √2 · ℓ₀  (4-单纯形边长×基础长度)              │
-  │  c      = √2 · ℓ₀ · f_c  (直径×基础长度×频率)          │
+  │  c      = √2 · ℓ₀ · f  (f 前网络, c 涌现)            │
   │  j      = 1/2   (序参量 Φ=0 条件)                   │
   │  分裂数 = 2   (Catalan(2)=2)                       │
-  ├────────────────────────────────��────────────────────┤
+  ├─────────────────────────────────────┤
   │ 临界对（5×5 空间内 9 对）:                           │
   │  (1,1) (1,3) (1,5) (3,1) (3,3) (3,5) (5,1) (5,3)  │
   │  (5,5) → 全是奇数乘积 → j=1/2                       │
   └─────────────────────────────────────────────────────┘
 
 参考文献：
-  - CNTFormal.ReproductionPeriod（整数频率 DiscreteFrequency）
+  - CNTFormal.ReproductionPeriod（能量子频率 ν 的离散化 DiscreteFrequency）
   - CNTFormal.SimplexGeometry（4-单纯形几何常数）
   - CNTConjectures.ReproductionEnergy（材料-形式守恒）
   - CNTConjectures.OntologicalMechanics（HPI变分原理）
@@ -65,8 +71,17 @@ abbrev DiscreteFrequency := ℕ
 
   形式：N_{k+1} = N_k + n(f_k, history, geometry)
 
+  ★ 重要区分 (2026) ★：
+    N_k = 累积改造的总能量子数（随步数 k 增加）
+    n   = 单次操作改造的能量子数（材料守恒中的 input_quanta，不变量）
+
+    关系：N_K = K·n（K 步操作，每步改造 n 个能量子）
+
+    材料守恒（ReproductionEnergy）说的是 n 不变，不是 N_k 不变。
+    微分方程描述的是 N_k 的累积增长，与材料守恒不矛盾。
+
   逻辑依据：
-  1. N = TotalParticles（总改造粒子数，类型 ℕ）
+  1. N = 累积改造的总能量子数（类型 ℕ）
   2. f = DiscreteFrequency（离散频率，类型 ℕ）
   3. 每步再生产增加 N（量变累积假设 accumulation_nonnegative）
   4. 增加量 n 由当前频率 f_k、历史路径和历史积累、4-单纯形几何常数决定
@@ -145,7 +160,7 @@ axiom reproduction_difference_eqn_guess
 
   约束：
   - 满足 lock_implies_hpi_variation_zero 作为边界条件
-    （已证明：HPI锁定 �� δ_hpi = 0）
+    （已证明：HPI锁定后 δ_hpi = 0）
   - 几何耦合内嵌于积分核
 
   L 的候选形式：
@@ -153,7 +168,7 @@ axiom reproduction_difference_eqn_guess
 
   其中：
   - n_k = N_{k+1} - N_k（单步增加量）
-  - h_planck · f_k = 能量量子（E = h·ν = h·f）
+  - h_planck · f_k = 能量量子（E = h·ν）
   - geometric_factor = 几何结构调制（如 sin²φ 等）
   ======================================================================-/
 
@@ -193,7 +208,7 @@ noncomputable def hpi_effective_action_guess
 /- ======================================================================
   2.3 一级序参量 Φ 猜测
 
-  条件：Φ(N_c, f_c, geometry) = 0
+  条件：Φ(N_c, f, geometry) = 0
   临界点给出自旋 j（半整数量子化）
 
   约束：
@@ -216,28 +231,28 @@ def catalan_2 : ℕ := 2
 
 /-- [工作假设] 一级序参量 Φ 的候选形式
 
-    Φ(N_c, f_c) = N_c · f_c mod 2 — 1
+    Φ(N_c, f) = N_c · f mod 2 — 1
 
-    临界条件 Φ = 0 给出 N_c · f_c ≡ 1 (mod 2)，
+    临界条件 Φ = 0 给出 N_c · f ≡ 1 (mod 2)，
     这对应于半整数自旋 j = 1/2。
 
     分裂数为 2 由 IntertwinerStructure 中
     intertwiner 空间的 2 维基矢（|I₀⟩, |I₁⟩）保证。 -/
-def order_parameter_phi_guess (N_c : ℕ) (f_c : DiscreteFrequency) : ℤ :=
-  (N_c * f_c) % 2 - 1
+def order_parameter_phi_guess (N_c : ℕ) (f : DiscreteFrequency) : ℤ :=
+  (N_c * f) % 2 - 1
 
-/-- [工作假设] 临界条件：Φ(N_c, f_c) = 0
+/-- [工作假设] 临界条件：Φ(N_c, f) = 0
 
-    等价于 N_c · f_c 是奇数。 -/
-def critical_condition_guess (N_c : ℕ) (f_c : DiscreteFrequency) : Prop :=
-  order_parameter_phi_guess N_c f_c = 0
+    等价于 N_c · f 是奇数。 -/
+def critical_condition_guess (N_c : ℕ) (f : DiscreteFrequency) : Prop :=
+  order_parameter_phi_guess N_c f = 0
 
 /-- [工作假设] 临界点给出半整数自旋 j = 1/2
 
-    当Φ=0时，临界频率 f_c 决定自旋：j = f_c / 2 (mod ℕ)
-    在 simplest case 下，j = 1/2。 -/
-noncomputable def critical_spin_guess (N_c : ℕ) (f_c : DiscreteFrequency) : ℝ :=
-  if order_parameter_phi_guess N_c f_c = 0 then (1/2 : ℝ) else 0
+    ★ 符号约定 (2026) ★ "临界频率"就是前网络能量子频率 ν ——
+    当序参量 Φ=0 时，频率 ν 决定自旋：j = 1/2（半整数量子化）。 -/
+noncomputable def critical_spin_guess (N_c : ℕ) (ν_val : DiscreteFrequency) : ℝ :=
+  if order_parameter_phi_guess N_c ν_val = 0 then (1/2 : ℝ) else 0
 
 /- ======================================================================
   2.4 网络化再生产条件猜测
@@ -303,7 +318,7 @@ def network_activated_guess
     当前猜测 alpha=1, beta=0, gamma=1 是最简形式。
 
   OPEN-2: HPI被积函数的具体形式
-    当前猜测 L_k = n_k·h·f_k·sin²φ 是最简形式。
+    当前猜测 L_k = n_k·h·ν_k·sin²φ 是最简形式。
     可能需要额外的耦合项或高阶修正。
 
   OPEN-3: 序参量 Φ 的完整形式
@@ -354,9 +369,9 @@ theorem hpi_fixed_point_compat (f_k : DiscreteFrequency) :
 
 /-- 检验4：序参量临界条件给出半整数自旋
 
-    当 Φ = 0 时 j = 1/2。临界对 (N_c, f_c) 满足 N_c*f_c 是奇数。 -/
-theorem critical_condition_gives_half_spin (N_c f_c : ℕ) :
-    order_parameter_phi_guess N_c f_c = 0 → critical_spin_guess N_c f_c = 1/2 := by
+    当 Φ = 0 时 j = 1/2。临界对 (N_c, f) 满足 N_c*f 是奇数。 -/
+theorem critical_condition_gives_half_spin (N_c f : ℕ) :
+    order_parameter_phi_guess N_c f = 0 → critical_spin_guess N_c f = 1/2 := by
   intro h
   dsimp [critical_spin_guess]
   rw [h]
@@ -367,9 +382,9 @@ theorem critical_condition_gives_half_spin (N_c f_c : ℕ) :
     一级质变的临界条件 Φ=0 触发分裂，
     新核满足 S_new ≠ S_old（公理5的要求）。
     当前假设：每次分裂产生 2 个新核（Catalan(2) = 2 兼容）。 -/
-theorem level1_transition_compat_axiom5 (N_c f_c : ℕ) (h_crit : order_parameter_phi_guess N_c f_c = 0) :
-  critical_spin_guess N_c f_c = 1/2 :=
-  critical_condition_gives_half_spin N_c f_c h_crit
+theorem level1_transition_compat_axiom5 (N_c f : ℕ) (h_crit : order_parameter_phi_guess N_c f = 0) :
+  critical_spin_guess N_c f = 1/2 :=
+  critical_condition_gives_half_spin N_c f h_crit
 
 end ConsistencyCheck
 
@@ -380,15 +395,15 @@ end ConsistencyCheck
     v_i = e_i - (1/5)Σe_j  →  边长平方 = 2  →  边长 = √2
     所有 10 条边等长：True（Wolfram 验证）
 
-  光速与临界频率关系:
-    c = D · f_c = √2 · f_c
-    若 c = 299792458 m/s（实验值），则 f_c ≈ 2.120 × 10⁸ Hz
+  光速与能量子频率关系:
+    c = D · f = √2 · f
+    若 c = 299792458 m/s（实验值），则 f = c/(√2·ℓ₀)（需 ℓ₀ 自洽确定）
 
   自旋与分裂:
     j = 1/2（序参量 Φ=0 ⇒ 半整数量子化）
     分裂数 = 2（Catalan(2) = 2）
 
-  临界对列举（N_c·f_c 为奇数的前 10 对）:
+  临界对列举（N_c · f 为奇数的前 10 对）:
     (1,1), (1,3), (1,5), (1,7), (1,9), (1,11),
     (3,1), (3,3), (3,5), (3,7)
   ======================================================================-/
@@ -424,26 +439,29 @@ theorem simplex4_diameter_eq_edge : simplex4_edge_length_exact = Real.sqrt 2 := 
 
 /-- 光速（有量纲形式）
 
-    c = D · ℓ₀ · f_c = √2 · ℓ₀ · f_c
+    c = D · ℓ₀ · f = √2 · ℓ₀ · f
 
-    其中 ℓ₀ 是基础长度标度（量纲 [L]），f_c 是临界频率（量纲 [T⁻¹]）。
+    其中 ℓ₀ 是基础长度标度（量纲 [L]），f 是能量子频率（量纲 [T⁻¹]，前网络）。
+    c 是网络化涌现量。
 
     √2 ≈ 1.414213562373095 是4-单纯形的无量纲直径。
     完整的量纲：c : [L·T⁻¹] ✓ -/
-noncomputable def speed_of_light_dimensional (ℓ₀ : ℝ) (f_c : DiscreteFrequency) : ℝ :=
-  Real.sqrt 2 * ℓ₀ * (f_c : ℝ)
+noncomputable def speed_of_light_dimensional (ℓ₀ : ℝ) (f : DiscreteFrequency) : ℝ :=
+  Real.sqrt 2 * ℓ₀ * (f : ℝ)
 
-/-- 光速（归一化形式，以 ℓ₀ 和 f_c 为基准单位）
+/-- 光速（归一化形式，以 ℓ₀ 和 f 为基准单位）
 
-    c/(ℓ₀·f_c) = √2 ≈ 1.414213562373095 -/
-noncomputable def speed_of_light_normalized (f_c : DiscreteFrequency) : ℝ :=
-  Real.sqrt 2 * (f_c : ℝ)
+    c/(ℓ₀·f) = √2 ≈ 1.414213562373095 -/
+noncomputable def speed_of_light_normalized (f : DiscreteFrequency) : ℝ :=
+  Real.sqrt 2 * (f : ℝ)
 
-/-- 实验光速固定时的临界频率
+/-- 实验光速固定时的能量子频率
 
     c_exp = 299792458 m/s
-    f_c = c_exp / √2 ≈ 2.119852800 × 10⁸ Hz -/
-noncomputable def critical_frequency_from_c : ℝ :=
+    f = c_exp / √2 ≈ 2.119852800 × 10⁸ Hz
+
+    ★ 这不是"临界频率"——f 是能量子固频率 ★ -/
+noncomputable def energy_quantum_frequency_from_c : ℝ :=
   299792458 / Real.sqrt 2
 
 /-- 自旋 = 1/2（临界点序参量 Φ=0 的代数推论） -/
@@ -454,12 +472,12 @@ noncomputable def spin_value_at_critical_point : ℝ :=
 def split_count_value : ℕ :=
   2
 
-/-- 前 10 个临界对（N_c · f_c 为奇数） -/
+/-- 前 10 个临界对（N_c · f 为奇数） -/
 def list_critical_pairs : List (ℕ × ℕ) :=
   [(1,1), (1,3), (1,5), (1,7), (1,9), (1,11),
    (3,1), (3,3), (3,5), (3,7)]
 
-/-- 验证：所有临界对满足 N_c · f_c 是奇数 -/
+/-- 验证：所有临界对满足 N_c · f 是奇数 -/
 theorem all_critical_pairs_odd :
     ∀ (p : ℕ × ℕ), p ∈ list_critical_pairs → (p.1 * p.2) % 2 = 1 := by
   native_decide
@@ -518,15 +536,15 @@ def isNetworkActivated (N f : ℕ) (overlap overlap_c : ℝ) : Prop :=
 
 /-- [阶段4.5] 一级涌现属性
 
-    在临界点 (N_c, f_c) 同时涌现的属性。
+    在临界点 (N_c, f) 同时涌现的属性。
 
-    注意：光速和最小距离的有量纲值分别需要 ℓ₀（基础长度）和 f_c（频率单位）。
+    注意：光速和最小距离的有量纲值分别需要 ℓ₀（基础长度）和 f（能量子频率）。
     √2, 1/2, 2 是无量纲纯数。 -/
-structure Level1EmergentProperties (N_c f_c : ℕ) where
-  /-- 光速归一化值：c/(ℓ₀·f_c) = √2 -/
+structure Level1EmergentProperties (N_c f : ℕ) where
+  /-- 光速归一化值：c/(ℓ₀·f) = √2 -/
   speedOfLight_normalized : ℝ := Real.sqrt 2
-  /-- 光速有量纲值：c = √2 · ℓ₀ · f_c -/
-  speedOfLight_dimensional (ℓ₀ : ℝ) : ℝ := Real.sqrt 2 * ℓ₀ * (f_c : ℝ)
+  /-- 光速有量纲值：c = √2 · ℓ₀ · f（f 前网络, c 涌现）-/
+  speedOfLight_dimensional (ℓ₀ : ℝ) : ℝ := Real.sqrt 2 * ℓ₀ * (f : ℝ)
   /-- 自旋：j = 1/2 -/
   spin : ℝ := 1/2
   /-- 最小距离无量纲值：l_min/ℓ₀ = √2 -/
@@ -540,7 +558,7 @@ structure Level1EmergentProperties (N_c f_c : ℕ) where
 
     公理1要求新核存在幂等态射 μ 和非可逆态射 ε。
     新核由公理5保证存在且 S_new ≠ S_old。 -/
-theorem post_transition_consistent (N_c f_c : ℕ) (_h_crit : isCritical N_c f_c) : True := by
+theorem post_transition_consistent (N_c f : ℕ) (_h_crit : isCritical N_c f) : True := by
   -- 验证新核的公理1条件（平凡真，因为具体构造待定）
   trivial
 
@@ -594,7 +612,7 @@ theorem reproduction_eq_dimension_consistent
 /- ======================================================================
   网络再生产动力学探索
 
-  探索 f_c、网络再生产、总粒子数与 HPI 的关系。
+  探索 f、网络再生产、总粒子数与 HPI 的关系。
 
   三个核心探索方向：
   1. 替代再生产方程（非线性、饱和、网络耦合）
@@ -602,26 +620,30 @@ theorem reproduction_eq_dimension_consistent
   3. HPI Lagrangian 的扩展形式
 
   符号约定：
-    f_c  : DiscreteFrequency = 临界频率（奇自然数）
-    N_c  : ℕ = 临界粒子数（满足 N_c·f_c ≡ 1 mod 2）
+    f    : DiscreteFrequency = 能量子频率（奇自然数，前网络存在）
+    N_c  : ℕ = 临界粒子数（满足 N_c·f ≡ 1 mod 2）
     N_k  : ℕ = 第 k 步再生产后的总粒子数
     K    : ℕ = 再生产总步数
     split_count = 2（Catalan(2) 兼容）
+
+  ★ 符号约定 (2026) ★
+    ν 是能量子固有频率（前网络存在）
+    "再生产频率"f_rep = ν 是 ν 在网络化层面上的同义表达
   ======================================================================-/
 
 section NetworkReproductionExploration
 
 /- ======================================================================
-  §E1 f_c 与网络再生产的标度关系
+  §E1 f 与网络再生产的标度关系
 
   核心洞察：
-    f_c 不仅是"临界频率"，更是"网络增长的时间标度"。
+    f 不仅是序参量参数，更是"网络增长的时间标度"。
 
   (1) 单核线性累积阶段（Φ≠0，未临界）：
-       N_k = k·f_c（若 f_k = f_c 为常数）
-       增长速率 ≡ f_c（每步增加 f_c 个粒子）
+       N_k = k·f（若 f_k = f 为常数）
+       增长速率 ≡ f（每步增加 f 个粒子）
 
-  (2) 临界点 (N_c, f_c) 满足 Φ(N_c, f_c) = 0：
+  (2) 临界点 (N_c, f) 满足 Φ(N_c, f) = 0：
        触发相变 → 核分裂为 split_count = 2 个新核
        每个新核继承 N_initial 个粒子
 
@@ -630,34 +652,34 @@ section NetworkReproductionExploration
        第 m 步后核的数量：M_m = 2^m
        总粒子数：N_total(m) = Σ_{i=1}^{2^m} N_i(m)
 
-  f_c 的双重角色：
+  f 的双重角色：
     (a) 作为相变触发条件（奇偶性约束）
     (b) 作为单核再生产的速率常数（决定了达到临界所需的步数）
   ======================================================================-/
 
 /-- 单核再生产达到临界所需的步数
 
-    N_k = k·f_c（常数频率模型）
-    临界条件 N_c·f_c ≡ 1 (mod 2) 且 N_c = K_c·f_c
+    N_k = k·f（常数频率模型）
+    临界条件 N_c·f ≡ 1 (mod 2) 且 N_c = K_c·f
 
-    如果 f_c 是奇数：N_c = K_c·f_c
-    N_c·f_c = K_c·f_c²
-    由于 f_c 是奇数，f_c² 也是奇数
-    K_c 必须为奇数 → 最小的 K_c = 1, N_c = f_c
+    如果 f 是奇数：N_c = K_c·f
+    N_c·f = K_c·f²
+    由于 f 是奇数，f² 也是奇数
+    K_c 必须为奇数 → 最小的 K_c = 1, N_c = f
 
     即：第一次再生产就达到临界！
 
-    如果 f_c = 1（最小频率）：N_1 = 1, N_1·f_c = 1 → Φ=0 ✓ 立即临界！ -/
-def stepsToCritical (f_c : DiscreteFrequency) : ℕ :=
-  if f_c = 0 then 0
-  else if f_c * f_c % 2 = 1 then 1 else 2
+    如果 f = 1（最小频率）：N_1 = 1, N_1·f = 1 → Φ=0 ✓ 立即临界！ -/
+def stepsToCritical (f : DiscreteFrequency) : ℕ :=
+  if f = 0 then 0
+  else if f * f % 2 = 1 then 1 else 2
 
-theorem minimal_steps_to_critical (f_c : DiscreteFrequency) (hf_odd : f_c % 2 = 1) (hf_pos : f_c ≠ 0) :
-    stepsToCritical f_c = 1 := by
+theorem minimal_steps_to_critical (f : DiscreteFrequency) (hf_odd : f % 2 = 1) (hf_pos : f ≠ 0) :
+    stepsToCritical f = 1 := by
   simp [stepsToCritical, hf_pos]
-  have h_sq_odd : (f_c * f_c) % 2 = 1 := by
+  have h_sq_odd : (f * f) % 2 = 1 := by
     calc
-      (f_c * f_c) % 2 = ((f_c % 2) * (f_c % 2)) % 2 := by rw [Nat.mul_mod]
+      (f * f) % 2 = ((f % 2) * (f % 2)) % 2 := by rw [Nat.mul_mod]
       _ = (1 * 1) % 2 := by rw [hf_odd]
       _ = 1 := by norm_num
   simp [h_sq_odd]
@@ -714,7 +736,7 @@ structure PowerLawReproduction where
 
     N_{k+1} = N_k + f_k · (1 + ε·S_k / S_total)
 
-    其中 S_k = Σ_{i=0}^k h·f_i 是累积 HPI（历史"惯性"）
+    其中 S_k = Σ_{i=0}^k h·ν_i 是累积 HPI（历史"惯性"）
     ε 是历史记忆系数。
 
     物理直觉：已经历多次再生产的核，其结构更"松散"，
@@ -741,28 +763,28 @@ structure NetworkCoupledReproduction where
 /- ======================================================================
   §E3 网络总粒子数标度律
 
-  单核线性阶段（常数 f_c）：
-    N_k = k·f_c
-    临界时 (k = K_c)：N_c = K_c·f_c
+  单核线性阶段（常数 f）：
+    N_k = k·f
+    临界时 (k = K_c)：N_c = K_c·f
 
   分裂后阶段（M_m = 2^m 个核）：
     第 m 代核的数量：M_m = 2^m
-    假设每个核以相同速率 f_c 再生产，且初始粒子数为 N_init
+    假设每个核以相同速率 f 再生产，且初始粒子数为 N_init
 
     第 m 代的总粒子数：
-    N_total(m) = M_m · (N_init + m·f_c)
+    N_total(m) = M_m · (N_init + m·f)
 
   网络总粒子数的时间演化（以代数为时间）：
-    N_network(0) = 2¹ · (N_init + 0·f_c)  = 2·N_init
-    N_network(1) = 2² · (N_init + 1·f_c)  = 4·(N_init + f_c)
-    N_network(2) = 2³ · (N_init + 2·f_c)  = 8·(N_init + 2f_c)
+    N_network(0) = 2¹ · (N_init + 0·f)  = 2·N_init
+    N_network(1) = 2² · (N_init + 1·f)  = 4·(N_init + f)
+    N_network(2) = 2³ · (N_init + 2·f)  = 8·(N_init + 2f)
     ...
 
-    N_network(m) = 2^{m+1} · (N_init + m·f_c)
+    N_network(m) = 2^{m+1} · (N_init + m·f)
 
   标度律：
-    主导项：2^{m+1}·m·f_c（当 m 大时）
-    日志标度：ln N_network ~ m·ln 2 + ln m + ln f_c
+    主导项：2^{m+1}·m·f（当 m 大时）
+    日志标度：ln N_network ~ m·ln 2 + ln m + ln f
     对 m ≫ 1：ln N_network ~ m·ln 2（指数增长）
 
   这暗示：网络再生产的"总粒子数"是超指数的！
@@ -778,36 +800,36 @@ def nucleiCountAtGeneration (m : ℕ) : ℕ :=
 
 /-- 第 m 代、第 i 个核的粒子数（忽略核间差异）
 
-    N_i(m) = N_init + m·f_c（每个核独立线性增长） -/
-def particlesPerNucleus (N_init : ℕ) (f_c : DiscreteFrequency) (m : ℕ) : ℕ :=
-  N_init + m * f_c
+    N_i(m) = N_init + m·f（每个核独立线性增长） -/
+def particlesPerNucleus (N_init : ℕ) (f : DiscreteFrequency) (m : ℕ) : ℕ :=
+  N_init + m * f
 
 /-- 网络总粒子数：第 m 代的总和
 
-    N_total(m) = 2^(m+1) · (N_init + m·f_c)
+    N_total(m) = 2^(m+1) · (N_init + m·f)
 
     关键：2^(m+1) 因子使总粒子数呈指数增长。 -/
-def networkTotalParticles (N_init : ℕ) (f_c : DiscreteFrequency) (m : ℕ) : ℕ :=
-  nucleiCountAtGeneration m * particlesPerNucleus N_init f_c m
+def networkTotalParticles (N_init : ℕ) (f : DiscreteFrequency) (m : ℕ) : ℕ :=
+  nucleiCountAtGeneration m * particlesPerNucleus N_init f m
 
 /-- [定理] 第 0 代总粒子数 = 2·N_init
 
     一次分裂后产生 2 个核，每个核有 N_init 个粒子。 -/
-theorem network_total_particles_gen0 (N_init : ℕ) (f_c : DiscreteFrequency) :
-    networkTotalParticles N_init f_c 0 = 2 * N_init := by
+theorem network_total_particles_gen0 (N_init : ℕ) (f : DiscreteFrequency) :
+    networkTotalParticles N_init f 0 = 2 * N_init := by
   dsimp [networkTotalParticles, nucleiCountAtGeneration, particlesPerNucleus]
   ring
 
 /-- [定理] 网络总粒子的增长律（标度关系）
 
-    N_total(m+1) = 2·N_total(m) + 2^{m+2}·f_c
+    N_total(m+1) = 2·N_total(m) + 2^{m+2}·f
 
     核数翻倍产生 2·N_total(m) 项，
-    新核各自再生产累积产生 2^{m+2}·f_c 项。 -/
-theorem network_total_growth_rate (N_init : ℕ) (f_c : DiscreteFrequency) (m : ℕ) :
-    networkTotalParticles N_init f_c (m + 1) =
-      2 * networkTotalParticles N_init f_c m +
-      2^(m+2) * f_c := by
+    新核各自再生产累积产生 2^{m+2}·f 项。 -/
+theorem network_total_growth_rate (N_init : ℕ) (f : DiscreteFrequency) (m : ℕ) :
+    networkTotalParticles N_init f (m + 1) =
+      2 * networkTotalParticles N_init f m +
+      2^(m+2) * f := by
   dsimp [networkTotalParticles, nucleiCountAtGeneration, particlesPerNucleus]
   have h : 2^(m+2) = 2 * 2^(m+1) := by
     rw [Nat.pow_succ, Nat.mul_comm 2]
@@ -818,13 +840,13 @@ theorem network_total_growth_rate (N_init : ℕ) (f_c : DiscreteFrequency) (m : 
 
     当网络总粒子数接近形式空间的容量时，
     每个核的增长不再独立。引入有效增长率：
-    r_eff(m) = f_c · (1 - N_total(m) / N_max_total)
+    r_eff(m) = f · (1 - N_total(m) / N_max_total)
 
     其中 N_max_total 是形式空间内的最大可容纳粒子数。
     对于 4-单纯形，N_max_total 可以估计为可标记的独立形式的数量。 -/
-noncomputable def effectiveGrowthRate (f_c : DiscreteFrequency) (N_total N_max_total : ℕ) : ℝ :=
+noncomputable def effectiveGrowthRate (f : DiscreteFrequency) (N_total N_max_total : ℕ) : ℝ :=
   if N_max_total = 0 then 0 else
-    (f_c : ℝ) * (1 - (N_total : ℝ) / (N_max_total : ℝ))
+    (f : ℝ) * (1 - (N_total : ℝ) / (N_max_total : ℝ))
 
 /- ======================================================================
   §E4 HPI Lagrangian 的扩展形式
@@ -862,7 +884,7 @@ structure DensityDependentHPI where
     其中 Θ = arccos(1/4) 是 4-单纯形的二面角。
     M 角模式叠加，权重 w_j 由 4-单纯形自旋网络给出。
 
-    当前 M=1, w₁=1 给出 L_k = n_k·h·f_k·sin²Θ
+    当前 M=1, w₁=1 给出 L_k = n_k·h·ν_k·sin²Θ
     但 sin²Θ = 15/16 ≠ 375/4096
 
     完整的 EPRL 相位涉及 sin²(5Θ)：
@@ -918,47 +940,48 @@ structure HistoryWeightedHPI where
   L_max : ℝ           -- HPI 饱和值
 
 /- ======================================================================
-  §E5 f_c 作为网络时间标度的物理含义
+  §E5 f 作为网络时间标度的物理含义
 
   CNT 从 c 和 ℓ₀ 导出的时间标度：
-    f_c = c / (√2 · ℓ₀)
-    τ_c = 1 / f_c
+    f = c / (√2 · ℓ₀)
+    周期 T = 1 / f
 
-  τ_c 是"单次再生产辐射"的周期——一个量子力学过程的时间尺度。
+  T 是"单次再生产辐射"的周期——一个量子力学过程的时间尺度。
 
   标度层级：
-    τ_c = √2 · ℓ₀ / c      → 再生产周期
+    T = √2 · ℓ₀ / c       → 能量子振荡周期
     Δt_inter-nuclear       → 核间传播时间
-    τ_network = 2^m · τ_c  → 网络总时间（m 代后）
+    τ_network = 2^m · T   → 网络总时间（m 代后）
 
   网络时间与粒子数的对偶关系：
-    N_network(m) = 2^{m+1}·(N_init + m·f_c)
-    t_network(m) = Σ_{i=0}^{m} τ_i ≈ 2^{m+1}·τ_c（粗略估计）
+    N_network(m) = 2^{m+1}·(N_init + m·f)
+    t_network(m) = Σ_{i=0}^{m} τ_i ≈ 2^{m+1}·T（粗略估计）
 
-    因此：N_total ~ t_total / τ_c · ln(t_total / τ_c)
+    因此：N_total ~ t_total / T · ln(t_total / T)
     即：总粒子数为网络时间的一个超线性函数。
 
-  注：τ_c 的具体数值依赖于 ℓ₀，而 ℓ₀ 需待 ε 由 CNT 临界条件闭合。
+  注：T 的具体数值依赖于 ℓ₀，而 ℓ₀ 需待由 CNT 自洽条件闭合。
   ======================================================================-/
 
-/-- [定义] f_c 与 ℓ₀ 的关系
+/-- [定义] f 与 ℓ₀ 的关系
 
-    f_c = c / (√2 · ℓ₀)
+    f = c / (√2 · ℓ₀)
 
-    输入量仅涉及 c 和 ℓ₀（ℓ₀ 由 ε 通过临界条件确定）。 -/
-noncomputable def f_c_from_ell0 (c_val ell0 : ℝ) : ℝ :=
+    ★ 注意 ★ f 是前网络能量子频率，c 是网络化涌现量
+    输入量涉及 c 和 ℓ₀（ℓ₀ 由自洽条件确定，不依赖电子质量）。 -/
+noncomputable def f_from_ell0 (c_val ell0 : ℝ) : ℝ :=
   c_val / (Real.sqrt 2 * ell0)
 
-/-- [定义] τ_c 与 f_c 的关系
+/-- [定义] T 与 f 的关系
 
-    τ_c = 1 / f_c = √2 · ℓ₀ / c -/
-noncomputable def tau_c_from_f_c (c_val ell0 : ℝ) : ℝ :=
+    T = 1 / f = √2 · ℓ₀ / c -/
+noncomputable def period_from_f (c_val ell0 : ℝ) : ℝ :=
   Real.sqrt 2 * ell0 / c_val
 
-/-- [验证] f_c · τ_c = 1 -/
-theorem f_c_tau_c_product (c_val ell0 : ℝ) (hc0 : c_val ≠ 0) (he0 : ell0 ≠ 0) :
-    f_c_from_ell0 c_val ell0 * tau_c_from_f_c c_val ell0 = 1 := by
-  dsimp [f_c_from_ell0, tau_c_from_f_c]
+/-- [验证] f · T = 1 -/
+theorem f_period_product (c_val ell0 : ℝ) (hc0 : c_val ≠ 0) (he0 : ell0 ≠ 0) :
+    f_from_ell0 c_val ell0 * period_from_f c_val ell0 = 1 := by
+  dsimp [f_from_ell0, period_from_f]
   field_simp [he0, hc0]
 
 /- ======================================================================
@@ -967,17 +990,16 @@ theorem f_c_tau_c_product (c_val ell0 : ℝ) (hc0 : c_val ≠ 0) (he0 : ell0 ≠
   EQ-1: 替代再生产方程的最优形式？
     Logistic vs 幂律 vs 历史记忆 vs 网络耦合。
     需要从 HPI 单调性和量变质变结构推导最佳选择。
-    检验标准：能否自然产生 N=3 的最小自洽解？
 
   EQ-2: 网络总粒子数是否有实验对应？
-    N_total(m) = 2^m · (N_init + m·f_c) 随 m 指数增长。
+    N_total(m) = 2^m · (N_init + m·f) 随 m 指数增长。
     是否存在可观测的物理量与此对应？
 
-  EQ-3: f_c = 1 作为最小奇数离散频率的物理意义？
-    f_c = 1 是最小的奇数离散频率（ℕ 空间中的值），
-    N_c = 1 → N_c·f_c = 1 → Φ=0 → 立即临界。
+  EQ-3: f = 1 作为最小奇数离散频率的物理意义？
+    f = 1 是最小的奇数离散频率（ℕ 空间中的值），
+    N_c = 1 → N_c·f = 1 → Φ=0 → 立即临界。
     这是否意味着"任何非零能量子都会触发相变"？
-    有量纲物理频率通过 f_phys = f_c · f_unit 获得 [T⁻¹] 量纲。
+    有量纲物理频率通过 f_phys = f · f_unit 获得 [T⁻¹] 量纲。
 
   EQ-4: HPI 的多角调制能否自洽？
     sin²(5Θ) = 375/4096 给出优美的 α⁻¹ ≈ 137.258，

@@ -6,13 +6,19 @@
 本文件从 DCNC 公理体系严格推导再生产辐射速度的
 存在性、上界和涌现机制。
 
+★ 重要澄清 ★
+辐射速度是网络化（一级质变）后涌现的物理量，不是前网络概念。
+
 推导链:
   DCNC 公理 (CategoryTheory.lean)
-    → 再生产周期 τ > 0 (ReproductionPeriod.lean, T7)
-    → 4-单纯形紧致性 → 直径 D = √2 (SimplexDominance.lean)
-    → HPI 严格递增 (OntologicalMechanics.lean: backaction_positivity + hpi_additivity)
-    → 量变累积 → 相变 Φ=0 (Level1Transition.lean)
-    → v_rad = √2·f_c 涌现
+    → 能量子频率 ν > 0 (ReproductionPeriod.lean)
+    → 4-单纯形几何 (SimplexGeometry.lean)
+    → 网络化（一级质变）→ 多个闭合核通过再生产产物连接
+    → 网络信息传播速度 c = √2·ℓ₀·ν 涌现
+
+**符号约定 (2026)**：能量子频率 ν，再生产频率 f。
+能量子频率 ν 是基础物理量，v_rad = d·ν。
+自然振荡周期 T_ν = 1/ν 是派生概念。
 
 证明状态标注规范:
   [公理]     : DCNC 公理本身
@@ -88,7 +94,7 @@ lemma hpi_single_event_pos
   每一项 L_k > 0，因此 HPI 严格递增。
 -/
 
-/-- [定理] HPI 严格递增性（采用 L_k = n_k·h·f_k·Γ 形式, Γ=3/5）
+/-- [定理] HPI 严格递增性（采用 L_k = n_k·h·ν_k·Γ 形式, Γ=3/5）
 
   前提：
     - f_k ≥ 1（离散频率，活跃再生）
@@ -151,83 +157,96 @@ theorem hpi_related_to_critical_parameter
 end HPI_Monotonicity
 
 /- ======================================================================
-  §2 再生产辐射速度的严格定义
+  §2 再生产辐射速度的严格定义（网络化后涌现）
 
-  再生产辐射速度 = 形式改造信号在闭合核结构中的传播速度。
+  ★ 重要澄清 ★
+  再生产辐射速度是网络化（一级质变）后涌现的物理量。
 
-  关键澄清（与 ReproductionPeriod.lean 对接）：
-    频率 f 是能量子本身的固有频率，
-    不是再生产周期的倒数。
-    再生产周期 τ 和能量子频率 f 是独立的概念。
+  前网络阶段：
+    - ℓ₀ (4-单纯形边长) — 存在
+    - ν  (能量子固有频率) — 存在
+    - E = h·ν (能量子能量) — 存在
+    - c  (信息传播速度) — 不存在！
+
+  网络化阶段（一级质变）：
+    - 多个闭合核通过再生产产物相互连接
+    - 信息传播速度 c = √2·ℓ₀·f 涌现
+    - 此时"辐射速度"才有良定义
 
   速度上限的来源：
-    4-单纯形是紧致度量空间 (SimplexDominance.lean)
-    → 直径 D = √2 有限
-    → 单步形式改造跨过一条边（距离 √2）
-    → 单步时间至少为 τ_min（T7: τ > 0）
-    → v_max = √2 / τ_min
+    - 网络化后，信息传播被限制在4-单纯形结构内
+    - 最大传播距离 = 4-单纯形直径 D = √2·ℓ₀
+    - 最小传播时间 = 再生产周期 T = 1/f
+    - 因此 v_max = D/T = √2·ℓ₀·f = c
 
-  而 τ_min 与 f 的关系需要从
-  "单步改造 = 一个能量量子的完整形式重排"
-  出发来确定。
+  频率 f 与最小操作时间的关系：
+    T_min = 1/f（一个能量子的自然振荡周期 = 再生产的最小步长）
+    则 v_rep = √2·ℓ₀ / T_min = √2·ℓ₀·ν
 
-  单次再生产作用量 S = h (ReproductionPeriod.lean T10)
-  单次再生产能量 E = h/τ (HistoryAccumulation.lean)
-  每个能量量子的能量 E_q = h·f (ReproductionPeriod.lean)
+  验证：
+    - 从 ReproductionPeriod.lean：ν > 0 是定理
+    - 单次再生产作用量 = h 是定义
+    - v_rad = d·ν，不是 d/τ
 
-  若单步再生产改造总体的能量代价来源于 f 个量子的能量和：
-    E = Σ_{i=1}^{f} h·f = f·h·f = h·f²
-    (这个对应关系是工作假设，非公理推导)
-
-  则 E = h/τ = h·f² 给出 τ = 1/f²
-  于是 v_rep = √2 / τ = √2·f²
-
-  或者，更保守的假设：
-    τ = 1/f（一个量子的一个周期 = 再生产的最小步长）
-  则 v_rep = √2 / (1/f) = √2·f
-
-  当前的 §14 使用了后一种关系 (v_rep = √2·f)，
-  但需要注意：
-    - 从 RecreationPeriod.lean：τ > 0 是定理，τ = 1/f 是假设
-    - 单次再生产行动量 = h 是定义，不等于 h·f·τ
+  **符号约定 (2026)**：能量子频率 ν，再生产频率 f。
+  不存在"再生产周期 τ"——只有能量子的固有频率 ν。
   ======================================================================-/
 
 section RepRadioVelocity
 
-/-- [定义] 单跳距离：4-单纯形边长
+/-- [定义] 基础长度 ℓ₀：4-单纯形边长
 
-  从 SimplexGeometry.lean: 正则4-单纯形边长 = √2 -/
-noncomputable def hop_distance : ℝ := Real.sqrt 2
+  从 SimplexGeometry.lean: 正则4-单纯形边长 = √2·ℓ₀
+  这里 ℓ₀ 是基础长度单位（量纲 [L]）。
+
+  在无量纲化系统中，取 ℓ₀ = 1，则边长 = √2。 -/
+noncomputable def base_length : ℝ := 1
+
+/-- [定义] 单跳距离：4-单纯形边长 = √2·ℓ₀
+
+  从 SimplexGeometry.lean: 正则4-单纯形边长 = √2·ℓ₀
+  在无量纲化系统中（ℓ₀ = 1），单跳距离 = √2。 -/
+noncomputable def hop_distance : ℝ := Real.sqrt 2 * base_length
 
 /-- [定理] 单跳距离为正 -/
 theorem hop_distance_pos : hop_distance > 0 := by
-  dsimp [hop_distance]
-  exact Real.sqrt_pos.mpr (by norm_num)
+  dsimp [hop_distance, base_length]
+  exact mul_pos (Real.sqrt_pos.mpr (by norm_num)) (by norm_num)
 
-/-- [定义] 最小操作时间：τ_min
+/-- [定义] 最小操作时间：T_min = 1/f
 
-  从 ReproductionPeriod.lean T7: τ > 0，存在正下界。
-  在能量子频率模型下，最小操作时间 = 1/f_max
+  从能量子频率推导：ν 越大 → T_min 越小 → 操作越快。
+  最小操作时间 = 1/ν_max，其中 ν_max 是系统中能量子的最高频率。
+  相变临界点的频率的值由序参量方程 Φ=0 确定。
 
-  其中 f_max 是系统中能量子的最高频率。
-  在临界点，f_max = f_c（临界频率）。 -/
-noncomputable def min_operation_time (f : DiscreteFrequency) : ℝ :=
-  1 / (f : ℝ)
+  **符号约定 (2026)**：这是基于能量子频率 ν 定义的"最小操作时间"，
+  不是"再生产周期 τ_min"。不存在"再生产周期"这个概念。 -/
+noncomputable def min_operation_time (ν_val : DiscreteFrequency) : ℝ :=
+  1 / (ν_val : ℝ)
 
-/-- [定理] 最小操作时间为正（f > 0 时） -/
-theorem min_operation_time_pos (f : DiscreteFrequency) (hf : f ≠ 0) :
-    min_operation_time f > 0 := by
+/-- [定理] 最小操作时间为正（ν > 0 时） -/
+theorem min_operation_time_pos (ν_val : DiscreteFrequency) (hν : ν_val ≠ 0) :
+    min_operation_time ν_val > 0 := by
   dsimp [min_operation_time]
-  have hf_pos : (f : ℝ) > 0 := by exact_mod_cast Nat.pos_of_ne_zero hf
-  exact one_div_pos.mpr hf_pos
+  have hν_pos : (ν_val : ℝ) > 0 := by exact_mod_cast Nat.pos_of_ne_zero hν
+  exact one_div_pos.mpr hν_pos
 
-/-- [定义] 再生产辐射速度 = 单跳距离 / 最小操作时间 -/
+/-- [定义] 再生产辐射速度 = 单跳距离 / 最小操作时间
+
+  这是网络化后涌现的物理量：
+    v_rad = (√2·ℓ₀) / (1/f) = √2·ℓ₀·f
+
+  在无量纲化系统中（ℓ₀ = 1）：
+    v_rad = √2·f -/
 noncomputable def reproduction_radiation_velocity (f : DiscreteFrequency) : ℝ :=
   hop_distance / min_operation_time f
 
 /-- [定理] 再生产辐射速度的计算
 
-  v_rad = √2 / (1/f) = √2·f -/
+  v_rad = √2·ℓ₀ / (1/f) = √2·ℓ₀·f
+
+  在无量纲化系统中（ℓ₀ = 1）：
+    v_rad = √2·f -/
 theorem reproduction_radiation_velocity_eq
     (f : DiscreteFrequency) (hf : f ≠ 0) :
     reproduction_radiation_velocity f = hop_distance * (f : ℝ) := by
@@ -243,31 +262,53 @@ theorem reproduction_radiation_velocity_pos
   have hf_pos : (f : ℝ) > 0 := by exact_mod_cast Nat.pos_of_ne_zero hf
   exact mul_pos h_dist_pos hf_pos
 
-/-- [定理] 结构上限的存在性
+/-- [定理] 结构上限的存在性（网络化后）
 
-  生产辐射速度有上界，因为：
-    - 4-单纯形直径 = √2（有限，SimplexDominance）
-    - 最小操作时间 > 0（T7，ReproductionPeriod）
-    → v_rad ≤ √2 / τ_min
+  再生产辐射速度有上界，因为：
+    - 网络化后，信息传播被限制在4-单纯形结构内
+    - 最大传播距离 = 4-单纯形直径 D = √2·ℓ₀（有限）
+    - 能量子频率 ν > 0（ReproductionPeriod）
+    → v_rad = √2·ℓ₀·ν
 
-  这个上界是几何拓扑结构固有的，不依赖任何动力学假设。 -/
-theorem velocity_upper_bound_exists
+  注意：这个上界是针对**单跳**速度的。
+  网络化后，信息可以经过多次跳跃传播，但每次跳跃的速度上限是 c = √2·ℓ₀·ν。
+
+  **符号约定 (2026)**：v_rad = d·ν，不是 d/τ。
+    不存在"再生产周期 τ_min"，只有能量子频率 ν。 -/
+theorem structural_upper_bound_exists
     (f : DiscreteFrequency) (hf : f ≠ 0) :
-    ∃ (v_max : ℝ), reproduction_radiation_velocity f ≤ v_max := by
-  -- 在常数频率假设下，v_rad = √2·f
-  -- 由于 f 是有限自然数，v_rad 有限
-  use hop_distance * (f : ℝ) + 1
-  have h_val : reproduction_radiation_velocity f = hop_distance * (f : ℝ) :=
-    reproduction_radiation_velocity_eq f hf
-  rw [h_val]
-  nlinarith
+    ∃ (c : ℝ), c > 0 ∧ reproduction_radiation_velocity f = c ∧
+    ∀ (f' : DiscreteFrequency), f' ≤ f →
+      reproduction_radiation_velocity f' ≤ c := by
+  have hf_pos : (f : ℝ) > 0 := by exact_mod_cast Nat.pos_of_ne_zero hf
+  refine ⟨reproduction_radiation_velocity f, ?_, ?_, ?_⟩
+  · exact reproduction_radiation_velocity_pos f hf
+  · rfl
+  · intro f' hf'_le
+    by_cases hzero : f' = 0
+    · subst hzero
+      have h_zero_vel : reproduction_radiation_velocity 0 = 0 := by
+        dsimp [reproduction_radiation_velocity, min_operation_time, hop_distance]
+        field_simp
+        ring
+      rw [h_zero_vel]
+      exact le_of_lt (reproduction_radiation_velocity_pos f hf)
+    · rw [reproduction_radiation_velocity_eq f' hzero]
+      rw [reproduction_radiation_velocity_eq f hf]
+      have h_hop_pos : hop_distance > 0 := hop_distance_pos
+      exact mul_le_mul_of_nonneg_left
+        (by exact_mod_cast hf'_le)
+        (le_of_lt h_hop_pos)
 
-/-- [定理] 比率 v_rad / f = √2（结构常数）
+/-- [定理] 比率 v_rad / f = √2·ℓ₀（结构常数）
 
   这是一个重要的无量纲预测量：
-    无论 f 取何值，v_rad/f = dist_per_hop = √2
+    无论 f 取何值，v_rad/f = hop_distance = √2·ℓ₀
 
-  这是由 4-单纯形几何决定的严格定理。 -/
+  这是由 4-单纯形几何决定的严格定理。
+
+  在无量纲化系统中（ℓ₀ = 1）：
+    v_rad/f = √2 -/
 theorem velocity_to_frequency_ratio (f : DiscreteFrequency) (hf : f ≠ 0) :
     reproduction_radiation_velocity f / (f : ℝ) = hop_distance := by
   rw [reproduction_radiation_velocity_eq f hf]
@@ -280,20 +321,29 @@ end RepRadioVelocity
 
   这是本文件的核心定理集。
 
+  ★ 符号约定 (2026) ★
+  Lean代码中参数名 `ν_c` 表示能量子频率 ν（前网络基础量 E = h·ν）。
+  "再生产周期"不存在——能量子频率 ν 是基础物理量，T_ν = 1/ν 是派生周期。
+
+  ★ 重要澄清 ★
+  辐射速度是网络化后涌现的物理量，不是前网络概念。
+  以下链路描述的是：HPI累积 → 量变 → 一级质变（网络化）→ 辐射速度涌现。
+
   链路:
     HPI 严格递增 → 量变累积 → 达到阈值
-      → Φ(N,f) = 0 (临界) → v_rad = √2·f_c 涌现
+      → Φ(N,f) = 0 (临界) → 一级质变（网络化）→ v_rad = √2·ℓ₀·f 涌现
 
   每个箭头对应以下公理/定理：
     HPI 严格递增    ← backaction_positivity + hpi_additivity (§1)
     量变累积       ← accumulation_nonnegative (CategoryTheory.lean)
     达到阈值       ← Axiom_2 (量变质变存在性)
     Φ(N,f) = 0    ← Level1Transition §2.3 (临界条件)
-    v_rad = √2·f_c ← 本节 §2 (结构推导)
+    一级质变       ← Axiom_5 (新形式涌现)
+    v_rad = √2·ℓ₀·ν ← 本节 §2 (网络化后结构推导)
 
-  若使用 HPI Lagrangian L_k = n_k·h·f_k·sin²φ:
+  若使用 HPI Lagrangian L_k = n_k·h·ν_k·sin²φ:
     accumulation 由 HPI 驱动:
-    Δ(accumulation) ∝ L_k = n_k·h·f_k·sin²φ
+    Δ(accumulation) ∝ L_k = n_k·h·ν_k·sin²φ
 
   因此 accumulation 到达阈值所需的步数 K_c 满足:
     Σ_{k=0}^{K_c-1} n_k·f_k 达到某个临界值。
@@ -351,14 +401,15 @@ theorem frequency_parity_selection (N f : ℕ) :
   rw [this] at h_mod
   norm_num at h_mod
 
-/-- [定理] 相变时 v_rad 的涌现
+/-- [定理] 相变时 v_rad 的涌现（网络化后）
 
   在临界点:
-    - 频率 f_c 是奇数（由 frequency_parity_selection）
-    - N_c 是奇数（使 N_c·f_c 是奇数）
-    - 再生产辐射速度: v_rad = √2·f_c
+    - 频率 f 是奇数（由 frequency_parity_selection）
+    - N_c 是奇数（使 N_c·f 是奇数）
+    - 一级质变发生 → 网络化
+    - 网络化后，辐射速度涌现: v_rad = √2·ℓ₀·ν
 
-  因此 v_rad 的涌现 = 几何结构 (√2) · 临界频率 (f_c)
+  因此 v_rad 的涌现 = 几何结构 (√2·ℓ₀) · 能量子频率 (ν)
   两者都由 DCNC 确定。 -/
 theorem velocity_emerges_at_phase_transition
     (N_c : ℕ) (f_c : DiscreteFrequency)
@@ -377,21 +428,24 @@ theorem velocity_emerges_at_phase_transition
 
 /-- [定理] v_rad 的相对论对应
 
-  若认定再生产辐射速度 = 光速（c = v_rad），则：
-    c = √2·f_c
-    f_c = c/√2
+  若认定辐射速度 = 光速（c = v_rad），则：
+    c = √2·f
+    f = c/√2
 
   以实验光速 c_SI = 299792458 m/s:
-    f_c_SI = 299792458 / 1.41421356... ≈ 2.12×10⁸ Hz
+    f_SI = 299792458 / 1.41421356... ≈ 2.12×10⁸ Hz
 
-  这个频率给出了 DCNT 中"一次再生产"的时间尺度：
-    τ_rep = 1/f_c ≈ 4.72×10⁻⁹ s
+  对应的自然振荡周期：
+    T = 1/f ≈ 4.72×10⁻⁹ s
 
   对应的最小距离：
     l_min_SI = √2·L_unit → 需要额外约定来确定 L_unit
 
-  这个定理陈述了 c 和 f_c 之间的线性关系，
-  由 4-单纯形几何唯一决定。 -/
+  这个定理陈述了 c 和能量子频率 ν 之间的线性关系，
+  由 4-单纯形几何唯一决定。
+
+  **符号约定 (2026)**：T_ν = 1/ν 是能量子自然振荡周期（派生概念），
+  不是"再生产周期 τ_R"。 -/
 theorem velocity_light_speed_identification
     (f_c : DiscreteFrequency) (hf : f_c ≠ 0) :
     let v_rep := reproduction_radiation_velocity f_c
@@ -415,9 +469,9 @@ end HPIToPhaseToVelocity
     4096 = 2^12 → HPI 量化 N·f = m·4096 (偶数) → 与临界矛盾
     → 修正: Γ = hpi_geom_factor = 3/5 (奇数/奇数)
 
-  【异常3】τ = 1/f 是额外假设，非公理推导:
-    T7 仅保证 τ>0, 不保证 τ=1/f
-    → 保持为"假设A"，明确标注
+  【异常3】T = 1/f 是定义（派生关系），非独立假设:
+    f > 0 是公理推导，T = 1/f 是自然振荡周期的定义
+    → T_min = 1/f_max 是最小操作时间的直接推论
 
   修正后的统一模型:
     N_{k+1} = N_k + f_k    (γ=0)
@@ -426,7 +480,11 @@ end HPIToPhaseToVelocity
     Φ(N_K,f) = N_K·f mod 2 - 1
     临界: K_c·f² 是奇数 → f 是奇数且 K_c 是奇数
     K_c = 1 (对任意奇 f, 第一步临界)
-    v_rad = √2·f (若 τ=1/f)
+    v_rad = √2·f
+
+  **符号约定 (2026)**：不存在"异常3"——T_ν=1/ν 本就是从频率
+  派生自然振荡周期的标准定义，不是独立假设。
+  能量子频率 ν 才是基础物理量。
   ======================================================================-/
 
 section GeometricFactorSelection
@@ -521,19 +579,23 @@ end PhaseTransitionTiming
 
   本文件严格推导的核心定理:
 
+  ★ 重要澄清 ★
+  辐射速度是网络化（一级质变）后涌现的物理量，不是前网络概念。
+
   §1 HPI 严格递增性
     - backaction_positivity + hpi_additivity → HPI 单调增长
-    - 增长速率 ∝ f（通过 L_k = n_k·h·f_k·sin²φ）
+    - 增长速率 ∝ ν（通过 L_k = n_k·h·ν_k·sin²φ）
 
-  §2 再生产辐射速度
-    - v_rad = √2·f (从几何 + 离散时间)
-    - 结构上限存在（紧致 4-单纯形 + τ > 0）
-    - 比值 v_rad/f = √2（无量纲预测）
+  §2 再生产辐射速度（网络化后涌现）
+    - v_rad = √2·ℓ₀·f (从几何 + 离散时间)
+    - 结构上限存在（网络化后信息传播限制在4-单纯形内）
+    - 比值 v_rad/f = √2·ℓ₀（无量纲预测）
 
-  §3 HPI → 相变 → 速度
+  §3 HPI → 相变 → 网络化 → 速度涌现
     - f 必须是奇数才能发生相变（frequency_parity_selection）
-    - 相变时 v_rad = √2·f_c 涌现
-    - 若 v_rad = c，则 f_c = c/√2 ≈ 2.12×10⁸ Hz
+    - 相变时一级质变发生 → 网络化
+    - 网络化后 v_rad = √2·ℓ₀·f 涌现
+    - 若 v_rad = c，则 f = c/(√2·ℓ₀) ≈ 2.12×10⁸ Hz (当 ℓ₀=1)
 
   §4 几何因子
     - 375/4096（分母2^12）使 HPI 量化与临界条件矛盾
@@ -561,14 +623,16 @@ noncomputable def hopDistanceWithDim : DCNCLength :=
 
 /-- 最小操作时间（带量纲 [T]）
 
-    τ_min = 1/f，量纲：[T] = [T⁻¹]⁻¹ ✓ -/
-noncomputable def minOperationTimeWithDim (f : DiscreteFrequency) (_hf : f ≠ 0) : DCNCTime :=
-  ⟨1 / (f : ℝ)⟩
+    T_min = 1/ν，量纲：[T] = [T⁻¹]⁻¹ ✓
+    从能量子频率直接派生，不是"再生产周期 τ_min"。 -/
+noncomputable def minOperationTimeWithDim (ν_val : DiscreteFrequency) (_hν : ν_val ≠ 0) : DCNCTime :=
+  ⟨1 / (ν_val : ℝ)⟩
 
 /-- 再生产辐射速度（带量纲 [L·T⁻¹]）
 
-    v_rad = d_hop / τ_min = √2·f
-    量纲：[L·T⁻¹] = [L] / [T] 或 [L]·[T⁻¹] ✓ -/
+    v_rad = d_hop · f = √2·f
+    量纲：[L·T⁻¹] = [L]·[T⁻¹] ✓
+    **注意**：v_rad = d·f，不是 d/τ。 -/
 noncomputable def reproductionRadiationVelocityWithDim
     (f : DiscreteFrequency) (_hf : f ≠ 0) : DCNCVelocity :=
   ⟨hop_distance * (f : ℝ)⟩

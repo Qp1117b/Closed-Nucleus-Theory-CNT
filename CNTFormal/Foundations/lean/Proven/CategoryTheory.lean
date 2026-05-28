@@ -2,12 +2,17 @@
 CNT范畴论公理体系 - 形式化
 
 本文件严格形式化闭合核理论(CNT)的范畴论基础，
-包括DCNC六公理、五判据和选择性余极限。
+包括DCNC四公理、五判据和量变质变结构。
+
+当前公理体系：
+- 公理1：闭合核的充要条件（五判据）
+- 公理2：量变质变的存在性
+- 公理3：再生产的幂等性（存在性约定）
+- 公理4：质变的形式新立
 
 所有形式化基于标准范畴论，不引入未定义的物理概念。
 
 参考文献:
-- CNT-体系文档.md
 - Mac Lane, S. Categories for the Working Mathematician
 - Awodey, S. Category Theory
 -/
@@ -67,7 +72,7 @@ structure CNTCriteria (C : Type) [Category C] where
 class CNTCategory (C : Type) [Category C] extends CNTCriteria C
 
 /-
-2. DCNC六公理的形式化
+2. DCNC公理体系的形式化
 
 DCNC = Dynamic Closed Nucleus Category
 -/
@@ -81,28 +86,84 @@ axiom CNT_Axiom_1 (C : Type) [Category C] [CNTCategory C] :
              (∃ (F : FitnessFunctor C) (colim : SelectiveColimit C F),
                 F.fitness S ≥ 0 ∧ colim.selection {S} = S)
 
-/-- 公理2: 选择性余极限的存在性 -/
+/-- 量变质变结构：包含累积函数和阈值 -/
+structure QuantitativeToQualitative (C : Type) [Category C] where
+  /-- 累积函数：将对象映射到累积量（非负实数） -/
+  accumulation : C → ℝ
+  /-- 阈值：触发质变的临界值 -/
+  threshold : ℝ
+  /-- 阈值正定性 -/
+  threshold_pos : threshold > 0
+  /-- 至少一个对象的累积量达到阈值 -/
+  threshold_reached : ∃ (S : C), accumulation S ≥ threshold
+
+/-- 公理2: 量变质变的存在性 -/
 axiom CNT_Axiom_2 (C : Type) [Category C] [CNTCategory C] :
-  ∃ (F : FitnessFunctor C) (colim : SelectiveColimit C F),
-    colim.candidate_states.Nonempty ∧
-    ∀ (S' : C), S' ∈ colim.candidate_states → F.fitness S' ≥ 0
+  ∃ (qq : QuantitativeToQualitative C),
+    qq.threshold > 0 ∧
+    ∃ (S : C), qq.accumulation S ≥ qq.threshold
 
-/-- 公理3: 历史路径的不可逆性 -/
+/-- 公理3: 再生产的幂等性
+
+  物理意义：再生产操作可以无限重复，每次产生相同的形式结构。
+  这对应于"材料-形式守恒"中的能量子数不变。
+
+  ★ 修正 (2026) ★：
+    原版：∀ (μ : S ⟶ S), μ ≫ μ = μ（所有态射幂等，太强）
+    修正：∃ (μ : S ⟶ S), μ ≫ μ = μ（存在幂等再生产态射）
+
+    注意：公理 1 中已包含 ∃ μ, μ ≫ μ = μ，
+    公理 3 是对再生产态射的专门强调，与公理 1 一致。 -/
 axiom CNT_Axiom_3 (C : Type) [Category C] [CNTCategory C] :
-  ∀ (S : C) (f : S ⟶ S), ¬ IsIso f → ¬ ∃ (g : S ⟶ S), f ≫ g = 𝟙 S
+  ∀ (S : C), ∃ (μ : S ⟶ S), μ ≫ μ = μ
 
-/-- 公理4: 再生产的结合性 -/
+/-- 公理4: 质变的形式新立
+  若存在非可逆态射 ε: S_old → S_old，则存在新形式 S_new ≠ S_old 和态射 φ: S_old → S_new
+  物理意义：量变累积触发质变时，产生全新的形式结构 -/
 axiom CNT_Axiom_4 (C : Type) [Category C] [CNTCategory C] :
-  ∀ (S : C) (μ : S ⟶ S), μ ≫ μ = μ
+  ∀ (S_old : C) (ε : S_old ⟶ S_old), ¬ IsIso ε →
+    ∃ (S_new : C) (_φ : S_old ⟶ S_new), S_new ≠ S_old
 
-/-- 公理5: 适应度函子的单调性 -/
-axiom CNT_Axiom_5 (C : Type) [Category C] [CNTCategory C] :
-  ∀ (X Y : C) (_f : X ⟶ Y) (F : FitnessFunctor C),
-    F.fitness X ≤ F.fitness Y
+/-- 量变单调递增假设（非公理，限定研究范围的假设）
+  说明：这不是公理，是限定研究范围的假设。
+  不可逆定理仅证明"不能撤销"，不等价于"必然前进"。 -/
+axiom accumulation_nonnegative (C : Type) [Category C] [CNTCategory C] :
+  ∀ (qq : QuantitativeToQualitative C) (S : C), qq.accumulation S ≥ 0
 
-/-- 公理6: 闭合核的个体化 -/
-axiom CNT_Axiom_6 (C : Type) [Category C] [CNTCategory C] :
-  ∀ (S₁ S₂ : C), Nonempty (S₁ ≅ S₂) → S₁ = S₂
+/-
+2.5 从公理推导的定理
+-/
+
+/-- 定理T1: 幂等非可逆态射没有右逆
+  若 f: S→S 幂等（f≫f=f）且非可逆，则 f 没有右逆
+  证明：假设存在右逆g使得f≫g=1，则f=1，因此f是同构，矛盾 -/
+theorem idempotent_noniso_has_no_right_inverse
+    {C : Type} [Category C] {S : C} (f : S ⟶ S)
+    (h_idem : f ≫ f = f) (h_noniso : ¬ IsIso f) :
+    ¬ ∃ (g : S ⟶ S), f ≫ g = 𝟙 S := by
+  intro h
+  obtain ⟨g, hg⟩ := h
+  have h_f_eq_id : f = 𝟙 S := by
+    calc
+      f = f ≫ 𝟙 S := by simp
+      _ = f ≫ (f ≫ g) := by rw [hg]
+      _ = (f ≫ f) ≫ g := by rw [Category.assoc]
+      _ = f ≫ g := by rw [h_idem]
+      _ = 𝟙 S := by rw [hg]
+  have h_iso : IsIso f := by
+    rw [h_f_eq_id]
+    exact inferInstance
+  contradiction
+
+/-- 定理T2: 不可逆定理（irreversibility_theorem）
+  公理4（幂等）+公理1（非可逆）⇒ 历史路径不可逆
+  证明：从公理1得到非可逆ε，从公理4得到幂等μ，
+        使用T1证明历史路径不可逆 -/
+theorem irreversibility_theorem
+    (C : Type) [Category C] [CNTCategory C] (S : C) :
+    ∀ (f : S ⟶ S), (f ≫ f = f) → (¬ IsIso f) → ¬ ∃ (g : S ⟶ S), f ≫ g = 𝟙 S := by
+  intro f h_idem h_noniso
+  exact idempotent_noniso_has_no_right_inverse f h_idem h_noniso
 
 /-
 3. 函子层级F₁-F₅的形式化
@@ -156,8 +217,8 @@ OPEN-1: 选择性余极限的存在性证明
 OPEN-2: 五判据的独立性证明
   需要证明五判据是相互独立的，不能从其他判据派生
 
-OPEN-3: DCNC六公理的自洽性
-  需要证明六公理系统是自洽的，没有内在矛盾
+OPEN-3: DCNC公理体系的自洽性
+  需要证明公理体系是自洽的，没有内在矛盾
 
 OPEN-4: 从CNT范畴到物理量的映射
   需要建立范畴论结构与物理可观测量之间的严格对应
