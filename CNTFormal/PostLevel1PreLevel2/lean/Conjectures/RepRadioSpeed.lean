@@ -141,7 +141,7 @@ noncomputable def hpi_accumulation_formula
   其中 N_K = K·n 是总共改造的能量量子数。
 
   因此：
-  - N_K·f 是奇数 → 临界条件满足 → j=1/2
+  - N_K·f 是奇数 → 临界条件满足 → j_min=1/2（完整谱 j=0,1/2,1,3/2,...）
   - HPI_K ∝ N_K·f (在常数频率下)
 
   这意味着相变条件 Φ(N,f)=0 与 HPI 累积直接关联：

@@ -229,12 +229,12 @@ noncomputable def hpi_effective_action_guess
 /-- [工作假设] Catalan数 C₂ = 2 -/
 def catalan_2 : ℕ := 2
 
-/-- [工作假设] 一级序参量 Φ 的候选形式
+/-- [工作假设] 一级序参量 Φ 的候选形式（最小临界条件）
 
     Φ(N_c, f) = N_c · f mod 2 — 1
 
     临界条件 Φ = 0 给出 N_c · f ≡ 1 (mod 2)，
-    这对应于半整数自旋 j = 1/2。
+    这对应于半整数自旋 j = 1/2 作为最小非平凡情况。
 
     分裂数为 2 由 IntertwinerStructure 中
     intertwiner 空间的 2 维基矢（|I₀⟩, |I₁⟩）保证。 -/
@@ -243,14 +243,46 @@ def order_parameter_phi_guess (N_c : ℕ) (f : DiscreteFrequency) : ℤ :=
 
 /-- [工作假设] 临界条件：Φ(N_c, f) = 0
 
-    等价于 N_c · f 是奇数。 -/
+    等价于 N_c · f 是奇数。这是质变发生的最小必要条件。 -/
 def critical_condition_guess (N_c : ℕ) (f : DiscreteFrequency) : Prop :=
   order_parameter_phi_guess N_c f = 0
 
-/-- [工作假设] 临界点给出半整数自旋 j = 1/2
+/-- [工作假设] 网络自旋值：从临界对 (N_c, f) 计算自旋 j
 
+    当 N_c·f 是奇数时，网络边的自旋值由下式给出：
+      j(N_c, f) = (N_c·f) / 2
+
+    验证：
+    N_c·f = 1  → j = 1/2   → 最小非平凡自旋
+    N_c·f = 3  → j = 3/2
+    N_c·f = 5  → j = 5/2
+    N_c·f = 7  → j = 7/2
+    ...
+
+    由于 N_c·f 是奇数，j = (奇数)/2 始终是半整数，
+    符合 j = 1/2, 3/2, 5/2, ... 的自旋网络边标记。
+
+    当 N_c·f 不是奇数（临界条件未满足）时，返回 j = 0。
+
+    注意：完整网络自旋谱为 j ∈ {0, 1/2, 1, 3/2, 2, 5/2, ...}。
+    半整数 j 来自临界条件 N_c·f = 奇数（即一级质变本身），
+    整数 j ∈ ℕ 在一级质变后的网络化再生产过程中通过
+    边耦合和自旋叠加涌现，由更一般的 SU(2) 表示论决定。 -/
+noncomputable def network_spin_value (N_c : ℕ) (f : DiscreteFrequency) : ℝ :=
+  if (N_c * f) % 2 = 1 then (N_c * f : ℝ) / 2 else 0
+
+/-- [工作假设] 临界点最小网络自旋
+
+    当序参量 Φ=0（即 N_c·f 是奇数）时，
+    最小非平凡网络自旋为 j = 1/2，
+    对应临界对 (N_c, f) = (1, 1) 或任何 N_c·f = 1 的组合。
+
+    完整的网络自旋谱 j = 0, 1/2, 1, 3/2, 2, ...
+    在一级质变后的网络化再生产过程中逐步展开，
+    但最小种子是 j = 1/2。
+    
     ★ 符号约定 (2026) ★ "临界频率"就是前网络能量子频率 ν ——
-    当序参量 Φ=0 时，频率 ν 决定自旋：j = 1/2（半整数量子化）。 -/
+    当序参量 Φ=0 时，最小网络自旋 j_min = 1/2（半整数量子化）。 -/
 noncomputable def critical_spin_guess (N_c : ℕ) (ν_val : DiscreteFrequency) : ℝ :=
   if order_parameter_phi_guess N_c ν_val = 0 then (1/2 : ℝ) else 0
 
@@ -369,13 +401,36 @@ theorem hpi_fixed_point_compat (f_k : DiscreteFrequency) :
 
 /-- 检验4：序参量临界条件给出半整数自旋
 
-    当 Φ = 0 时 j = 1/2。临界对 (N_c, f) 满足 N_c*f 是奇数。 -/
+    当 Φ = 0 时，最小网络自旋 j_min = 1/2。
+    临界对 (N_c, f) 满足 N_c*f 是奇数。
+
+    完整的网络自旋谱 j ∈ {0, 1/2, 1, 3/2, 2, ...}。
+    对于满足临界条件的对 (N_c, f)，网络自旋值由下式给出：
+      j(N_c, f) = (N_c·f) / 2
+    这给出所有半整数自旋 j = 1/2, 3/2, 5/2, ...
+    整数自旋 j ∈ ℕ 在一级质变后的网络化再生产过程中涌现。 -/
 theorem critical_condition_gives_half_spin (N_c f : ℕ) :
     order_parameter_phi_guess N_c f = 0 → critical_spin_guess N_c f = 1/2 := by
   intro h
   dsimp [critical_spin_guess]
   rw [h]
   simp
+
+/-- 检验4b：网络自旋值公式验证
+
+    当 N_c·f 为奇数时，network_spin_value 返回 (N_c·f)/2。
+    这给出半整数自旋谱 j = 1/2, 3/2, 5/2, ...
+
+    例：
+    N_c=1, f=1 → network_spin_value = 1/2  ✓（最小非平凡）
+    N_c=1, f=3 → network_spin_value = 3/2  ✓
+    N_c=3, f=1 → network_spin_value = 3/2  ✓
+    N_c=3, f=3 → network_spin_value = 9/2  ✓ -/
+theorem network_spin_value_formula (N_c f : ℕ) (h_odd : (N_c * f) % 2 = 1) :
+    network_spin_value N_c f = (N_c * f : ℝ) / 2 := by
+  dsimp [network_spin_value]
+  rw [h_odd]
+  rfl
 
 /-- 检验5：公理5兼容性（质变产生新形式）
 
@@ -396,16 +451,20 @@ end ConsistencyCheck
     所有 10 条边等长：True（Wolfram 验证）
 
   光速与能量子频率关系:
-    c = D · f = √2 · f
-    若 c = 299792458 m/s（实验值），则 f = c/(√2·ℓ₀)（需 ℓ₀ 自洽确定）
+    c = D · ν = √2 · ν
+    若 c = 299792458 m/s（实验值），则 ν = c/(√2·ℓ₀)（需 ℓ₀ 自洽确定）
 
-  自旋与分裂:
-    j = 1/2（序参量 Φ=0 ⇒ 半整数量子化）
+  网络自旋与分裂:
+    最小网络自旋 j_min = 1/2（序参量 Φ=0 ⇒ 半整数量子化）
+    完整网络自旋谱 j ∈ {0, 1/2, 1, 3/2, 2, ...}
+    对于临界对 (N_c, ν)，网络自旋值 j = (N_c·ν)/2
     分裂数 = 2（Catalan(2) = 2）
 
-  临界对列举（N_c · f 为奇数的前 10 对）:
-    (1,1), (1,3), (1,5), (1,7), (1,9), (1,11),
-    (3,1), (3,3), (3,5), (3,7)
+  临界对列举（N_c · ν 为奇数的前 10 对）:
+    (1,1) → j = 1/2,  (1,3) → j = 3/2,  (1,5) → j = 5/2,
+    (1,7) → j = 7/2,  (1,9) → j = 9/2,  (1,11) → j = 11/2,
+    (3,1) → j = 3/2,  (3,3) → j = 9/2,  (3,5) → j = 15/2,
+    (3,7) → j = 21/2
   ======================================================================-/
 
 section ConcreteValues
@@ -538,15 +597,27 @@ def isNetworkActivated (N f : ℕ) (overlap overlap_c : ℝ) : Prop :=
 
     在临界点 (N_c, f) 同时涌现的属性。
 
-    注意：光速和最小距离的有量纲值分别需要 ℓ₀（基础长度）和 f（能量子频率）。
-    √2, 1/2, 2 是无量纲纯数。 -/
+    注意：光速和最小距离的有量纲值分别需要 ℓ₀（基础长度）和 ν（能量子频率）。
+    √2, 1/2, 2 是无量纲纯数。
+
+    网络自旋：
+    - 最小非平凡自旋（临界点）：j_min = 1/2
+    - 完整网络自旋谱：j ∈ {0, 1/2, 1, 3/2, 2, ...}
+    - 对于给定临界对 (N_c, ν)，自旋值 j = (N_c·ν)/2
+    - 半整数自旋来自临界条件 N_c·ν 是奇数
+    - 整数自旋来自一级质变后的网络化再生产过程 -/
 structure Level1EmergentProperties (N_c f : ℕ) where
-  /-- 光速归一化值：c/(ℓ₀·f) = √2 -/
+  /-- 光速归一化值：c/(ℓ₀·ν) = √2 -/
   speedOfLight_normalized : ℝ := Real.sqrt 2
-  /-- 光速有量纲值：c = √2 · ℓ₀ · f（f 前网络, c 涌现）-/
+  /-- 光速有量纲值：c = √2 · ℓ₀ · ν（ν 前网络, c 涌现）-/
   speedOfLight_dimensional (ℓ₀ : ℝ) : ℝ := Real.sqrt 2 * ℓ₀ * (f : ℝ)
-  /-- 自旋：j = 1/2 -/
+  /-- 最小网络自旋（临界点）：j_min = 1/2 -/
   spin : ℝ := 1/2
+  /-- 网络自旋值：j(N_c, f) = (N_c·f)/2（当 N_c·f 是奇数时）
+      给出半整数自旋谱 j = 1/2, 3/2, 5/2, ... -/
+  networkSpinValue : ℝ := (N_c * f : ℝ) / 2
+  /-- 完整网络自旋谱：j ∈ {0, 1/2, 1, 3/2, 2, ...} -/
+  fullSpinSpectrum : Set ℝ := {0} ∪ {j | ∃ (k : ℕ), j = (k+1 : ℝ)/2}
   /-- 最小距离无量纲值：l_min/ℓ₀ = √2 -/
   minDistance_normalized : ℝ := Real.sqrt 2
   /-- 最小距离有量纲值：l_min = √2 · ℓ₀ -/

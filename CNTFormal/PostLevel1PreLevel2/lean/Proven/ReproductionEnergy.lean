@@ -21,6 +21,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Data.Nat.Basic
 import Mathlib.Tactic.Ring
 import Foundations.lean.Proven.CategoryTheory
+import Foundations.lean.Proven.ReproductionPeriod
 
 set_option maxHeartbeats 400000
 set_option checkBinderAnnotations false

@@ -247,7 +247,7 @@ def totalNn (nk_form : NKForm) (mark_form : MarkIncrement) (N_c n0 : ℕ) : ℕ 
     3. 序参量临界: Φ(Nn, f_c) = 0
     4. 几何耦合: l_min = diam(Δ₄) · g₃
     5. 光速: c = f_c · l_min · g₂
-    6. 自旋: j = 1/2
+    6. 自旋: j_min = 1/2（完整谱 j = 0, 1/2, 1, 3/2, ...）
     7. 质能: m = Nn · h · f_c / c²
   ======================================================================-/
 
@@ -362,9 +362,24 @@ def checkIntegerity (N_c f_c : ℕ) : Bool :=
 noncomputable def checkPositivity (c l_min m : ℝ) : Bool :=
   c > 0 && l_min > 0 && m > 0
 
-/-- 检查自旋量子化：2j ∈ ℕ → j = 1/2 给出 2j = 1 ∈ ℕ -/
+/-- 检查自旋量子化：2j ∈ ℕ
+
+    最小非平凡自旋 j_min = 1/2（来自临界条件 N_c·f 是奇数）。
+    完整网络自旋谱 j ∈ {0, 1/2, 1, 3/2, 2, ...}。
+    对于给定临界对 (N_c, f)，网络自旋值 j = (N_c·f)/2。
+    此函数验证最小自旋条件（j = 1/2 是基本筛选条件）。 -/
 noncomputable def checkSpinQuantization (spin : ℝ) : Bool :=
   spin = 1/2
+
+/-- 检查完整自旋谱条件：网络自旋值 j = (N_c·f)/2 是半整数
+
+    当 N_c·f 是奇数时，j = (N_c·f)/2 给出半整数。
+    此函数验证传入的 (N_c, f) 对是否满足：
+    1. N_c·f 是奇数（临界条件）
+    2. 因此 j 是半整数
+    3. 这是完整自旋谱 j ∈ {0, 1/2, 1, 3/2, 2, ...} 的一部分 -/
+def checkFullSpinSpectrum (N_c f : ℕ) : Bool :=
+  (N_c * f) % 2 = 1
 
 /-- 求解单个参数组合，返回所有解 -/
 noncomputable def solveForParamSet (ps : ParameterSet) (n0 : ℕ) (g2 g3 _α_param : ℝ) : List SearchSolution :=
@@ -688,7 +703,9 @@ theorem search_conclusion_existence : True := by
       Nn - α·f_c = 0 → f_c = 3/α, α=3 → f_c = 1（最小性）
       l_min = √2 · ℓ₀（以基础长度标度）
       c = √2 · ℓ₀ · f_c（量纲 [L·T⁻¹]）
-      j = 1/2（自旋量子化 2j=1∈ℕ）
+      j_min = 1/2（最小非平凡自旋，来自 N_c·f_c = 3 是奇数）
+      完整网络自旋谱 j ∈ {0, 1/2, 1, 3/2, 2, ...}
+      网络自旋值 j(N_c, f_c) = (N_c·f_c)/2 = 3/2
 
     结论：(N_c, Nn, f_c) = (3, 3, 1) 是最简参数组合下
     满足所有基本筛选条件的确定解。 -/
@@ -768,7 +785,8 @@ theorem search_conclusion_physical_quantities : True := by
     一级质变 (N_c=3, f_c=1) 标记从单核孤立再生产
     过渡到网络化再生产。
 
-    涌现自旋 j=1/2 与 LQG 的最小非平凡自旋表示一致。
+    涌现自旋 j_min=1/2 与 LQG 的最小非平凡自旋表示一致。
+    完整网络自旋谱 j ∈ {0, 1/2, 1, 3/2, ...} 对应 LQG 自旋网络边的自旋标记。
     l_min=√2 与面积谱最小本征值候选一致，
     但需要进一步与 LQG 面积算符 λ·√(j(j+1)) 比较。
 
