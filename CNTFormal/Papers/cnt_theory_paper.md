@@ -824,6 +824,8 @@ theorem irreversibility_requires_positive_time
 
 ## 7. 精细结构常数的几何推导
 
+> **权威整合版**：完整的严格推导（含偏差分析、参考文献、认识论标记）参见 [../Foundations/附录A-α的严格推导.md](../Foundations/附录A-α的严格推导.md)。本节保留核心推导链以备论文自足性。
+
 ### 7.1 推导步骤概述
 
 从4-单纯形几何到精细结构常数的完整推导链：
