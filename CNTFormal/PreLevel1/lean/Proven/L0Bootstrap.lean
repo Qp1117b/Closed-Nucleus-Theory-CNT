@@ -31,7 +31,7 @@ import Foundations.lean.Proven.Dimensions
 import Level1.lean.Proven.Level1Transition
 import Level2.lean.Proven.Level2Transition
 
-namespace CNTFormal.Level0.L0Bootstrap
+namespace CNTFormal.PreLevel1.L0Bootstrap
 
 open Foundations.Strict
 open Real
@@ -457,4 +457,4 @@ structure ClosedSystemTheorem where
   eq_emergent_c : c = Real.sqrt 2 * ℓ₀ * (c / (Real.sqrt 2 * ℓ₀))  -- trivial identity placeholder
   eq_G_structure : G = Real.sqrt 2 * ε₂ * c ^ 3 * ℓ₀ ^ 2 / h
 
-end CNTFormal.Level0.L0Bootstrap
+end CNTFormal.PreLevel1.L0Bootstrap

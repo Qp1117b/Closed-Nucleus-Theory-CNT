@@ -1,4 +1,5 @@
 import PreLevel1.lean.Proven.HistoryAccumulation
+import PreLevel1.lean.Proven.L0Bootstrap
 import PreLevel1.lean.Proven.PhaseTransitionSearch
 import PreLevel1.lean.Proven.SimplexDominance
 import PreLevel1.lean.Proven.SimplexAsNucleus

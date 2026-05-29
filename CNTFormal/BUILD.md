@@ -77,15 +77,12 @@ CNTFormal/
 │   │       ├── SimplexGeometry.lean      # 单纯形几何
 │   │       └── StrictnessConfig.lean     # 严格性配置
 │   └── *.md              # 理论文档
-├── Level0/                # 第0层理论
-│   └── lean/
-│       └── Proven/
-│           └── L0Bootstrap.lean
 ├── PreLevel1/             # 一级质变前理论
 │   └── lean/
 │       ├── Conjectures/  # 猜想
 │       │   └── KernelPerspective.lean
 │       └── Proven/       # 已证明
+│           └── L0Bootstrap.lean          # ℓ₀ Bootstrap定理
 ├── Level1/                # 一级质变理论
 │   └── lean/
 │       ├── Conjectures/  # 猜想
@@ -117,7 +114,7 @@ CNTFormal/
 1. **KernelPerspective.lean** 包含2个 `sorry`：
    - 第169行
    - 第206行
-   
+
    这些是未完成的证明，需要后续补充。
 
 2. **PhaseTransitionSearch.lean** 输出调试信息：
