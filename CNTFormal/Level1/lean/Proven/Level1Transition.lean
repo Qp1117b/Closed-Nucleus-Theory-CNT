@@ -487,8 +487,8 @@ theorem minimal_distance_dimensionless : simplex4_edge_length_exact = Real.sqrt 
 /-- 有量纲最小距离：l_min = √2 · ℓ₀
 
     注意：这是闭合核网络的最小再生产距离，非时空最小标度。
-    时空最小标度 ℓ_P = √(ħG/c³) 在 G 涌现后才定义（一级质变后），
-    且仅在二级质变后经典时空涌现时才获得完整的物理意义。 -/
+    时空最小标度 ℓ_P = √(ħG/c³) 在 G 推导出后才定义（一级质变后）。
+    时空本身是连续的背景，不"涌现"自网络（见最终本体论）。 -/
 noncomputable def minimal_distance_dimensional (ℓ₀ : ℝ) : ℝ :=
   Real.sqrt 2 * ℓ₀
 
