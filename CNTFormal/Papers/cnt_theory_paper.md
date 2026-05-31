@@ -1718,6 +1718,66 @@ $$\rho(t) = \rho_{\max} \cdot \frac{e^{j_{\perp} t}}{1 + e^{j_{\perp} t}}, \quad
 
 **核心结论**：质量从0以S型曲线增长至饱和，是能量子流在闭合核表面信息压缩达到贝肯斯坦极限的动态涌现过程。
 
+### 9.19 曲率作为初始几何：质量形成的几何基础（v3.0）
+
+> 源自 [质量形成的微分方程_v3.md](../docs/archive/质量形成的微分方程_v3.md)
+
+§9.18 提供了质量形成的动力学描述，但未回答一个根本问题：能量子为何会流向闭合核表面？v3.0 给出几何回答——闭合核是时空中的纯几何结构，带有初始曲率（无质量），能量子沿弯曲时空的测地线运动，部分测地线自然经过闭合核表面。
+
+**初始度规**：$g_{\mu\nu}^{(0)}$ 描述闭合核周围的时空几何，是初始的、几何的，不依赖于质量。
+
+**关键反转**：
+- 传统 GR：$g_{\mu\nu}$ 由 $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ 决定，质量是曲率的源
+- CNT v3.0：$g_{\mu\nu}^{(0)}$ 是初始几何，质量是曲率表现的涌现现象
+
+**能量子测地线方程**：
+
+$$\frac{d^2x^\mu}{d\tau^2} + \Gamma^{(0)\mu}_{\alpha\beta} \frac{dx^\alpha}{d\tau} \frac{dx^\beta}{d\tau} = 0$$
+
+其中 $\Gamma^{(0)\mu}_{\alpha\beta}$ 由初始度规 $g_{\mu\nu}^{(0)}$ 计算。
+
+**能量子数守恒**：
+
+$$\nabla_\mu^{(0)} J^\mu = 0$$
+
+**测地线通量密度** $\sigma(x,t)$：
+
+$$\sigma(x,t) = \int_{\text{测地线经过 } x} j_0(x_0, u_0) \cdot \delta^{(3)}(x - x_{\text{geo}}(\tau)) \cdot |u^\mu n_\mu| \, d\tau \, d^3x_0 \, d^3u_0$$
+
+$\sigma(x,t)$ 完全由初始度规 $g_{\mu\nu}^{(0)}$ 决定，与质量无关——曲率是因，质量是果。
+
+**信息密度演化**：
+
+$$\frac{\partial \rho}{\partial t} = \sigma(x,t) \cdot \left(1 - \frac{\rho}{\rho_{\max}}\right)$$
+
+**完整演化方程组（v3.0）**：
+
+$$\begin{cases}
+\frac{d^2x^\mu}{d\tau^2} + \Gamma^{(0)\mu}_{\alpha\beta} \frac{dx^\alpha}{d\tau} \frac{dx^\beta}{d\tau} = 0 & \text{(能量子测地线方程)} \\
+\nabla_\mu^{(0)} J^\mu = 0 & \text{(能量子数守恒)} \\
+\sigma(x,t) = \int j_0 \cdot \delta(x - x_{\text{geo}}) \cdot |u^\mu n_\mu| \, d\tau d^3x_0 d^3u_0 & \text{(测地线通量密度)} \\
+\frac{\partial \rho}{\partial t} = \sigma(x,t) \cdot \left(1 - \frac{\rho}{\rho_{\max}}\right) & \text{(信息密度演化)} \\
+m(t) = \frac{h\nu}{c^2} \int_S \rho(x,t) \sqrt{\gamma^{(0)}} \, d^2x & \text{(质量涌现)} \\
+\rho_{\max} = \frac{\ln 2}{4\ell_P^2} & \text{(贝肯斯坦上限)}
+\end{cases}$$
+
+**稳态质量**：
+
+$$m_{\text{final}} = \frac{h\nu \rho_{\max}}{c^2} \int_S \sqrt{\gamma^{(0)}} \, d^2x = \frac{h\nu \rho_{\max}}{c^2} A_{\text{visible}}^{(0)}$$
+
+$A_{\text{visible}}^{(0)}$ 由初始度规计算，质量完全由初始几何决定，无自举增强循环。
+
+**v3.0 vs v2.0**：
+
+| 方面 | v2.0 | v3.0 |
+|------|------|------|
+| 度规 | Kerr $g_{\mu\nu}(M,J)$ | 初始度规 $g_{\mu\nu}^{(0)}$ |
+| 质量与曲率 | 质量产生曲率（传统 GR） | 曲率是初始的，质量是涌现的 |
+| 自举循环 | 有 | 无 |
+| 测地线方程 | 由动态质量决定 | 由初始几何决定 |
+
+**核心结论**：闭合核是时空中的几何凹陷，能量子沿几何自然流动，不需要引力吸引。质量是信息压缩饱和的涌现表现。曲率是初始的、几何的；质量是后来的、涌现的——完全自洽，避免了传统 GR 中"先有质量还是先有曲率"的循环困境。
+
 
 ---
 
