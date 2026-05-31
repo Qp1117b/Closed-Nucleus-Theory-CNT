@@ -14,7 +14,7 @@
 > - [卡西米尔系数严格计算探索.md](../docs/archive/卡西米尔系数严格计算探索.md)（C₀分解、g_cm推导、S₅-Bernoulli链，已归档）
 > - [卡西米尔效应与真空灾难的统一CNT框架.md](../docs/archive/卡西米尔效应与真空灾难的统一CNT框架.md)（两孔统一，已归档）
 > - [所有卡西米尔效应的虚闭合核解释——覆盖范围评估.md](../docs/archive/所有卡西米尔效应的虚闭合核解释——覆盖范围评估.md)（21类变体评估、规范群分类，已归档）
-> - [LQG-CNT系统对比与万物统一框架.md](LQG-CNT系统对比与万物统一框架.md)（第九-十一部分：本体论、自洽性审查、卡西米尔效应推导）
+> - [LQG-CNT系统对比与万物统一框架.md](LQG-CNT系统对比.md)（第九-十一部分：本体论、自洽性审查、卡西米尔效应推导）
 > - [cnt_theory_paper.md](cnt_theory_paper.md)（CNT理论主文档）
 >
 > **计算脚本**：[Scripts/](../Scripts/)（13个Wolfram/Python验证脚本）

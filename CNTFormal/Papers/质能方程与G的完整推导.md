@@ -297,6 +297,6 @@ $$\boxed{\frac{1}{\alpha_0} = \frac{16384\pi}{375} \approx 137.258}$$
 
 - **CNT 主论文**：[cnt_theory_paper.md](cnt_theory_paper.md) — DCNC公理体系、理论全貌
 - **交换耦合 J₀**：[../Level2/03-二级质变理论.md](../Level2/03-二级质变理论.md) — J₀ 与 γ 的推导
-- **LQG-CNT 对比**：[LQG-CNT系统对比与万物统一框架.md](LQG-CNT系统对比与万物统一框架.md)
+- **LQG-CNT 对比**：[LQG-CNT系统对比与万物统一框架.md](LQG-CNT系统对比.md)
 - **粒子物理历史**：[粒子物理历史探索.md](粒子物理历史探索.md)
 - **α 推导详细展开**：[附录A-α的严格推导.md](附录A-α的严格推导.md)

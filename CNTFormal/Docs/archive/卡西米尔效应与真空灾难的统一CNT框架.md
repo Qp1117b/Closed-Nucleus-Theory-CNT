@@ -9,7 +9,7 @@
 > - 详细系数分解与数学链：[卡西米尔系数严格计算探索.md](卡西米尔系数严格计算探索.md)
 > - 实验文献与证伪条件：[虚闭合核真空引力效应——理论与实验研究.md](虚闭合核真空引力效应——理论与实验研究.md)
 > - 完整宇宙学计算：[cosmological_constant_cnt.wls](../Scripts/cosmological_constant_cnt.wls)
-> - CNT本体论与理论全貌：[LQG-CNT系统对比与万物统一框架.md](LQG-CNT系统对比与万物统一框架.md)
+> - CNT本体论与理论全貌：[LQG-CNT系统对比与万物统一框架.md](LQG-CNT系统对比.md)
 
 ---
 
