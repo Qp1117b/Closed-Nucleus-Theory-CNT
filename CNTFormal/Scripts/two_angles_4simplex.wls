@@ -124,10 +124,10 @@ Print[];
 Print["2D face bivector:       cos = 1/3, beta  ~ 70.5 deg"];
 Print["  -> This is the angle between triangular FACES (sharing edge)"];
 Print["  -> It governs how curvature is distributed WITHIN a cell"];
-Print["  -> NOT directly relevant for Casimir (but may be for other physics)"];
+Print["  -> Relevant for understanding curvature propagation in network dynamics"];
 Print[];
 
-Print["WHY 1/4 and not 1/3 for Casimir?"];
+Print["Why 1/4 and not 1/3?"];
 Print["  Curvature (deficit angle) lives on 2D hinges (triangle faces)."];
 Print["  But curvature PROPAGATES through the 4-simplex via the 3D cells."];
 Print["  The angle between cells determines the coupling between"];
