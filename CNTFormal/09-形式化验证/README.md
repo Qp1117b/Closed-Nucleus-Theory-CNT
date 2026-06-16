@@ -1,6 +1,6 @@
 # 09-形式化验证
 
-本目录是CNT形式化验证的文档入口。实际的Lean代码位于 `CNTFormal/` 根目录下的各Lean库中。
+本目录包含CNT的全部Lean形式化验证代码。
 
 ## Lean库结构
 
@@ -17,7 +17,7 @@ CNT的形式化验证分为五个层次，对应物理理论的不同阶段：
 ## 编译命令
 
 ```bash
-cd CNTFormal
+cd CNTFormal/09-形式化验证
 lake build Foundations
 lake build PreLevel1
 lake build Level1
@@ -42,4 +42,4 @@ lake build
 | 04-核心方程 | Foundations (ReproductionEnergy, ReproductionPeriod) |
 | 07-质变理论 | Level1, Level2, PreLevel1, PostLevel1PreLevel2 |
 
-详见 [BUILD.md](../BUILD.md)
+详见 [BUILD.md](BUILD.md)
