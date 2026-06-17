@@ -101,7 +101,6 @@ CNTFormal/
 │   ├── cnt_theory_paper.md               # CNT主论文（含§1.6哲学基础）
 │   ├── LQG-CNT系统对比.md                # 权威整合：LQG-CNT对比、电荷起源
 │   ├── 质能方程与G的完整推导.md            # E=mc² + G + α 三合一推导 → 已移至 Foundations/
-│   ├── 粒子物理历史探索.md               # v3.0→v3.1变迁、量子几何到粒子物理 → 已归档至 Docs/archive/
 ├── lakefile.toml          # Lake 构建配置
 └── lean-toolchain         # Lean 版本指定
 ```

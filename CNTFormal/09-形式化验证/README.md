@@ -31,6 +31,11 @@ lake build
 
 - `PreLevel1/lean/Conjectures/KernelPerspective.lean` 包含2个 `sorry`（第169、206行）
 - `PreLevel1/lean/Proven/PhaseTransitionSearch.lean` 输出调试信息
+- 多个Proven目录文件使用Conjectures命名空间（AxiomConsistency.lean, IntertwinerStructure.lean, Level2Transition.lean）
+- KernelPerspective.lean使用Proven命名空间但位于Conjectures目录
+- PhaseTransitionSearch.lean使用Foundations.Strict命名空间但位于PreLevel1
+- 29个`theorem xxx : True := by trivial`占位符（含电荷量子化、光子无质量等核心结论）
+- 18个axiom声明（含重复定义和工作假设混入）
 
 ## 与理论文档的对应关系
 

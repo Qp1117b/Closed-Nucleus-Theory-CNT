@@ -18,7 +18,7 @@ import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Data.Fin.Basic
 import Foundations.lean.Proven.CategoryTheory
 
-namespace Level2.lean.Conjectures
+namespace Level2.lean.Proven
 
 open CategoryTheory
 open Foundations.lean.Proven
@@ -94,4 +94,4 @@ OPEN-4: intertwiner再生产的量子效应
   - 涉及HPI修正与intertwiner动力学的耦合
 -/
 
-end Level2.lean.Conjectures
+end Level2.lean.Proven

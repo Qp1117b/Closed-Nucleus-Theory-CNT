@@ -19,7 +19,7 @@ import Mathlib.Analysis.Real.Pi.Bounds
 import Foundations.lean.Proven.CategoryTheory
 import Foundations.lean.Proven.AlphaDerivation
 
-namespace Level1.lean.Conjectures
+namespace Level1.lean.Proven
 
 open Real
 open CategoryTheory
@@ -166,4 +166,4 @@ OPEN-4: 公理系统的独立性证明
   - 涉及公理系统的极小性
 -/
 
-end Level1.lean.Conjectures
+end Level1.lean.Proven

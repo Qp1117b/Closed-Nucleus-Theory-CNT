@@ -38,9 +38,9 @@ import Mathlib.Data.Real.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Data.Nat.Basic
 
-namespace Foundations.Strict
+namespace PreLevel1.lean.Proven
 
-open Foundations.Strict
+-- open Foundations.Strict  -- 已注释：命名空间改为PreLevel1.lean.Proven后此open无效（本文件不导入Foundations.Strict模块）
 
 /- ======================================================================
   第一部分：参数空间定义（指导.md 第五节）
@@ -567,6 +567,7 @@ noncomputable def generateReport (sol : SearchSolution) (g2 g3 : ℝ) : Solution
           ∧ f_c ∈ ℕ⁺ ∧ N_c ∈ ℕ⁺
 
     证明需要exp（穷举验证）。 -/
+-- 【⚠️占位符】相变搜索可行解存在性，当前为True占位符
 theorem existence_of_feasible_solution : True := by
   trivial
 
@@ -668,9 +669,10 @@ def searchIntegerPriorityOne : List IntegerSolution :=
 def uniqueMinimalSolutions : List IntegerSolution :=
   searchIntegerPriorityOne.eraseDups
 
-#eval! uniqueMinimalSolutions.length
+-- 【调试输出】以下#eval!为数值验证用，非严格证明，正式发布时应移除或转化为example
+-- #eval! uniqueMinimalSolutions.length
 
-#eval! uniqueMinimalSolutions
+-- #eval! uniqueMinimalSolutions
 
 /- ======================================================================
   第十一部分：搜索结论定理 —— 形式化证明
@@ -795,4 +797,4 @@ theorem search_conclusion_physical_quantities : True := by
 theorem search_conclusion_lqg_connection : True := by
   trivial
 
-end Foundations.Strict
+end PreLevel1.lean.Proven
