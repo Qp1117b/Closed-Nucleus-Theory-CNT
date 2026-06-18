@@ -334,7 +334,7 @@ noncomputable def computeLightSpeed (ls_form : LightSpeedForm) (f_c : ℕ) (l_mi
   | .S3_geometric  => simplex4_diam_pure * (f_c : ℝ) * g2
   | .S4_network    => (Nn : ℝ) * l_min * (f_c : ℝ) / 3
 
-/-- 计算质量（指导.md 方程7）
+/-- 计算质量（指导.md 方程5）
 
     m = Nn · h · f_c / c² -/
 noncomputable def computeMass (h Nn f_c : ℝ) (c : ℝ) : ℝ :=
