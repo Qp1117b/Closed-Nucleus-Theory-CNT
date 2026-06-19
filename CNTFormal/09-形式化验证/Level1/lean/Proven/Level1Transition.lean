@@ -1,10 +1,10 @@
 
 
 /-
-一级质变方程形式猜测
+一级量变质变方程形式猜测
 
 本文件根据 DCNC 公理体系和整数化改造（ReproductionPeriod.lean），
-对一级质变的四个关键方程进行形式化猜测。
+对一级量变质变的四个关键方程进行形式化猜测。
 
 所有内容标记为 工作假设（working hypotheses），
 待阶段3的形式化自洽性检验。
@@ -13,7 +13,7 @@
   ν 是前网络能量子固有频率（不是网络化产物）
   c = √2·ℓ₀·ν 是网络化涌现量（由 ℓ₀ 和 ν 共同决定）
   "再生产频率"f_rep = ν 是 ν 在网络化层面上的同义表达
-  电子是二级质变后产物，不能用 m_e 标定 ℓ₀ 或 ν
+  电子是二级量变质变后产物，不能用 m_e 标定 ℓ₀ 或 ν
 
 约束条件：
   - N, f, k ∈ ℕ（整数约束）
@@ -243,7 +243,7 @@ def order_parameter_phi_guess (N_c : ℕ) (f : DiscreteFrequency) : ℤ :=
 
 /-- [工作假设] 临界条件：Φ(N_c, f) = 0
 
-    等价于 N_c · f 是奇数。这是质变发生的最小必要条件。 -/
+    等价于 N_c · f 是奇数。这是量变质变发生的最小必要条件。 -/
 def critical_condition_guess (N_c : ℕ) (f : DiscreteFrequency) : Prop :=
   order_parameter_phi_guess N_c f = 0
 
@@ -265,8 +265,8 @@ def critical_condition_guess (N_c : ℕ) (f : DiscreteFrequency) : Prop :=
     当 N_c·f 不是奇数（临界条件未满足）时，返回 j = 0。
 
     注意：完整网络自旋谱为 j ∈ {0, 1/2, 1, 3/2, 2, 5/2, ...}。
-    半整数 j 来自临界条件 N_c·f = 奇数（即一级质变本身），
-    整数 j ∈ ℕ 在一级质变后的网络化再生产过程中通过
+    半整数 j 来自临界条件 N_c·f = 奇数（即一级量变质变本身），
+    整数 j ∈ ℕ 在一级量变质变后的网络化再生产过程中通过
     边耦合和自旋叠加涌现，由更一般的 SU(2) 表示论决定。 -/
 noncomputable def network_spin_value (N_c : ℕ) (f : DiscreteFrequency) : ℝ :=
   if (N_c * f) % 2 = 1 then (N_c * f : ℝ) / 2 else 0
@@ -278,7 +278,7 @@ noncomputable def network_spin_value (N_c : ℕ) (f : DiscreteFrequency) : ℝ :
     对应临界对 (N_c, f) = (1, 1) 或任何 N_c·f = 1 的组合。
 
     完整的网络自旋谱 j = 0, 1/2, 1, 3/2, 2, ...
-    在一级质变后的网络化再生产过程中逐步展开，
+    在一级量变质变后的网络化再生产过程中逐步展开，
     但最小种子是 j = 1/2。
     
     ★ 符号约定 (2026) ★ "临界频率"就是前网络能量子频率 ν ——
@@ -408,7 +408,7 @@ theorem hpi_fixed_point_compat (f_k : DiscreteFrequency) :
     对于满足临界条件的对 (N_c, f)，网络自旋值由下式给出：
       j(N_c, f) = (N_c·f) / 2
     这给出所有半整数自旋 j = 1/2, 3/2, 5/2, ...
-    整数自旋 j ∈ ℕ 在一级质变后的网络化再生产过程中涌现。 -/
+    整数自旋 j ∈ ℕ 在一级量变质变后的网络化再生产过程中涌现。 -/
 theorem critical_condition_gives_half_spin (N_c f : ℕ) :
     order_parameter_phi_guess N_c f = 0 → critical_spin_guess N_c f = 1/2 := by
   intro h
@@ -432,9 +432,9 @@ theorem network_spin_value_formula (N_c f : ℕ) (h_odd : (N_c * f) % 2 = 1) :
   rw [h_odd]
   rfl
 
-/-- 检验5：公理5兼容性（质变产生新形式）
+/-- 检验5：公理5兼容性（量变质变产生新形式）
 
-    一级质变的临界条件 Φ=0 触发分裂，
+    一级量变质变的临界条件 Φ=0 触发分裂，
     新核满足 S_new ≠ S_old（公理5的要求）。
     当前假设：每次分裂产生 2 个新核（Catalan(2) = 2 兼容）。 -/
 theorem level1_transition_compat_axiom5 (N_c f : ℕ) (h_crit : order_parameter_phi_guess N_c f = 0) :
@@ -487,7 +487,7 @@ theorem minimal_distance_dimensionless : simplex4_edge_length_exact = Real.sqrt 
 /-- 有量纲最小距离：l_min = √2 · ℓ₀
 
     注意：这是闭合核网络的最小再生产距离，非时空最小标度。
-    时空最小标度 ℓ_P = √(ħG/c³) 在 G 推导出后才定义（一级质变后）。
+    时空最小标度 ℓ_P = √(ħG/c³) 在 G 推导出后才定义（一级量变质变后）。
     时空本身是连续的背景，不"涌现"自网络（见最终本体论）。 -/
 noncomputable def minimal_distance_dimensional (ℓ₀ : ℝ) : ℝ :=
   Real.sqrt 2 * ℓ₀
@@ -548,7 +548,7 @@ theorem minimal_critical_pair : list_critical_pairs.head? = some (1, 1) := by
 end ConcreteValues
 
 /- ======================================================================
-  阶段4-5：一级质变推导与一致性验证
+  阶段4-5：一级量变质变推导与一致性验证
 
   流程：
   1. 孤立再生产（公理4: μ≫μ=μ）→ 持续释放产物
@@ -605,7 +605,7 @@ def isNetworkActivated (N f : ℕ) (overlap overlap_c : ℝ) : Prop :=
     - 完整网络自旋谱：j ∈ {0, 1/2, 1, 3/2, 2, ...}
     - 对于给定临界对 (N_c, ν)，自旋值 j = (N_c·ν)/2
     - 半整数自旋来自临界条件 N_c·ν 是奇数
-    - 整数自旋来自一级质变后的网络化再生产过程 -/
+    - 整数自旋来自一级量变质变后的网络化再生产过程 -/
 structure Level1EmergentProperties (N_c f : ℕ) where
   /-- 光速归一化值：c/(ℓ₀·ν) = √2 -/
   speedOfLight_normalized : ℝ := Real.sqrt 2
@@ -625,7 +625,7 @@ structure Level1EmergentProperties (N_c f : ℕ) where
   /-- 分裂数 = 2（Catalan数兼容） -/
   splitCount : ℕ := 2
 
-/-- [阶段5] 一致性验证：质变后的新核仍满足闭合核条件
+/-- [阶段5] 一致性验证：量变质变后的新核仍满足闭合核条件
 
     公理1要求新核存在幂等态射 μ 和非可逆态射 ε。
     新核由公理5保证存在且 S_new ≠ S_old。 -/
@@ -633,7 +633,7 @@ theorem post_transition_consistent (N_c f : ℕ) (_h_crit : isCritical N_c f) : 
   -- 验证新核的公理1条件（平凡真，因为具体构造待定）
   trivial
 
-/-- [阶段5] 一致性验证：质变后的分裂数
+/-- [阶段5] 一致性验证：量变质变后的分裂数
 
     分裂数 = 2 与 IntertwinerStructure 兼容
     （Catalan(2) = 2，反映 2 维 intertwiner 空间）。 -/
@@ -1087,12 +1087,12 @@ theorem f_period_product (c_val ell0 : ℝ) (hc0 : c_val ≠ 0) (he0 : ell0 ≠ 
 end NetworkReproductionExploration
 
 /- ======================================================================
-  §G 引力涌现：一级质变中的引力常数 G
+  §G 引力涌现：一级量变质变中的引力常数 G
 
-  在闭合核理论中，引力不是基本相互作用，而是从一级质变的
+  在闭合核理论中，引力不是基本相互作用，而是从一级量变质变的
   网络化再生产中涌现的。核心逻辑链：
 
-  (1) 一级质变 → 穿刺网络形成（自旋 j=1/2）
+  (1) 一级量变质变 → 穿刺网络形成（自旋 j=1/2）
   (2) 穿刺网络 ≡ LQG 自旋网络（桥接原理）
   (3) LQG 面积量子化 → 最小面积 A_min = 4π√3·γ·ℓ_P²
   (4) CNT 几何 → 基础面积 l_min² = 2ℓ₀²
@@ -1101,8 +1101,8 @@ end NetworkReproductionExploration
   (7) 网络演化 → N_p ∝ 2^m → G ∝ 2^{-m}
 
   关键参数：
-    ℓ₀  : 闭合核基础长度（一级质变涌现）
-    c   : 光速（一级质变涌现）
+    ℓ₀  : 闭合核基础长度（一级量变质变涌现）
+    c   : 光速（一级量变质变涌现）
     ℏ   : 普朗克常数（输入）
     γ   : Barbero-Immirzi 参数（LQG 自由参数，可由 CNT 确定）
     N_p : 网络穿刺数（再生产演化决定）
@@ -1121,7 +1121,7 @@ open Real
 /- ======================================================================
   §G1 基本物理常数
 
-  从一级质变涌现的常数和已知物理常数。
+  从一级量变质变涌现的常数和已知物理常数。
   ======================================================================-/
 
 /-- 普朗克常数（约化）ħ = h/(2π) -/
@@ -1156,7 +1156,7 @@ noncomputable def c_SI_numeric : ℝ := 299792458.0
        = 4π√3 · γ · ℓ_P²
 
   CNT 桥接原理（核心洞察）：
-    一级质变后形成的穿刺网络 ≡ LQG 的自旋网络。
+    一级量变质变后形成的穿刺网络 ≡ LQG 的自旋网络。
     每个穿刺由一次再生产事件产生，携带自旋 j=1/2。
     CNT 的最小面积 l_min² = 2ℓ₀² 被 N_p 个 LQG 面积量子铺满。
   ======================================================================-/
@@ -1314,7 +1314,7 @@ theorem planck_length_cnt_self_consistency
 
     其中：
     - ℓ₀：闭合核基础长度
-    - c：光速（一级质变涌现）
+    - c：光速（一级量变质变涌现）
     - ℏ：普朗克常数（约化）
     - 𝒩_grav = ℓ₀²/ℓ_P²：引力网络稀释因子（纯标度比） -/
 noncomputable def gravitational_constant_cnt
@@ -1336,7 +1336,7 @@ theorem gravitational_constant_self_consistency
   CNT 的核心预测：G 不是宇宙常数，它在网络再生产过程中演化。
 
   网络穿刺通过再生产扩张：
-    第 0 代（刚完成一级质变）：𝒩_grav(0) = 𝒩₀
+    第 0 代（刚完成一级量变质变）：𝒩_grav(0) = 𝒩₀
     第 1 代：𝒩_grav(1) = 2·𝒩₀
     第 m 代：𝒩_grav(m) = 2^m · 𝒩₀
 
@@ -1451,18 +1451,18 @@ theorem dirac_number_equals_ratio_sq (N_grav : ℝ) (hN : N_grav ≥ 0) :
   层次1：时空量子标度——普朗克标度
     - ℓ_P = √(ħG/c³)：时空离散化最小单位
     - 尺度由 G 决定，非由闭合核几何直接决定
-    - 一级质变后无经典时空（经典时空在二级质变涌现）
+    - 一级量变质变后无经典时空（经典时空在二级量变质变涌现）
 
   层次2：闭合核网络标度——核标度
     - 闭合核基础长度 ℓ₀（由 ε 通过 CNT 临界条件确定）
     - l_min = √2·ℓ₀（闭合核网络最小再生产距离）
-    - 不涉及时空——一级质变产物的标度是闭合核结构标度
+    - 不涉及时空——一级量变质变产物的标度是闭合核结构标度
 
   层次3：经典时空宏观标度——几何光学极限
-    - 经典广义相对论恢复（二级质变后，U(1)规范场涌现后）
+    - 经典广义相对论恢复（二级量变质变后，U(1)规范场涌现后）
     - G 表现为"常数"（变化率极小）
-    - 经典时空连续近似有效（仅二级质变后出现）
-    - Einstein场方程：二级质变后的经典时空中的有效方程
+    - 经典时空连续近似有效（仅二级量变质变后出现）
+    - Einstein场方程：二级量变质变后的经典时空中的有效方程
 
   连接关系（闭合核网络 → 时空）：
     𝒩_grav = ℓ₀²/ℓ_P²    （时空稀释因子：核尺度² / 时空量子²）
@@ -1493,7 +1493,7 @@ structure GravityScaleHierarchy where
     这需要研究闭合核的再生产遗传机制。
 
   GQ-2: 初始稀释因子 𝒩₀ 的确定？
-    𝒩₀ 对应一级质变刚完成时的标度分离。
+    𝒩₀ 对应一级量变质变刚完成时的标度分离。
     需通过 ℓ₀ 和 ℓ_P 的绝对标度来确定——ℓ₀ 由 ε 临界条件闭合。
 
   GQ-3: G 的演化能否被观测？

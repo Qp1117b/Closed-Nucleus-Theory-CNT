@@ -9,10 +9,10 @@ CNT的形式化验证分为五个层次，对应物理理论的不同阶段：
 | 库名 | 状态 | 对应理论层次 | 关键内容 |
 |------|------|-------------|---------|
 | **Foundations** | ✅ 编译成功 | 公理体系/本体论 | 基础定义、单纯形几何、α推导、再生产周期、范畴论 |
-| **PreLevel1** | ✅ 编译成功 | 一级质变前 | ℓ₀ Bootstrap定理、相变搜索、核视角猜想 |
-| **Level1** | ✅ 编译成功 | 一级质变理论 | 公理一致性、HPI公理对应、幂等量子化 |
+| **PreLevel1** | ✅ 编译成功 | 一级量变质变前 | ℓ₀ Bootstrap定理、相变搜索、核视角猜想 |
+| **Level1** | ✅ 编译成功 | 一级量变质变理论 | 公理一致性、HPI公理对应、幂等量子化 |
 | **PostLevel1PreLevel2** | ✅ 编译成功 | 过渡理论 | 再生产网络质量、标度涌现、再生产无线电速度 |
-| **Level2** | ✅ 编译成功 | 二级质变理论 | 交织子结构、二级跃迁 |
+| **Level2** | ✅ 编译成功 | 二级量变质变理论 | 交织子结构、二级跃迁 |
 
 ## 编译命令
 
@@ -45,6 +45,6 @@ lake build
 | 02-本体论 | Foundations (Basic, CategoryTheory) |
 | 03-方法论 | Foundations (Dimensions, StrictnessConfig) |
 | 04-核心方程 | Foundations (ReproductionEnergy, ReproductionPeriod) |
-| 07-质变理论 | Level1, Level2, PreLevel1, PostLevel1PreLevel2 |
+| 07-量变质变理论 | Level1, Level2, PreLevel1, PostLevel1PreLevel2 |
 
 详见 [BUILD.md](BUILD.md)

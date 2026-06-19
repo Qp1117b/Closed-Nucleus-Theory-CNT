@@ -17,8 +17,8 @@
 依赖关系:
   - Foundations.lean.Proven.SimplexGeometry (Θ, sin²(5Θ))
   - Foundations.lean.Proven.Dimensions (维度与标度)
-  - Level1.lean.Proven.Level1Transition (一级质变)
-  - Level2.lean.Proven.Level2Transition (二级质变, J₀)
+  - Level1.lean.Proven.Level1Transition (一级量变质变)
+  - Level2.lean.Proven.Level2Transition (二级量变质变, J₀)
 -/
 
 import Mathlib.Data.Real.Basic
@@ -49,7 +49,7 @@ noncomputable def dihedral_angle : ℝ :=
 noncomputable def deficit_two_nuclei : ℝ :=
   2 * π - 2 * dihedral_angle
 
-/-- 几何因子 Γ = 3/5 (质变前) -/
+/-- 几何因子 Γ = 3/5 (量变质变前) -/
 noncomputable def geometric_factor_pre : ℝ := 3/5
 
 /-- 网络几何因子 Γ_net = 1/3 (hinge占可见面比例) -/
@@ -60,7 +60,7 @@ noncomputable def geometric_factor_net : ℝ := 1/3
   ====================================================================== -/
 
 /--
-跃迁过剩（transition excess）：一级质变瞬间释放的不可吸收能量子。
+跃迁过剩（transition excess）：一级量变质变瞬间释放的不可吸收能量子。
 E_excess^(transition) = h·f_phys
 这是用于 Bootstrap 确定 ℓ₀ 的唯一过剩。
 -/
@@ -71,7 +71,7 @@ structure TransitionExcess where
   eq_energy : energy = h * f_phys
 
 /--
-再生产过剩（reproduction excess）：质变后每步网络耦合产生的额外产物。
+再生产过剩（reproduction excess）：量变质变后每步网络耦合产生的额外产物。
 ΔE_excess^(reprod)(k) = 2J₀·N_tot(k)·h·f_phys
 与 Bootstrap 独立。
 -/
@@ -317,11 +317,11 @@ theorem Gamma_net_is_one_third (hg : HingeGeometry) (hℓ₀_pos : hg.ℓ₀ > 0
   field_simp [h_hinge_pos.ne.symm]
 
 /- ======================================================================
-  §6 质变后 HPI Lagrangian (完整形式)
+  §6 量变质变后 HPI Lagrangian (完整形式)
   ====================================================================== -/
 
 /--
-质变后 HPI Lagrangian (H4):
+量变质变后 HPI Lagrangian (H4):
 
   L_k^(post) = h·f_phys · [2(f_count + J₀·N_tot(k-1))·Γ + J₀·N_tot(k-1)·Γ_net]
               · cos²(5·k·f_count·Θ)

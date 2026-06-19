@@ -77,14 +77,14 @@ CNTFormal/
 │   │       ├── SimplexGeometry.lean      # 单纯形几何
 │   │       └── StrictnessConfig.lean     # 严格性配置
 │   └── *.md              # 理论文档
-├── PreLevel1/             # 一级质变前理论
+├── PreLevel1/             # 一级量变质变前理论
 │   └── lean/
 │       ├── Conjectures/  # 猜想
 │       │   └── KernelPerspective.lean
 │       └── Proven/       # 已证明
 │           └── L0Bootstrap.lean          # ℓ₀ Bootstrap定理
-├── Level1/                # 一级质变理论
-│   ├── *.md              # 理论文档（04-一级质变理论.md）
+├── Level1/                # 一级量变质变理论
+│   ├── *.md              # 理论文档（01-一级量变质变理论.md）
 │   └── lean/
 │       ├── Conjectures/  # 猜想
 │       └── Proven/       # 已证明
@@ -93,8 +93,8 @@ CNTFormal/
 │   └── lean/
 │       ├── Conjectures/
 │       └── Proven/
-├── Level2/                # 二级质变理论
-│   ├── *.md              # 理论文档（03-二级质变理论.md, 02-自旋泡沫理论.md）
+├── Level2/                # 二级量变质变理论
+│   ├── *.md              # 理论文档（03-二级量变质变理论.md, 02-自旋泡沫理论.md）
 │   └── lean/
 │       └── Proven/
 ├── Papers/                # 学术论文与研究文档
@@ -111,9 +111,9 @@ CNTFormal/
 |------|------|------|
 | Foundations | ✅ 成功 | 基础理论层 |
 | PreLevel1 | ✅ 成功 | 含2个sorry（KernelPerspective.lean:169, 206） |
-| Level1 | ✅ 成功 | 一级质变理论 |
+| Level1 | ✅ 成功 | 一级量变质变理论 |
 | PostLevel1PreLevel2 | ✅ 成功 | 过渡理论层 |
-| Level2 | ✅ 成功 | 二级质变理论 |
+| Level2 | ✅ 成功 | 二级量变质变理论 |
 
 ## 已知问题
 
