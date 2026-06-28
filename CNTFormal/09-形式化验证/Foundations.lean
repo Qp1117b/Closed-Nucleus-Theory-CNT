@@ -21,3 +21,4 @@ import Foundations.lean.Proven.SimplexGeometry
 import Foundations.lean.Proven.AlphaDerivation
 import Foundations.lean.Proven.ReproductionPeriod
 import Foundations.lean.Proven.StrictnessConfig
+import Foundations.lean.Proven.CompositionalPAdic
