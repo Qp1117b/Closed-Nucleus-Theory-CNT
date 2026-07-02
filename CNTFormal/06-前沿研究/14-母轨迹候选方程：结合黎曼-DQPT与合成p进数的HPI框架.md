@@ -939,7 +939,6 @@ CNT 真正的预测力不在耦合常数的精确数值上，而在**结构约�
 - 质数动力跃迁 von Mangoldt 相位：[05-质数动力跃迁_vonMangoldt相位分析.py](../10-模拟/05-质数动力跃迁_vonMangoldt相位分析.py)
 - 三论文交叉验证：[06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py](../10-模拟/06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py)
 - 端到端 RG 跑动：[07-端到端RG跑动_跃迁点火到MZ.py](../10-模拟/07-端到端RG跑动_跃迁点火到MZ.py)
-- 统计投影收敛：[18-统计投影收敛分析.py](../10-模拟/18-统计投影收敛分析.py)
 
 ---
 
