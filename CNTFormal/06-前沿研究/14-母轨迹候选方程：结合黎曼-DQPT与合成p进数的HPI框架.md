@@ -936,9 +936,10 @@ CNT 真正的预测力不在耦合常数的精确数值上，而在**结构约�
 
 ### 16.7 计算代码
 
+- 质数动力跃迁 von Mangoldt 相位：[05-质数动力跃迁_vonMangoldt相位分析.py](../10-模拟/05-质数动力跃迁_vonMangoldt相位分析.py)
+- 三论文交叉验证：[06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py](../10-模拟/06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py)
 - 端到端 RG 跑动：[07-端到端RG跑动_跃迁点火到MZ.py](../10-模拟/07-端到端RG跑动_跃迁点火到MZ.py)
-- 母轨迹方程推导能标：[14-母轨迹方程推导能标.py](../10-模拟/14-母轨迹方程推导能标.py)
-- 耦合常数诚实分析：[15-母轨迹直接推导耦合常数.py](../10-模拟/15-母轨迹直接推导耦合常数.py)
+- 统计投影收敛：[18-统计投影收敛分析.py](../10-模拟/18-统计投影收敛分析.py)
 
 ---
 
@@ -1116,7 +1117,7 @@ CNT 的"统一"不在一个点上，而是沿着质数序列 $\{2, 3, 5\}$ 分�
 13. CNT 增强母轨迹计算（v1.0，已删除）：原使用旧相位函数 $\Phi = \sum \nu_p$，已由 v2.0 von Mangoldt 框架取代。
 14. CNT 相位函数深度分析（v1.0，已删除）：原分析旧相位函数结构定理，已由 v2.0 取代。
 15. CNT 质数动力跃迁分析（v2.0）：[05-质数动力跃迁_vonMangoldt相位分析.py](../10-模拟/05-质数动力跃迁_vonMangoldt相位分析.py)
-16. CNT 基础母轨迹计算：[02-真实SMRG约束下的母轨迹计算.py](../10-模拟/02-真实SMRG约束下的母轨迹计算.py)
+16. CNT 基础母轨迹计算（已删除）：[02-真实SMRG约束下的母轨迹计算.py] — v5.0 框架下相关数值方法已重构
 17. Bulanhagui, R. D. & Bulanhagui, L. R. G. (2026). "The Explicit Formula for the Chebyshev–Von Mangoldt Function and the Prime Representing Constant". Preprints, 202602.0799.
 18. "Quantum Phase Transitions in Cyclotomic Fields: A Spectral Approach to the Riemann Hypothesis" (2026). DumbPrime Research Pipeline.
 19. "The Quantum Rhythm Hypothesis: Mathematics as Condensed Matter Physics" (2025). ShunyaBar Labs.
@@ -1126,18 +1127,27 @@ CNT 的"统一"不在一个点上，而是沿着质数序列 $\{2, 3, 5\}$ 分�
 23. **协同本体论框架 (2026).** "von Mangoldt-Wigner 矩阵与黎曼猜想的结构对应分析". 51CTO, 2026-04-30.
 24. CNT 三论文对接分析：[06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py](../10-模拟/06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py)
 25. CNT 端到端 RG 跑动：[07-端到端RG跑动_跃迁点火到MZ.py](../10-模拟/07-端到端RG跑动_跃迁点火到MZ.py)
-26. CNT 深度分析：[07-深度分析.py](../10-模拟/07-深度分析.py)
-27. CNT 频率层级结构：[13-再生产频率层级结构.py](../10-模拟/13-再生产频率层级结构.py)
-28. CNT 母轨迹方程推导能标：[14-母轨迹方程推导能标.py](../10-模拟/14-母轨迹方程推导能标.py)
-29. CNT 耦合常数诚实分析：[15-母轨迹直接推导耦合常数.py](../10-模拟/15-母轨迹直接推导耦合常数.py)
+26. CNT 深度分析（已删除）：[07-深度分析.py] — v5.0 框架下相关分析已整合
+27. CNT 频率层级结构（已删除）：[13-再生产频率层级结构.py] — "规范力独立频率"路径已证伪
+28. CNT 母轨迹方程推导能标（已删除）：[14-母轨迹方程推导能标.py] — 被 v5.0 框架取代
+29. CNT 耦合常数诚实分析（已删除）：[15-母轨迹直接推导耦合常数.py] — 临时文件，分析结论已整合入正文
 
 ## 附录：已删除的旧文件
 
-以下文件为探索过程中产生的死胡同，已被删除：
+以下文件为探索过程中产生的死胡同或已被 v5.0 框架取代，已删除：
 
+- `02-真实SMRG约束下的母轨迹计算.py`（+附属4文件）— 早期 SM RG 基准计算，v5.0 下已重构
 - `08-独立p进频率与耦合常数.py` — "规范力独立频率"路径，证伪
 - `09-精度提升_两圈RG_共享频率.py` — 两圈RG精度分析，被端到端RG取代
+- `10-质子层级基础频率.py` — 错误假设 $\nu_0 = m_p/h$，已修正为 $\nu_0 = \nu_P$
 - `11-能标函数推导.py` — 被14-母轨迹方程推导能标取代
+- `12-Planck频率基础再生产.py` — 被13-再生产频率层级取代
+- `13-再生产频率层级结构.py` — "规范力独立频率"路径证伪
+- `14-母轨迹方程推导能标.py` — 被 v5.0 框架取代
+- `15-母轨迹直接推导耦合常数.py` — 临时分析文件，结论已整合
+- `16-母轨迹离散投影坍缩模型.py` — v4.0 "投影"模型，被 v5.0 传播子框架取代
+- `17-玻色子中介概率投影模型.py` — v4.0 "玻色子中介"模型，被 v5.0 内在展开结构取代
+- 所有过时的 .png / .json 附属输出文件
 
 ---
 
