@@ -148,13 +148,13 @@ $$\tau_k = k \cdot \tau_0, \quad k = 0, 1, 2, \ldots$$
 | 外部参数 | 内生涌现 |
 | 微分方程 | 差分方程 |
 
-**[推导3.2]**（基本再生产频率）基本再生产频率 $\nu_0$ 由普朗克频率锚定：
+**[推导3.2]**（基本再生产频率）基本再生产频率 $\nu_0 = 1/\tau_0$ 是质子的内在属性，由CNT内部动力学确定：
 
-$$\nu_0 \approx \nu_P = \sqrt{\frac{c^5}{\hbar G}} \approx 1.855 \times 10^{43} \text{ Hz}$$
+$$\mu_0 = M_Z \cdot e^{4\pi^2} \approx 1.25 \times 10^{19} \text{ GeV}$$
 
-$$\tau_0 = \frac{1}{\nu_0} \approx t_P \approx 5.391 \times 10^{-44} \text{ s}$$
+$$\nu_0 = \frac{\mu_0}{\hbar} \approx 1.90 \times 10^{43} \text{ Hz}, \quad \tau_0 = \frac{1}{\nu_0} \approx 5.27 \times 10^{-44} \text{ s}$$
 
-**论证**：普朗克尺度是唯一由基本常数 $\hbar, c, G$ 唯一确定的自然尺度。在CNT中，$\nu_0 \approx \nu_P$ 不是假设，而是量纲分析的必然结果——只有普朗克频率能由 $\hbar, c, G$ 构造。
+**论证**：$\tau_0$ 是质子的内在属性，不由普朗克尺度决定。$\mu_0 = M_Z \cdot e^{4\pi^2}$ 来自传播子谱密度 $\rho(q) \propto 1/q$ 和相空间几何约束，不依赖于 $G$。$G$ 在CNT中不是基本常数——它是连续时空爱因斯坦方程的耦合常数。$\tau_0$ 数值上接近普朗克时间 $t_P$，但两者概念独立：$t_P$ 是标准物理从 $\hbar, c, G$ 构造的导出量，在CNT中没有基础地位。
 
 ### 3.2 内禀坍缩：从圈图到树图的数学机制
 

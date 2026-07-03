@@ -1,4 +1,4 @@
-﻿# 闭合核理论 (Closed Nucleus Theory, CNT) — 研究综述
+# 闭合核理论 (Closed Nucleus Theory, CNT) — 研究综述
 
 > 本报告基于 `D:\WorkSpace\物理\闭合核理论\CNTFormal` 目录下全部核心研究文件的系统性阅读与分析。经文档整理后，部分碎片化内容已整合入主文档附录。
 
@@ -354,7 +354,7 @@ $$Z_{\text{HPI}} = \int \prod_{k=0}^{K-1} d\mu_p(\phi_k) \, \exp\left(\frac{i}{\
 - 耦合常数从p进修正的统计性质中涌现：$g^2 \sim \frac{1}{\hbar^2}\langle (\delta S)^2 \rangle_0$
 - 强耦合常数 leading-order 估计：$\alpha_s \approx 0.083$（实验值 0.118，偏差约30%）
 - 完整传播子为adele乘积：$\Delta_{\mathbb{A}} = \Delta_{\infty} \cdot \prod_p \Delta_p$
-- 闭合核网络增殖（CNP）：质子由大量普朗克尺度闭合核通过网络化增殖构建
+- 闭合核网络增殖（CNP）：质子由大量基础尺度闭合核通过网络化增殖构建
 - **引力常数推导：** $G = \frac{12\hbar c}{5m_p^2}\bar{\varepsilon}^2$，其中 $\bar{\varepsilon} \approx 4.96 \times 10^{-20}$ rad
 
 ### 7.2 基本粒子自由度与涌现机制
