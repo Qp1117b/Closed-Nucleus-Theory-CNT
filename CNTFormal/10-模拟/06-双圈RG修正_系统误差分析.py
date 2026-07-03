@@ -695,7 +695,7 @@ def run_full_analysis():
 def save_results(results: Dict, filename: str = None):
     if filename is None:
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        filename = os.path.join(script_dir, '13-双圈RG修正_结果.json')
+        filename = os.path.join(script_dir, '06-双圈RG修正_结果.json')
     
     def convert(obj):
         if isinstance(obj, dict):

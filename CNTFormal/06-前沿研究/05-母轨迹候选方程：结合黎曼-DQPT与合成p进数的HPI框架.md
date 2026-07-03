@@ -124,7 +124,7 @@ CNT 此前提出猜想（见[09-母轨迹求解框架 附录C](09-循环论相�
 
 ### 3.2 合成 p 进数的核心特征
 
-详见[05-合成p进数](../01-公理体系/05-合成p进数.md)。关键结构：
+详见[05-合成p进数](../01-公理体系/03-合成p进数.md)。关键结构：
 
 - 同一再生产总量 $N$ 在固定频率 $\nu = 1/N$ 下循环；
 - 历史阶段依次展开，每个阶段以不同质数为基底；
@@ -373,7 +373,7 @@ $$\text{已知 } g_i^{\text{SM}}(\mu), \; i=1,2,3 \;\Longrightarrow\; \text{求 
 - 在非质数计数处，用线性插值或离散 Einstein 方程连接；
 - 数值求解使 HPI 指数取极值的轨迹。
 
-**候选周期说明**：$N_{\text{cycle}} = 30$ 的选择是启发式的（三种规范力对应质数的乘积）。在 CNT 早期工作（[06-循环论相空间与标准 RG 参数空间的等价性推导](../03-方法论/06-循环论相空间与标准RG参数空间的等价性推导.md)）中，也曾出现 $T_{\text{cycle}} = 2 + 3 + 5 = 10$ 的加和周期。究竟应取乘积、求和还是其他数论函数（如最小公倍数），是待确定的开放问题。
+**候选周期说明**：$N_{\text{cycle}} = 30$ 的选择是启发式的（三种规范力对应质数的乘积）。在 CNT 早期工作（[06-循环论相空间与标准 RG 参数空间的等价性推导](../03-方法论/05-循环论相空间与标准RG参数空间的等价性推导.md)）中，也曾出现 $T_{\text{cycle}} = 2 + 3 + 5 = 10$ 的加和周期。究竟应取乘积、求和还是其他数论函数（如最小公倍数），是待确定的开放问题。
 
 ---
 
@@ -927,9 +927,9 @@ CNT 真正的预测力不在耦合常数的精确数值上，而在**结构约�
 
 ### 16.7 计算代码
 
-- 质数动力跃迁 von Mangoldt 相位：[05-质数动力跃迁_vonMangoldt相位分析.py](../10-模拟/05-质数动力跃迁_vonMangoldt相位分析.py)
-- 三论文交叉验证：[06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py](../10-模拟/06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py)
-- 端到端 RG 跑动：[07-端到端RG跑动_跃迁点火到MZ.py](../10-模拟/07-端到端RG跑动_跃迁点火到MZ.py)
+- 新体系母轨迹与 RG 流：[01-新体系母轨迹与RG流_adelic约束推导.py](../10-模拟/01-新体系母轨迹与RG流_adelic约束推导.py)
+- 传播子谱密度推导能标：[02-传播子谱密度推导能标函数.py](../10-模拟/02-传播子谱密度推导能标函数.py)
+- 三论文约束统一计算：[03-三论文约束与传播子统计平均_统一计算.py](../10-模拟/03-三论文约束与传播子统计平均_统一计算.py)
 
 ---
 
@@ -1000,7 +1000,7 @@ $$\prod_p Z_p = \prod_p e^{-S_p} = \prod_p p^{-1} = \frac{1}{2 \cdot 3 \cdot 5} 
 
 ### 17.3 计算代码
 
-对接分析代码：[06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py](../10-模拟/06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py)
+对接分析代码：[03-三论文约束与传播子统计平均_统一计算.py](../10-模拟/03-三论文约束与传播子统计平均_统一计算.py)
 
 ---
 
@@ -1085,10 +1085,9 @@ CNT 的"统一"不在一个点上，而是沿着质数序列 $\{2, 3, 5\}$ 分�
 
 ### 18.7 计算代码
 
-端到端 RG 跑动：[07-端到端RG跑动_跃迁点火到MZ.py](../10-模拟/07-端到端RG跑动_跃迁点火到MZ.py)
-新体系母轨迹与 RG 流：[08-新体系母轨迹与RG流_adelic约束推导.py](../10-模拟/08-新体系母轨迹与RG流_adelic约束推导.py)
-传播子谱密度推导能标：[09-传播子谱密度推导能标函数.py](../10-模拟/09-传播子谱密度推导能标函数.py)
-三论文约束统一计算：[10-三论文约束与传播子统计平均_统一计算.py](../10-模拟/10-三论文约束与传播子统计平均_统一计算.py)
+新体系母轨迹与 RG 流：[01-新体系母轨迹与RG流_adelic约束推导.py](../10-模拟/01-新体系母轨迹与RG流_adelic约束推导.py)
+传播子谱密度推导能标：[02-传播子谱密度推导能标函数.py](../10-模拟/02-传播子谱密度推导能标函数.py)
+三论文约束统一计算：[03-三论文约束与传播子统计平均_统一计算.py](../10-模拟/03-三论文约束与传播子统计平均_统一计算.py)
 
 ---
 
@@ -1191,11 +1190,11 @@ SU(3) 和 SU(2) 的点火耦合差异仅 4.3%，U(1) 偏离约 32%。U(1) 的较
 
 ### 19.5 三论文约束的完整整合
 
-| 论文 | 约束 | CNT 对应 | 状态 |
-|:---|:---|:---|:---|
-| Primacohedron | $S_p = \hbar \ln p$ | $\Phi_\Lambda(k) = \log p$ at $k = p^m$ | 精确一致 |
-| Li (2026) | $K_{\text{UV}}=11 \to K_{\text{IR}}=4$, $b=1/2$ | $\gamma = 1/2$, $\Delta K = 7 = b_3(\text{SM})$ | 三重收敛 |
-| VMW (2026) | $M_{ij} = \Lambda(|i-j|)/\sqrt{N} \cdot \varepsilon_{ij}$ | GUE 谱统计, $\eta = 1/2$ | 三重收敛 |
+| 论文            | 约束                                              | CNT 对应                                          | 状态                                 |                       |      |
+| :------------ | :---------------------------------------------- | :---------------------------------------------- | :--------------------------------- | --------------------- | ---- |
+| Primacohedron | $S_p = \hbar \ln p$                             | $\Phi_\Lambda(k) = \log p$ at $k = p^m$         | 精确一致                               |                       |      |
+| Li (2026)     | $K_{\text{UV}}=11 \to K_{\text{IR}}=4$, $b=1/2$ | $\gamma = 1/2$, $\Delta K = 7 = b_3(\text{SM})$ | 三重收敛                               |                       |      |
+| VMW (2026)    | $M_{ij} = \Lambda(                              | i-j                                             | )/\sqrt{N} \cdot \varepsilon_{ij}$ | GUE 谱统计, $\eta = 1/2$ | 三重收敛 |
 
 **三重收敛**：$\eta_N = \beta = \gamma = 1/2$（非完备性参数 = DQPT 临界指数 = Loschmidt 衰减指数），独立确认临界线 $\text{Re}(s) = 1/2$ 的物理实在性。
 
@@ -1378,7 +1377,7 @@ $$\text{Li (2026) } K = 1/d_P + 1/\zeta_R \;\to\; \text{fractal 维度 } d_{P,\t
 
 ### 21.11 计算代码
 
-DQPT 修正参数推导：[11-DQPT修正参数与Li约束_第一性原理推导.py](../10-模拟/11-DQPT修正参数与Li约束_第一性原理推导.py)
+DQPT 修正参数推导：[11-DQPT修正参数与Li约束_第一性原理推导.py](../10-模拟/04-DQPT修正参数与Li约束_第一性原理推导.py)
 
 ---
 
@@ -1473,27 +1472,27 @@ $$b_i = \begin{pmatrix} -41/10 \\ 19/6 \\ 7 \end{pmatrix}, \quad b_{ij} = \begin
 
 ### 22.9 计算代码
 
-双圈 RG 修正分析：[13-双圈RG修正_系统误差分析.py](../10-模拟/13-双圈RG修正_系统误差分析.py)
+双圈 RG 修正分析：[06-双圈RG修正_系统误差分析.py](../10-模拟/06-双圈RG修正_系统误差分析.py)
 
-传播子统计平均与自然尺度分析：[12-传播子统计平均_第一性原理计算.py](../10-模拟/12-传播子统计平均_第一性原理计算.py)
+传播子统计平均与自然尺度分析：[05-传播子统计平均_第一性原理计算.py](../10-模拟/05-传播子统计平均_第一性原理计算.py)
 
 ---
 
 ## 参考文献 {#ref}
 
-1. CNT 母轨迹框架：[09-循环论相空间母轨迹的第一性原理求解框架](09-循环论相空间母轨迹的第一性原理求解框架.md)
-2. CNT 概念深化：[09-母轨迹求解框架 附录A-D](09-循环论相空间母轨迹的第一性原理求解框架.md#A)
-3. CNT 推导纲领：[09-母轨迹求解框架 附录B](09-循环论相空间母轨迹的第一性原理求解框架.md#B)
-4. CNT 猜想集：[09-母轨迹求解框架 附录C](09-循环论相空间母轨迹的第一性原理求解框架.md#C)
-5. CNT 存在连续性：[09-母轨迹求解框架 附录D](09-循环论相空间母轨迹的第一性原理求解框架.md#D)
-6. CNT 合成 p 进数：[05-合成p进数](../01-公理体系/05-合成p进数.md)
+1. CNT 母轨迹框架：[04-循环论相空间母轨迹的第一性原理求解框架](04-循环论相空间母轨迹的第一性原理求解框架.md)
+2. CNT 概念深化：[04-母轨迹求解框架 附录A-D](04-循环论相空间母轨迹的第一性原理求解框架.md#A)
+3. CNT 推导纲领：[04-母轨迹求解框架 附录B](04-循环论相空间母轨迹的第一性原理求解框架.md#B)
+4. CNT 猜想集：[04-母轨迹求解框架 附录C](04-循环论相空间母轨迹的第一性原理求解框架.md#C)
+5. CNT 存在连续性：[04-母轨迹求解框架 附录D](04-循环论相空间母轨迹的第一性原理求解框架.md#D)
+6. CNT 合成 p 进数：[03-合成p进数](../01-公理体系/03-合成p进数.md)
 7. **Wei, S., Lu, Q., Zhai, Y., Xin, T., Long, G., Nori, F., et al. (2026).** "The Riemann Hypothesis Manifested in Dynamical Quantum Phase Transitions". *Nature Communications*. [新华网报道](http://www.xinhuanet.com/liangzi/20260701/ca0d0fc6d9de4e42a03b44aef3b39f20/c.html) | [arXiv:2511.11199](https://arxiv.org/abs/2511.11199)
 8. **Li, Z. (2026).** "Prime–Zero Duality: Fractal Geometry, Renormalization-Group Flow, and an Information-Ontological Framework for Number Theory". arXiv:2604.14596. 103 pages.
 9. **McGreevy, J. W. (2026).** "Relativistic Field Theory of Primes: An Adelic Approach to the Hilbert–Pólya Conjecture and the Riemann Hypothesis". viXra:2603.0049.
 10. Regge, T. (1961). "General relativity without coordinates". *Il Nuovo Cimento*, 19(3), 558-571.
 11. Hartle, J. B., & Hawking, S. W. (1983). "Wave function of the Universe". *Physical Review D*, 28(12), 2960.
 12. Rovelli, C. (2004). *Quantum Gravity*. Cambridge University Press.
-13. CNT 质数动力跃迁分析：[05-质数动力跃迁_vonMangoldt相位分析.py](../10-模拟/05-质数动力跃迁_vonMangoldt相位分析.py)
+13. CNT 母轨迹与RG流：[01-新体系母轨迹与RG流_adelic约束推导.py](../10-模拟/01-新体系母轨迹与RG流_adelic约束推导.py)
 14. Bulanhagui, R. D. & Bulanhagui, L. R. G. (2026). "The Explicit Formula for the Chebyshev–Von Mangoldt Function and the Prime Representing Constant". Preprints, 202602.0799.
 15. "Quantum Phase Transitions in Cyclotomic Fields: A Spectral Approach to the Riemann Hypothesis" (2026). DumbPrime Research Pipeline.
 16. "The Quantum Rhythm Hypothesis: Mathematics as Condensed Matter Physics" (2025). ShunyaBar Labs.
@@ -1501,10 +1500,10 @@ $$b_i = \begin{pmatrix} -41/10 \\ 19/6 \\ 7 \end{pmatrix}, \quad b_{ij} = \begin
 18. **Setiawan, S. (2025).** "Primacohedron: A p-Adic String & Random-Matrix Framework for Emergent Spacetime, and a Proposal towards solving Riemann Hypothesis". Preprints, 202511.1726. [DOI:10.20944/preprints202511.1726.v1](https://doi.org/10.20944/preprints202511.1726.v1)
 19. **Stanley, D. (2025).** "Prime Harmonics: Proving the Rhythmic Drum of Prime Numbers". Preprints, 202505.1787. [DOI:10.20944/preprints202505.1787.v1](https://doi.org/10.20944/preprints202505.1787.v1)
 20. **协同本体论框架 (2026).** "von Mangoldt-Wigner 矩阵与黎曼猜想的结构对应分析". 51CTO, 2026-04-30.
-21. CNT 三论文对接分析：[06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py](../10-模拟/06-三论文对接_Primacohedron_vonMangoldtWigner_PrimeLaplacian.py)
-22. CNT 端到端 RG 跑动：[07-端到端RG跑动_跃迁点火到MZ.py](../10-模拟/07-端到端RG跑动_跃迁点火到MZ.py)
-23. CNT 传播子统计平均：[12-传播子统计平均_第一性原理计算.py](../10-模拟/12-传播子统计平均_第一性原理计算.py)
-24. CNT 双圈 RG 修正：[13-双圈RG修正_系统误差分析.py](../10-模拟/13-双圈RG修正_系统误差分析.py)
+21. CNT 三论文约束统一计算：[03-三论文约束与传播子统计平均_统一计算.py](../10-模拟/03-三论文约束与传播子统计平均_统一计算.py)
+22. CNT DQPT修正参数推导：[04-DQPT修正参数与Li约束_第一性原理推导.py](../10-模拟/04-DQPT修正参数与Li约束_第一性原理推导.py)
+23. CNT 传播子统计平均：[05-传播子统计平均_第一性原理计算.py](../10-模拟/05-传播子统计平均_第一性原理计算.py)
+24. CNT 双圈 RG 修正：[06-双圈RG修正_系统误差分析.py](../10-模拟/06-双圈RG修正_系统误差分析.py)
 25. Machacek, M. E. & Vaughn, M. T. (1983). "Two-loop renormalization group equations in a general quantum field theory". *Nuclear Physics B*, 222(1), 83-103.
 
 
