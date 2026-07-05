@@ -2,10 +2,10 @@
 端到端计算 v6.0：从Regge作用量/Cartan曲率到可观测耦合常数
 ==========================================================
 完整推导链：4-单纯形几何 → Cartan曲率本征值 → β函数系数 → 
-          博弈收益函数 → 复制子动力学 → RG流 → 耦合常数
+          层间收敛效率函数 → 复制子动力学 → RG流 → 耦合常数
 
 关键新推导（v6.0 — 2026-07-04）：
-  【缺口1】Regge作用量 → 博弈收益函数
+  【缺口1】Regge作用量 → 层间收敛效率函数
            S_Regge ∝ Σ_i λ_i · x_i² · S
            F_i = ∂S_Regge/∂x_i ∝ λ_i · x_i · S
            物理：收益 = 几何曲率的边际贡献
@@ -22,7 +22,7 @@
 
 推导链总览：
   §1 — Cartan曲率本征值 {9, 4, 1}（严格数学定理）
-  §2 — Regge作用量与博弈收益函数的对应（新推导）
+  §2 — Regge作用量与层间收敛效率函数的对应（新推导）
   §3 — Cartan曲率 → β函数系数（新推导，含γ=7/9因子）
   §4 — 曲率效率 → 耦合常数层级（定性+定量）
   §5 — 复制子动力学与RG流（数值求解）
@@ -74,12 +74,12 @@ CARTAN_GAUGE = ['SU(3) 强', 'SU(2) 弱', 'U(1) 电磁/超荷']
 # λ_5 = 1 (5重) → U(1), 1个生成元, 非渐近自由
 
 # ============================================================
-# §2: Regge作用量 → 博弈收益函数（缺口1的新推导）
+# §2: Regge作用量 → 层间收敛效率函数（缺口1的新推导）
 # ============================================================
 
 def derive_regge_payoff_correspondence():
     """
-    Regge作用量 → 博弈收益函数 的严格推导。
+    Regge作用量 → 层间收敛效率函数 的严格推导。
     
     推导链:
     
@@ -100,20 +100,20 @@ def derive_regge_payoff_correspondence():
        λ_i = {9, 4, 1} 是Cartan本征值
        T_i 是第i个不可约表示中的挠率分量
     
-    5. 博弈论翻译:
+    5. 层间收敛翻译:
        - 挠率 T_i ↔ 策略投资 (strategy investment)
        - 策略投资 ∝ 策略频率 × 总尺度: T_i ∝ x_i · S
-       - 曲率 S_curv ↔ 总再生产成功度 (总收益)
+       - 曲率 S_curv ↔ 总再生产成功度 (总收敛效率)
     
     6. 边际收益 (Marginal Payoff):
        F_i = ∂S_curv/∂x_i ∝ λ_i · x_i · S
     
-    这是关键结果: 博弈收益 = 几何曲率的边际贡献。
+    这是关键结果: 层间收敛效率 = 几何曲率的边际贡献。
     Cartan本征值 λ_i 直接决定了策略i的收益效率。
     """
     
     print("=" * 75)
-    print("§2: Regge作用量 → 博弈收益函数 的推导")
+    print("§2: Regge作用量 → 层间收敛效率函数 的推导")
     print("=" * 75)
     
     print("""
@@ -121,8 +121,8 @@ def derive_regge_payoff_correspondence():
   
   1. Regge作用量: S_Regge = (1/8πG) Σ_h A_h ε_h
   2. Cartan曲率:  S_curv = Σ_i λ_i |T_i|²
-  3. 博弈翻译:    T_i ∝ x_i · S
-  4. 边际收益:    F_i = ∂S_curv/∂x_i ∝ λ_i · x_i · S
+  3. 层间收敛翻译:    T_i ∝ x_i · S
+  4. 边际收敛效率:    F_i = ∂S_curv/∂x_i ∝ λ_i · x_i · S
   
   【关键公式】
   F_i(x, S) = c · λ_i · x_i · S
@@ -535,7 +535,7 @@ def simulate_cartan_pure(K, x0, S0, lambda_i, lambda_en, eta, kappa):
     """
     纯Cartan收益驱动 (无β函数修正，直接使用F_i ∝ λ_i · x_i · S)。
     
-    这是Regge作用量 → 博弈收益的最直接实现。
+    这是Regge作用量 → 层间收敛效率的最直接实现。
     """
     primes = np.array([2, 3, 5])
     prime_gauge = {2: 0, 3: 1, 5: 2}
@@ -626,7 +626,7 @@ def comprehensive_assessment(results):
   │    → 直接给出耦合常数层级方向                                      │
   │    → 已确定 (几何事实)                                            │
   │                                                                  │
-  │ 3. Regge作用量 → 博弈收益函数                                     │
+  │ 3. Regge作用量 → 层间收敛效率函数                                     │
   │    → F_i ∝ λ_i · x_i · S (边际曲率贡献)                           │
   │    → 已确定 (推导链完整)                                          │
   │                                                                  │
@@ -691,7 +691,7 @@ def comprehensive_assessment(results):
 def main():
     print("=" * 75)
     print("  端到端计算 v6.0: Regge作用量/Cartan曲率 → 耦合常数")
-    print("  完整推导链: 4-单纯形几何 → 博弈收益 → RG流 → 可观测量")
+    print("  完整推导链: 4-单纯形几何 → 层间收敛效率 → RG流 → 可观测量")
     print("=" * 75)
     print(f"  日期: 2026-07-04")
     
@@ -707,7 +707,7 @@ def main():
     print(f"  S_5 分解: 10 = 1⊕4⊕5")
     print(f"  物理对应: SU(3)↔λ=9, SU(2)↔λ=4, U(1)↔λ=1")
     
-    # §2: Regge作用量 → 博弈收益
+    # §2: Regge作用量 → 层间收敛效率
     regge_results = derive_regge_payoff_correspondence()
     
     # §3: Cartan曲率 → β函数
