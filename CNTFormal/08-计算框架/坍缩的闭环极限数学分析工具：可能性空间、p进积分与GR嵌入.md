@@ -582,7 +582,7 @@ $$d\tau = \sqrt{1 - \frac{2GM}{rc^2}} \, dt$$
 **关键推论**：引力势越深（$M$ 越大，$r$ 越小），$g_{00}$ 越小，固有时流逝越慢，因此：
 $$\text{引力越强} \;\Rightarrow\; d\tau \text{ 越小} \;\Rightarrow\; \tau_{\text{close}} \text{ 到达越慢} \;\Rightarrow\; \text{坍缩速率越慢}$$
 
-这正是CNT坍缩两层论的核心结论。
+这正是CNT引力-再生产闭环的核心结论。
 
 ### 6.2 可能性空间极限的GR调制
 
@@ -592,16 +592,16 @@ $$\tau_{\text{close}}(r) = \tau_{\text{close}}^\infty \cdot \sqrt{-g_{00}(r)}$$
 
 **物理含义**：引力结构直接调制了可能性空间的极限尺度。在不同引力势的位置，可能性空间展开的"速度"不同——这是引力-量子耦合的CNT实现。
 
-### 6.3 本底引力坍缩的数学表达
+### 6.3 必要引力结构的数学表达
 
-本底引力坍缩（坍缩两层论的前提层）的数学表达：
+必要引力结构（决定再生产闭环周期）的数学表达：
 
 $$\boxed{\mathcal{B}_{\text{grav}} = \int_{\Sigma} \sqrt{-g} \, R \, d^4x}$$
 
 其中 $\Sigma$ 是可能性空间对应的时空区域，$R$ 是Ricci标量。
 
-本底引力坍缩**不是**坍缩事件本身，而是**坍缩得以发生的几何前提**：
-$$\mathcal{B}_{\text{grav}} > 0 \;\Longleftrightarrow\; \text{固有时截断存在} \;\Longleftrightarrow\; \text{坍缩可能}$$
+必要引力结构**不是**独立于再生产闭环的前提，而是**与再生产闭环同一物理过程的几何侧面**：
+$$\mathcal{B}_{\text{grav}} > 0 \;\Longleftrightarrow\; \text{固有时-因果时截断存在} \;\Longleftrightarrow\; \text{再生产闭环可能}$$
 
 ### 6.4 Einstein场方程嵌入
 
@@ -970,7 +970,7 @@ $$\text{因果结构} = \{(x, y) \in \mathcal{M} \times \mathcal{M} : \text{存�
 
 $$\text{光程差} \;\longleftrightarrow\; \text{因果结构中的相对路径差}$$
 
-时间差来自本底坍缩-叠加再生产不同步对光程差的耦合：
+时间差来自引力结构-叠加再生产不同步对光程差的耦合：
 $$\Delta t_{\text{observed}} = \frac{\tau_{\text{close}}}{\sqrt{-g_{00}(r_A)}} - \frac{\tau_{\text{close}}}{\sqrt{-g_{00}(r_B)}} + \frac{\Delta L}{c}$$
 
 其中 $\Delta L/c$ 是经典光程差（如Kim实验中的约8 ns），引力项是CNT的额外贡献。
