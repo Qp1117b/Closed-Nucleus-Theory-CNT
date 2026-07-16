@@ -394,16 +394,54 @@ $$\text{固有时} \tau \;\longleftrightarrow\; \text{可能性空间展开} \;\
 
 ### 4.5 固有时Poincaré回归时间
 
-闭环步数 $N_{\text{close}}$ 由博弈矩阵的Poincaré回归时间决定。对于复制子动力学，回归时间近似为：
+闭环步数 $N_{\text{close}}$ 由博弈矩阵的Poincaré回归时间决定。对于 $\{2,3,5\}$ 复制子博弈矩阵
 
-$$T_{\text{Poincaré}} \approx \frac{2\pi}{\sqrt{|\det(A)|}}$$
+$$A = \begin{pmatrix}
+0 & a & -c \\
+-a & 0 & b \\
+c & -b & 0
+\end{pmatrix},
+\quad a=\ln\frac{3}{2},\; b=\ln\frac{5}{3},\; c=\ln\frac{5}{2},$$
 
-对于 $\{2,3,5\}$ 博弈矩阵：
-$$|\det(A)| = 2abc = 2 \cdot \ln\frac{3}{2} \cdot \ln\frac{5}{3} \cdot \ln\frac{5}{2} \approx 0.379$$
+注意 **3×3 反对称矩阵的行列式恒为零**，因此不能直接用 $|{\det}(A)|$ 计算回归时间。改用特征值方法：反对称矩阵的非零特征值为一对纯虚数 $\pm i\omega$，其中
 
-$$T_{\text{Poincaré}} \approx \frac{2\pi}{\sqrt{0.379}} \approx 10.2 \text{ 步}$$
+$$\omega = \sqrt{a^2 + b^2 + c^2} \approx 1.1247.$$
 
-但这是期望轨道的回归时间。单次坍缩闭环的步数 $N_{\text{close}}$ 是随机变量，其期望为 $T_{\text{Poincaré}}$。实际闭环可以在更短或更长的步数内发生，遵循Born规则的概率分布。
+于是期望回归时间为
+
+$$T_{\text{Poincaré}} \approx \frac{2\pi}{\omega} \approx 5.59 \text{ 步}.$$
+
+（旧版本此处误用 $\det(A)$ 得到 10.2 步，已修正。）
+
+单次坍缩闭环的步数 $N_{\text{close}}$ 是随机变量，其期望为 $T_{\text{Poincaré}}$。实际闭环可以在更短或更长的步数内发生，遵循Born规则的概率分布。
+
+### 4.6 数值结果（2026-07-16）
+
+由脚本 `08-计算框架/proton_collapse_time_calculation.py` 第一性原理计算得到：
+
+| 量 | 数值 | 说明 |
+|:---|:---|:---|
+| 基本再生产周期 $\tau_0$ | $5.17\times10^{-44}$ s | $\tau_0=\hbar/\mu_0$，$\mu_0=M_Z e^{4\pi^2}$ |
+| Planck 时间 $t_P$ | $5.39\times10^{-44}$ s | $\tau_0/t_P\approx 0.96$ |
+| Poincaré 回归步数 $N_{\text{close}}$ | $5.59$ 步 | 由特征值 $\omega=\sqrt{a^2+b^2+c^2}$ 计算 |
+| 基本闭环固有时 $\tau_{\text{close}}$ | $2.89\times10^{-43}$ s | $\tau_{\text{close}}=N_{\text{close}}\tau_0$ |
+| 完整 adelic 周期 $\tau_{\text{cycle}}$ | $1.55\times10^{-42}$ s | $\tau_{\text{cycle}}=N_{\text{cycle}}\tau_0=30\tau_0$ |
+| 强 sector ($p=2$) 闭环时间 | $8.42\times10^{-43}$ s | $\tau_{\text{close}}\cdot 2^{\alpha_2}$ |
+| 弱 sector ($p=3$) 闭环时间 | $4.70\times10^{-43}$ s | $\tau_{\text{close}}\cdot 3^{\alpha_3}$ |
+| 电磁 sector ($p=5$) 闭环时间 | $1.09\times10^{-42}$ s | $\tau_{\text{close}}\cdot 5^{\alpha_5}$ |
+
+**引力修正**：在 Schwarzschild 度规下，坐标时间中的坍缩速率
+
+$$\Gamma_{\text{close}}(r) = \frac{1}{\tau_{\text{close}}}\sqrt{1-\frac{2GM}{rc^2}},$$
+
+因此引力越强，固有时越慢，坍缩速率越慢。典型场景数值：
+
+| 场景 | $d\tau/dt$ | $\Gamma_{\text{close}}$ (s$^{-1}$) |
+|:---|:---:|:---:|
+| 地球表面 | $\approx 1$ | $3.46\times10^{42}$ |
+| 太阳表面 | $\approx 0.999998$ | $3.46\times10^{42}$ |
+| 中子星表面 | $\approx 0.81$ | $2.80\times10^{42}$ |
+| 黑洞 $r=1.1r_s$ | $\approx 0.30$ | $1.04\times10^{42}$ |
 
 ---
 
