@@ -344,7 +344,7 @@ theorem discrete_time_slice_disjoint
     - 辐射速度 c 成为网络信息传播的普适上限
 
   辐射速度的严格定义和证明见：
-    - PostLevel1PreLevel2/lean/Proven/NetworkMass.lean (radiationSpeed)
+    - PostLevel1PreLevel2/lean/Proven/NetworkMass.lean (已删除，质量涌现思路已扬弃)
     - PostLevel1PreLevel2/lean/Conjectures/RepRadioSpeed.lean
     - PreLevel1/lean/Proven/SimplexDominance.lean
   ======================================================================-/
@@ -396,7 +396,7 @@ theorem irreversibility_requires_positive_time
   5. 辐射速度是网络化涌现量（非前网络概念）
      - 前网络阶段：d·ν 无界（形式距离 d 无界）
      - 网络化后：c = √2·ℓ₀·f_rep 有界（信息传播限制在4-单纯形内）
-     - 严格定义和证明见 NetworkMass.lean 和 RepRadioSpeed.lean
+     - 严格定义和证明见 NetworkMass.lean（已删除）和 RepRadioSpeed.lean
 
   定义（非推导）:
     - 单次再生产作用量 S = h（定义）
