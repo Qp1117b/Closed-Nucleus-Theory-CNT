@@ -1,4 +1,4 @@
-# Vladimirov 指数 $\alpha_p$ 的第一性原理确定：GL(3)-Langlands 与 p-adic AdS/CFT
+﻿# Vladimirov 指数 $\alpha_p$ 的第一性原理确定：GL(3)-Langlands 与 p-adic AdS/CFT
 
 **版本**: 0.6
 **日期**: 2026-07-16
