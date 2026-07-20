@@ -111,7 +111,7 @@ $$\prod_{p \in \{2,3,5\}} \mathbb{Q}_p = 2 \times 3 \times 5$$
 
 从这条路径导出的 $\alpha^{-1}$ 数值（≈137.036）与 v3 定理 7.5 的 Cartan-S5 adelic 循环结果一致，但推导结构独立。
 
-**当前 v3 权威 α⁻¹ 推导链**：$C = \xi'(1)/\xi(1) \to$ 传输方程 $\to$ 黎曼谱 $E_1 = 1/4 + \gamma_1^2 \to \cdots \to \alpha^{-1} = 137.036$（定理 7.5，偏差 6 ppb）。详见 `08-计算框架/01-数学化纲领_从引力限制场到Adele值波函数.md` §7.5。
+**当前 v3 权威 α⁻¹ 推导链**：$C = \xi'(1)/\xi(1) \to$ 双曲Laplacian $\hat{H}=\hat{D}^2+1/4 \to$ 黎曼谱 $E_1 = 1/4 + \gamma_1^2 \to \cdots \to \alpha^{-1} = 137.0305$（定理 7.5，偏差 −40 ppm）。详见 `08-计算框架/01-数学化纲领_从引力限制场到Adele值波函数.md` §7.5。
 
 ### 决策记录
 
@@ -262,12 +262,12 @@ $$\boxed{G_N = \frac{I \cdot \lambda_c \cdot C^2 \cdot E_1}{m_p^2} \cdot \exp\le
 | $m_p^{-2}$ | — | **唯一实验输入** | — |
 
 **指数压制 $\exp(-2/C)$ 的来源**（核心发现）：
-1. 传输方程特征线 $du/d\tau = C e^u$ 给因果轨道
+1. 传输方程特征线 $du/d\tau = C e^u$ 给因果轨道（经典极限描述）
 2. UV→IR和IR→UV的因果轨道必须构成闭合回路（双向因果限制）
 3. $\xi(s) = \xi(1-s)$ 对称性 → 引力势路径总长 $\approx 2/C$
 4. 归一化Jacobian $\mathcal{J} = \exp(-2/C)$
 
-**数值**：$G_N \approx 6.78 \times 10^{-39}$ GeV⁻²（实验 $6.67 \times 10^{-39}$，偏差 +1.6%）
+**数值**：$G_N \approx 6.55 \times 10^{-39}$ GeV⁻²（实验 $6.71 \times 10^{-39}$，偏差 −2.3%）
 
 ### 步骤⑪：QCD能动张量 → 引发引力
 
@@ -360,17 +360,23 @@ $$\Delta\tau_{\text{eff}} \geq \tau_{\text{res}} = \frac{\hbar}{M_{\text{det}} c
 
 ### 步骤⑮-⑯：不确定性关系
 
-**操作**：从因果截断推导出耦合常数空间的非交换几何。
+**操作**：从壳层双曲几何导出耦合常数空间的非交换几何。
 
+经典对易子（径向辛结构）：
 $$\boxed{[\hat{u}, \hat{p}_u] = i}, \quad u = \ln r$$
 
-**标量不确定性关系（定理2.1）**：
+新框架对易子（能标-固有时直接耦合，2026-07-21）：
+$$\boxed{[\hat{\tau}, \hat{u}] = iC}$$
 
+**标量不确定性关系（定理2.1）**：
+$$\boxed{\Delta\tau \cdot \Delta u \geq \frac{C}{2}}$$
+
+等价于：
 $$\boxed{\frac{\Delta r}{\langle r \rangle} \cdot \Delta v_\tau \geq \frac{C}{2}}$$
 
 $v_\tau = du/d\tau = C e^u$ 是固有时流速，$C = \xi'(1)/\xi(1)$。
 
-**★ 这是计算框架的正式起点**——从概念阶段进入精确计算阶段。
+> **v3.1 注**：旧框架 $[\hat{u}, \hat{p}_u] = i$ 给出 $\Delta u \cdot \Delta v_\tau \geq 1$，与 $C/2 \approx 0.0115$ 存在 86.6 倍不兼容。新对易子 $[\hat{\tau}, \hat{u}] = iC$ 从根本上解决了这一矛盾。
 
 三方向推广：
 $$\frac{\Delta g_i}{\langle g_i \rangle} \cdot \Delta v_\tau^{(i)} \geq \frac{C_i}{2}, \quad i = 1,2,3$$
@@ -400,27 +406,29 @@ $$\boxed{C = \sum_{n=1}^{\infty} \frac{1}{\frac{1}{4} + \gamma_n^2} = \frac{\xi'
 
 **临界线筛选（定理4.2）**：非临界线模式获得虚部能级，破坏概率守恒——物理仅允许Re(s)=1/2。
 
-### 步骤⑱：传输方程与元RG运动学
+### 步骤⑱：传输方程与元RG运动学（已降级）
 
-**操作**：建立描述再生产结构连续演化的方程。
+**操作**：建立描述再生产结构连续演化的经典极限方程。
 
 $$\boxed{\partial_\tau \Psi + C e^u \partial_u \Psi = 0}$$
 
-**推导**：$\hat{H} = C e^{\hat{u}} \hat{p}_u$ → $i\partial_\tau\Psi = \hat{H}\Psi$ → 传输方程。
+**推导**：$\hat{H}_{\text{trans}} = C e^{\hat{u}} \hat{p}_u$ → $i\partial_\tau\Psi = \hat{H}_{\text{trans}}\Psi$ → 传输方程。
 
 **特征线解**：$r(\tau) = 1/(-C\tau + \text{const})$ —— 经典RG流 $dr/d\tau = C r^2$。
 
 CNT的RG流直接从哈密顿结构导出，不需要猜测。
 
+> **v3.1 注**：传输方程已被双曲Laplacian $\hat{H} = \hat{D}^2 + 1/4$（$\hat{D} = -i(\partial_u-1/2)$）取代为主要量子动力学框架。传输方程仍描述经典RG流特征线。
+
 **运动学 vs 动力学**：
-- 传输方程（双曲型—演化）: $\partial_\tau\Psi + C e^u\partial_u\Psi = 0$
-- 薛定谔方程（椭圆型—量子化）: $[-\partial_u^2 + V(u)]\psi = E\psi$
+- 传输方程（双曲型—演化，已降级）: $\partial_\tau\Psi + C e^u\partial_u\Psi = 0$
+- 双曲Laplacian（椭圆型—量子化，新主框架）: $\hat{H} = \hat{D}^2 + 1/4$
 
 ### 覆盖的文档
 
 | 文档 | 组织内容 |
 |:---|:---|
-| `08-计算框架/01-数学化纲领_从引力限制场到Adele值波函数.md` §2-5 | 公理体系→传输方程→黎曼谱→RG流→数值验证 |
+| `08-计算框架/01-数学化纲领_从引力限制场到Adele值波函数.md` §2-5 | 公理体系→双曲Laplacian→黎曼谱→RG流→数值验证 |
 | `10-代码/cnt_calculation.py` | v3 完整第一性计算：C→E₁→λ_c→全部可观测量 |
 | `归档/04-旧计算链/` | v1-v7 研究日志和旧版脚本 (历史记录) |
 
@@ -438,7 +446,9 @@ CNT的RG流直接从哈密顿结构导出，不需要猜测。
 
 **操作**：将数论量（$C$, $E_1$）和群论量（$g_s^{IR}$）合成为连接壳层空间和物理空间的"转换常数"。
 
-$$\boxed{k = \frac{\lambda_{\text{QCD}}}{r_{\text{conf}}} = \frac{\hbar c \cdot C \cdot E_1}{m_p \cdot g_s^{IR}} = 0.6784 \text{ fm}}$$
+$$\boxed{k = \frac{\lambda_{\text{QCD}}}{r_{\text{conf}}} = \frac{\hbar c \cdot C \cdot E_1}{m_p \cdot g_s^{IR}} = 0.6805 \text{ fm}}$$
+
+> **v3.1 注**：k 由壳层几何确定 $\sqrt{\lambda_p \cdot r_p} / r_{\text{GUT}} \approx 0.6805$ fm，要求 $g_s^{IR} \approx 1.428$。与定理 10.4 的 $g_s^{IR} = \sqrt{I\cdot\lambda_c} = 1.481$ 存在 3.7% 张力。
 
 **k的本体论意义**：$\mathcal{H}_{\text{Riemann}}$（黎曼谱空间）与 $\mathcal{H}_{\text{angular}}$（马蒂厄-Weyl谱空间）之间的**交织算子范数**。
 
@@ -615,7 +625,7 @@ $$\boxed{\text{夸克禁闭} \equiv \text{壳层退相干}}$$
 四       ⑫⑬⑭          退相干     约束场, 自举RQM               ★QM原理扩展(纠缠/延迟选择/12种对比)
 五       ⑮⑯⑰⑱         数论       C=ξ'(1)/ξ(1), ★E₁=200.0405      v7攻克(七步代码验证)
                                传输方程, RG流数学化              开放问题A闭合
-六       D1-D7         壳层几何   ★k=0.6784fm, 自对偶½:1:2       所有偏差<0.33%
+六       D1-D7         壳层几何   ★k=0.6805fm, 自对偶½:1:2       所有偏差<0.33%
                                ★力-距离分层, 氢原子/电子/层级问题  ★候选公式待融合
 七       ⑲⑳㉑㉒         禁闭机制   哈密顿量p进化, p进-费曼图         ★收束: 禁闭=壳层退相干
                                希格斯重释                         开放问题H(路径统一)

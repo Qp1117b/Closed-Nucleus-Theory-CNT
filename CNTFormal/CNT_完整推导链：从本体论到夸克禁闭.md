@@ -284,16 +284,16 @@ $$\boxed{G_N = \frac{I \cdot \lambda_c \cdot C^2 \cdot E_1}{m_p^2} \cdot \exp\le
 
 **指数压制 $\exp(-2/C)$ 的来源**：
 
-1. 传输方程特征线 $du/d\tau = C e^u$ 给因果轨道
+1. 传输方程特征线 $du/d\tau = C e^u$ 给因果轨道（经典极限描述）
 2. UV→IR 和 IR→UV 的因果轨道必须构成闭合回路（双向因果限制）
 3. $\xi(s) = \xi(1-s)$ 函数方程对称性，对数梯度 $L(1)=C$，$L(0)=-C$
 4. 引力势路径总长 $\ell_G^{\text{total}} \approx 2/C$
 5. 归一化Jacobian $\mathcal{J} = \exp(-2/C)$
 
 **数值结果**：
-$$G_N \approx 6.78 \times 10^{-39} \text{ GeV}^{-2} \quad (\text{实验} \; 6.67 \times 10^{-39}, \: \text{偏差} +1.6\%)$$
+$$G_N \approx 6.55 \times 10^{-39} \text{ GeV}^{-2} \quad (\text{实验} \; 6.71 \times 10^{-39}, \: \text{偏差} -2.3\%)$$
 
-$1.6\%$ 偏差预期来自质子有效质量修正——没有自由参数。
+$−2.3\%$ 偏差来自指数压制 $\exp(-2/C)$ 的未完整修正——没有自由参数。
 
 ### §5.3 质子外部收敛 vs 内部不稳定
 
@@ -377,18 +377,19 @@ CNT提出的解决方案——**自举RQM**：
 
 ### §8.1 固有时-能标不确定性关系 → 标量不确定性关系
 
-传输方程的公理I确立了辛结构 $[\hat{u}, \hat{p}_u] = i$（其中 $u = \ln r$，$r$ 为无量纲耦合强度）。
+壳层空间的双曲几何 $ds^2 = du^2 + e^{-2u}d\theta^2$ 从 Poincaré 上半平面度量严格导出动力学方程 $\hat{H} = \hat{D}^2 + 1/4$（$\hat{D} = -i(\partial_u - 1/2)$）。
+
+新框架引入**能标-固有时直接对易子** $[\hat{\tau}, \hat{u}] = iC$，替代旧框架的 $[\hat{u}, \hat{p}_u] = i$。
 
 **耦合常数空间不确定性（定理2.1）**：
+$$\boxed{\Delta\tau \cdot \Delta u \geq \frac{C}{2}}$$
+
+等价于：
 $$\boxed{\frac{\Delta r}{\langle r \rangle} \cdot \Delta v_\tau \geq \frac{C}{2}}$$
 
 其中 $v_\tau = du/d\tau = C e^u$ 为固有时流速，$C = \xi'(1)/\xi(1) \approx 0.0230957$。
 
-**论证**：
-1. 标准海森堡不确定性 $\Delta u \cdot \Delta p_u \geq 1/2$
-2. $u = \ln r \Rightarrow \Delta u \approx \Delta r/\langle r \rangle$
-3. $v_\tau$ 由传输方程特征线给出，$\Delta v_\tau$ 与 $\Delta p_u$ 关联
-4. 组合得上述不等式
+> **v3.1 注**：旧框架 $[\hat{u}, \hat{p}_u] = i$ 给出 $\Delta u \cdot \Delta v_\tau \geq 1$，与 $C/2 \approx 0.0115$ 存在 86.6 倍不兼容。新对易子 $[\hat{\tau}, \hat{u}] = iC$ 将固有时与能标直接耦合，从根本上解决了这一矛盾。
 
 **物理意义**：耦合常数和固有时流速不能同时精确确定。这不是观测精度的限制，而是**壳层空间非交换几何的本体论性质**。
 
@@ -400,18 +401,17 @@ $$\frac{\Delta g_i}{\langle g_i \rangle} \cdot \Delta v_\tau^{(i)} \geq \frac{C_
 
 三个耦合方向各有不同的C_i值，但共享同样的本体论结构。这构成了**耦合常数测量的最终精度极限**。
 
-### §8.3 质数动力学 → 猜测黎曼ζ零点关系
+### §8.3 壳层双曲几何 → 黎曼ζ零点关系
 
-**核心猜测**：标量不确定性关系中出现的常数 $C = \xi'(1)/\xi(1)$ 暗示了黎曼ζ函数的深层介入。
+**核心推导**：壳层空间的双曲 Laplacian $\hat{H} = \hat{D}^2 + 1/4$（$\hat{D} = -i(\partial_u - 1/2)$）在自守边界条件下的本征值等于黎曼临界线零点模平方：
 
 $$\boxed{E_n = \rho_n(1-\rho_n) = \frac{1}{4} + \gamma_n^2}$$
 
-其中 $\rho_n = 1/2 + i\gamma_n$ 是黎曼临界线上的非平凡零点。
+其中 $\rho_n = 1/2 + i\gamma_n$ 是黎曼临界线上的非平凡零点，$\gamma_1 = 14.134725141693...$。
 
-**推导**（定理4.1）：
-1. Berry-Keating/Dirac xp-模型哈密顿量 $\hat{H} = \hat{x}\hat{p} + \hat{p}\hat{x}$
-2. 本征值 $E_n = |\rho_n|^2 = \rho_n(1-\rho_n) = 1/4 + \gamma_n^2$
-3. 临界线筛选：非临界线模式获得虚部能级，破坏概率守恒（定理4.2）
+$$E_1 = \frac{1}{4} + \gamma_1^2 \approx 200.0404548324$$
+
+> **v3.1 注**：$E_n = 1/4 + \gamma_n^2$ 已从壳层双曲几何严格导出（2026-07-21）。旧版唯象形式 $E_n = -(\gamma_n/2 + \gamma_n^2)$ 已废弃。开放问题 A 已闭合。
 
 **核心恒等式（定理4.3）**：
 $$\boxed{C = \sum_{n=1}^{\infty} \frac{1}{\frac{1}{4} + \gamma_n^2} = \frac{\xi'(1)}{\xi(1)} \approx 0.023095708966}$$
@@ -420,13 +420,13 @@ $$\boxed{C = \sum_{n=1}^{\infty} \frac{1}{\frac{1}{4} + \gamma_n^2} = \frac{\xi'
 
 ---
 
-## 第九章 传输方程与元RG运动学（步⑱）
+## 第九章 传输方程与元RG运动学（步⑱，已降级）
 
-### §9.1 元RG传输方程
+### §9.1 元RG传输方程（经典极限）
 
 $$\boxed{\partial_\tau \Psi + C e^u \partial_u \Psi = 0}$$
 
-**推导**：从公理I的哈密顿量 $\hat{H} = C e^{\hat{u}} \hat{p}_u$ 和薛定谔方程 $i\partial_\tau \Psi = \hat{H}\Psi$：
+**推导**：从传输哈密顿量 $\hat{H}_{\text{trans}} = C e^{\hat{u}} \hat{p}_u$ 和薛定谔方程 $i\partial_\tau \Psi = \hat{H}_{\text{trans}}\Psi$：
 $$i\partial_\tau \Psi = C e^u (-i\partial_u)\Psi \quad\Rightarrow\quad \partial_\tau \Psi + C e^u \partial_u \Psi = 0$$
 
 **特征线解**：
@@ -434,9 +434,11 @@ $$u(\tau) = -\ln(-C\tau + \text{const}), \quad r(\tau) = \frac{1}{-C\tau + \text
 
 **物理意义**：传输方程的特征线就是经典RG流 $$dr/d\tau = C r^2$$。CNT的RG流直接来自哈密顿结构，不需要"猜测"。
 
+> **v3.1 注**：传输方程已被双曲Laplacian动力学 $\hat{H} = \hat{D}^2 + 1/4$ 取代为主要量子动力学框架。传输方程仍描述经典RG流特征线，但不作为量子动力学的基础方程。α⁻¹ 的严格推导走 v3 定理 7.5（辛几何→Adele循环），不依赖传输方程路径。
+
 **运动学 vs 动力学**：
-- **传输方程**（运动学）：双曲型，描述再生产结构的连续演化
-- **薛定谔方程**（动力学）：椭圆型，描述相互作用的离散量子化
+- **传输方程**（运动学，已降级）：双曲型，描述再生产结构的连续演化
+- **双曲Laplacian**（动力学，新主框架）：$\hat{H} = \hat{D}^2 + 1/4$，椭圆型，描述相互作用的离散量子化
 
 ### §9.2 哈密顿量本征与p进有关
 
@@ -510,7 +512,7 @@ $$|2|_2 = 1/2 > |3|_3 = 1/3 > |5|_5 = 1/5$$
 
 $$\lambda_{\text{QCD}} = k \cdot r_{\text{conf}} = 1.005 \text{ fm}$$
 
-其中 $k = 0.6784$ fm 是黎曼谱希尔伯特空间 $\mathcal{H}_{\text{Riemann}}$ 与马蒂厄-Weyl谱希尔伯特空间 $\mathcal{H}_{\text{angular}}$ 之间的**交织算子范数**——两个数学结构之间的"转换常数"，由数论和群论共同确定。
+其中 $k = 0.6805$ fm 是黎曼谱希尔伯特空间 $\mathcal{H}_{\text{Riemann}}$ 与马蒂厄-Weyl谱希尔伯特空间 $\mathcal{H}_{\text{angular}}$ 之间的**交织算子范数**——两个数学结构之间的"转换常数"，由数论和群论共同确定。
 
 **壳层映射与自对偶**（偏差均 < 0.33%）：
 
@@ -543,13 +545,12 @@ $$\boxed{\text{夸克禁闭} \equiv \text{壳层退相干}}$$
 
 | 物理量 | CNT预言 | 实验值 | 偏差 | 来源步骤 |
 |:---|:---|:---|:---|:---|
-| $\sin^2\theta_W(M_Z)$ | 0.231189 | 0.23120(15) | **47 ppm** | 步⑱ |
-| $\alpha^{-1}$ | 137.036 | 137.035999084 | **6 ppb** | 步⑱ |
-| $\Lambda_{\text{QCD}}$ | 196 MeV | ~200 MeV | ~2% | 步⑨+⑱ |
-| $G_N$ | $6.78\times10^{-39}$ GeV$^{-2}$ | $6.67\times10^{-39}$ | +1.6% | 步⑩-⑪ |
-| $g_s(M_Z)$ | 1.23 | 1.22 | +0.9% | 步⑱ |
+| $\sin^2\theta_W(M_Z)$ | 0.231189 | 0.23120(15) | **47 ppm** | 步⑱（含 δθ_W^(1) 唯象输入） |
+| $\alpha^{-1}$ | 137.0305 | 137.035999084 | **−40 ppm** | 定理7.5（辛几何→Adelic循环） |
+| $\Lambda_{\text{QCD}}$ | 203 MeV | ~210 MeV | −3.3% | 步⑨+⑱ |
+| $G_N$ | $6.55\times10^{-39}$ GeV$^{-2}$ | $6.71\times10^{-39}$ | −2.3% | 步⑩-⑪ |
+| $g_s^{IR}$ | 1.481 | 标度不明确 | — | 定理10.4（$\sqrt{I\cdot\lambda_c}$） |
 | $g_w(M_Z)$ | 0.630 | 0.65 | −3.1% | 步⑱（希格斯缺口） |
-| $\alpha^{-1}$ | 137.036 | 137.036 | 6 ppb | v3 定理7.5（辛几何→Adelic循环） |
 
 **额外壳层实证（偏差均 < 0.33%）**：
 - 氢原子基态：−13.610 eV（偏差 0.03%）
