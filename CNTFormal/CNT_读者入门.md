@@ -405,7 +405,7 @@ $$\boxed{G_N = \frac{I \cdot \lambda_c \cdot C^2 \cdot E_1}{m_p^2} \cdot \exp\le
 |:---|:---|:---|:---|
 | $\alpha^{-1}$ | 137.036 | 137.035999177(21) | **6 ppb** |
 | $\sin^2\theta_W$ | 0.231189 | 0.23120 | 47 ppm |
-| $g_s$ (IR) | 1.214 | 1.22 | +1.6% |
+| $g_s$ (IR) | 1.481 | ~1.22 (M_Z) / ~2.5 (1 GeV) | 红外区非微扰 |
 | $g_w$ | 0.6395 | 0.65 | −3.1% |
 | $G_N$ | $6.78\times10^{-39}$ GeV⁻² | $6.67\times10^{-39}$ | +1.6% |
 | $\Lambda_{\text{QCD}}$ | 196 MeV | ~210 MeV | −6.7% |
@@ -497,7 +497,7 @@ $$\boxed{G_N = \frac{I \cdot \lambda_c \cdot C^2 \cdot E_1}{m_p^2} \cdot \exp\le
 | 壳层几何全部发现 | `06-前沿研究/02-全发现汇总.md` |
 | Vladimirov指数 | `08-计算框架/02-Vladimirov指数_alpha_p_的第一性原理确定_GL3_Langlands.md` |
 | 形式化验证 | `09-形式化验证/README.md` |
-| 代码与计算 | `11-代码实现/python/RESEARCH_LOG.md` |
+| 代码与计算 | `10-代码/cnt_calculation.py` |
 
 ---
 

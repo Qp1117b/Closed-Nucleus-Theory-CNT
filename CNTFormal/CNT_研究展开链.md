@@ -235,7 +235,7 @@ $$\boxed{(g_1, g_2, g_3; \tau) \cong (g_1, g_2, g_3; \ln\mu)}$$
 
 **SU(5)全局嵌入**：$G = \text{SU}(5) \supset \text{SU}(3) \times \text{SU}(2) \times \text{U}(1)$，$\hat{G}$ 提供角向算符数学来源。
 
-**文献支撑**（`11-代码实现/python/LITERATURE_REVIEW.md`）：
+**文献支撑**（`10-代码/LITERATURE_REVIEW.md`；如文件缺失见归档 `归档/04-旧计算链/` 中的历史记录）：
 - L1 (2001.01721): Vladimirov Green函数 = Tate局部函数方程，adelic乘积 = 全局Zeta函数方程
 - L2 (1901.02013): adelic弦谱 = 黎曼ζ零点，真空爱因斯坦方程从标度对称涌现
 - L3 (0712.0705): Berry-Keating $H = xp$ 量子化，黎曼零点作为共振
@@ -287,7 +287,7 @@ $$\boxed{G_{\mu\nu} = \kappa \langle T_{\mu\nu} \rangle, \quad \kappa = \frac{C_
 |:---|:---|
 | `08-计算框架/01-数学化纲领_从引力限制场到Adele值波函数.md` §1-10 | 完整数学推导：公理→传输方程→黎曼谱→朗兰兹→标准模型接口→角向谱→能动张量→G_N |
 | `03-方法论/04-范式类型与谱系.md` | 再生产物理学作为新范式：硬核定义、不可通约性论证、p进-再生产结构同一性（三条文献路径汇聚） |
-| `11-代码实现/python/LITERATURE_REVIEW.md` | 公理-文献完整对接表（5定理 vs 4文献）、研究含义四条、v3公理III严格化工具 |
+| `10-代码/cnt_calculation.py` | v3 完整第一性计算：7个可观测量 × 实验对比 |
 | `03-方法论/03-七概念关系链.md` | 再生产→质数→p进→规范群→荷→不可还原 的完整概念链 |
 
 ---
@@ -421,9 +421,8 @@ CNT的RG流直接从哈密顿结构导出，不需要猜测。
 | 文档 | 组织内容 |
 |:---|:---|
 | `08-计算框架/01-数学化纲领_从引力限制场到Adele值波函数.md` §2-5 | 公理体系→传输方程→黎曼谱→RG流→数值验证 |
-| `11-代码实现/python/RESEARCH_LOG.md` | v1-v7完整演进链：四层Tate定理验证、E₁第一性修正 |
-| `11-代码实现/python/padic_dynamics_v1.py` 到 `v7.py` | 七步代码实现——每一步的数值验证数据 |
-| `11-代码实现/python/LITERATURE_REVIEW.md` | 公理III/Berry-Keating/Vladimirov/adelic弦四篇关键文献的完整对接 |
+| `10-代码/cnt_calculation.py` | v3 完整第一性计算：C→E₁→λ_c→全部可观测量 |
+| `归档/04-旧计算链/` | v1-v7 研究日志和旧版脚本 (历史记录) |
 
 ---
 
@@ -598,7 +597,7 @@ $$\boxed{\text{夸克禁闭} \equiv \text{壳层退相干}}$$
 
 **工程文档**：
 - `09-形式化验证/BUILD.md`：Lean v4.29.1环境配置、依赖（mathlib/physlib/batteries）
-- `11-代码实现/README.md`：目录划分约定、代码约定（注明v3章节对应）
+- `10-代码/cnt_calculation.py`：v3 完整第一性计算脚本，所有数值结果与实验对比
 
 ---
 
