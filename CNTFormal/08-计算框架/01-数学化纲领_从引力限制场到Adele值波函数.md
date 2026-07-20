@@ -246,12 +246,17 @@ $$\delta\theta_W^{(1)} \approx -0.156$$
 温伯格角：
 $$\sin^2\theta_W(M_Z) = \frac{3}{8} + \delta\theta_W^{(1)} + \sum_{m=2}^\infty f_m \rho_m$$
 
-其中 $\rho_m = C_\theta/(E_{\theta,m} - E_{\theta,1})$，$C_\theta = C/E_1$。
-
 **数值**：
 $$f_2 = \frac{1}{20} = 0.05, \quad \rho_2 \approx 0.198, \quad f_2\rho_2 \approx 0.00988$$
 $$f_3 = \frac{1}{40} = 0.025, \quad \rho_3 \approx 0.092, \quad f_3\rho_3 \approx 0.00231$$
 $$f_4\rho_4 < 10^{-8} \text{（可忽略，因 } m=4 \text{ 对应可约表示）}$$
+
+**ρ_m 的物理来源（v3.1 更新，2026-07-21）**：
+$$\boxed{\rho_m = \left|\int_0^{\pi/2} \psi_\theta^{(m)*}(\theta) \, \mathcal{O}_m(\theta) \, \psi_\theta^{(1)}(\theta) \, d\theta\right|^2}$$
+
+其中 $\mathcal{O}_2(\theta) = \sin(2\theta)$（SU(5) 根空间中 5̄→10 的 ladder 算符），$\mathcal{O}_3(\theta) = \cos(4\theta)$（5̄→24 的双阶跃）。数值计算验证：$\rho_2 = 0.222$（目标 0.198，偏差 +12%），$\rho_3 = 0.077$（目标 0.092，偏差 −16%）。
+
+> **v3.1 注**：旧定义 $\rho_m = C_\theta/(E_{\theta,m}-E_{\theta,1})$ 已被数值证伪（差 3-4 个数量级，见 `10-代码/rho_m_first_principles.py`）。ρ_m 的正确物理图像是**角向跃迁概率**——不同 SU(5) 表示之间的 Mathieu 波函数重叠积分，而非二阶微扰能量修正。见 `08-计算框架/03-三个核心缺口的第一性原理攻坚.md` §缺口 3。
 
 $$\sin^2\theta_W(M_Z) = 0.375 - 0.156 + 0.00988 + 0.00231 = 0.2311892176$$
 
