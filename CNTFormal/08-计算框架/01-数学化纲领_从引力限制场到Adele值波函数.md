@@ -29,7 +29,7 @@
 - 电荷离散化（$1/3$ 整数倍）
 - 三代结构截断 $m \leq 3$
 
-所有结果均从数学结构先验推出，无任意可调参数。除质子质量标度 $m_p$ 和 α_s(M_Z)（用于 M_GUT 自洽标定）作为实验输入外，其余全部由纯数学结构（$C, E_1, \lambda_c, I, W_m, N_{\text{cycle}}, q_c, \exp(-2/C)$）确定。$E_n$ 谱公式（定理 4.1）已第一性闭合。$\delta\theta_W^{(1)}$ 已完全第一性确定：$\delta\theta_W^{(1)} = \Delta_{\text{RGE}} + \delta_{\text{CNT}}$（$\Delta_{\text{RGE}} = -0.0433$ 标准SU(5) 1-loop, $\delta_{\text{CNT}} = -C(1+1/N_{\text{cycle}})\ln(M_{\text{GUT}}/M_Z)/(2\pi) = -0.1130$）。$\rho_2, \rho_3$ 已从 Mathieu 波函数重叠积分 + SU(5) 群论归一化完全推导（$\rho_2 = 0.19907$, 残差 <0.03%; $\rho_3 = 0.10197$, 残差 0.32%）。$G_N$ 使用 $\kappa=1$ 近似，偏差 −0.077%，亚领头阶 $\kappa = +0.238 > 0$。
+所有结果均从数学结构先验推出，无任意可调参数。除质子质量标度 $m_p$ 和 α_s(M_Z)（用于 M_GUT 自洽标定）作为实验输入外，其余全部由纯数学结构（$C, E_1, \lambda_c, I, W_m, N_{\text{cycle}}, q_c, \exp(-2/C)$）确定。$E_n$ 谱公式（定理 4.1）已第一性闭合。$\delta\theta_W^{(1)}$ 已完全第一性确定：$\delta\theta_W^{(1)} = \Delta_{\text{RGE}} + \delta_{\text{CNT}}$（$\Delta_{\text{RGE}} = -0.0433$ 标准SU(5) 1-loop, $\delta_{\text{CNT}} = -C(1+1/N_{\text{cycle}})\ln(M_{\text{GUT}}/M_Z)/(2\pi) = -0.1130$）。$\rho_2, \rho_3$ 已从 Mathieu 波函数重叠积分 + SU(5) 群论归一化完全推导（$\rho_2 = 0.19907$, 残差 <0.03%; $\rho_3 = 0.10197$, 残差 0.32%）。$G_N$ 使用 $\kappa=1$（经验O(1)值），偏差 −0.077%；谱行列式推导给出 $\kappa_{\text{spec}} = +0.238$ 但不匹配（偏差 −1.80%），$\kappa$ 精确取值列为开放问题 B4。
 
 ---
 

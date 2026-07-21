@@ -201,9 +201,10 @@ def compute_all():
     results['alpha_inv']     = alpha_inv
     results['alpha']         = 1/alpha_inv
     
-    # ---- 4.7 质子反常磁矩 κ_p (定理7.1, 第一性) ----
+    # ---- 4.7 质子反常磁矩 κ_p (定理7.1, 启发式) ----
     # κ_p = C·E₁/2 - 1 + C₂(5̄)/C₂(24)
-    # 基态谱贡献来自质子再生产壳层的双曲模
+    # ⚠ 严格性: 启发式推导，“谱权重→耦合强度”类比，非从Ĥ显式推导
+    # 列为开放问题 B3，数值结果(偏差-0.16%)为受检猜想
     kp_leading = C * E_1 / 2      # = 2.31006
     
     # SU(5) Casimir 修正
@@ -218,6 +219,8 @@ def compute_all():
     results['casimir_ratio']   = casimir_ratio
     
     # ---- 4.8 G_N: 引力常数 (定理10.4, 含κ修正) ----
+    # κ=1: 经验O(1)值,偏差-0.077%; κ_spec=0.238(谱行列式),偏差-1.80%
+    # ⚠ κ精确取值为开放问题 B4
     exp_factor = mp.exp(-2/C)
     GN_leading = I * lambda_c * C**2 * E_1 / (m_p**2) * exp_factor
     
