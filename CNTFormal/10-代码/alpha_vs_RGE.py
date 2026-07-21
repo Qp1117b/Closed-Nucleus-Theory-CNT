@@ -7,6 +7,8 @@
 本脚本提取标准 RGE 路径，与 CNT 公式逐项对比。
 
 日期: 2026-07-21
+更新 (2026-07-21): 修正 sin²θ_W 公式错误和 β 函数系数。
+  详见 delta_theta_W_first_principles.py 获取完整分析。
 """
 
 import mpmath as mp
