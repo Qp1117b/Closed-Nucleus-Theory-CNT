@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CNT v3 完整第一性原理计算
+CNT 完整第一性原理计算
 ==========================
 从闭合核理论第一性原理出发，仅用 m_p=938.272 MeV 一个实验输入，
 导出全部电磁与引力可观测量，逐项与实验值对比。
@@ -219,19 +219,25 @@ def compute_all():
     results['casimir_ratio']   = casimir_ratio
     
     # ---- 4.8 G_N: 引力常数 (定理10.4, 含κ修正) ----
-    # κ=1: 经验O(1)值,偏差-0.077%; κ_spec=0.238(谱行列式),偏差-1.80%
-    # ⚠ κ精确取值为开放问题 B4
+    # κ_spec = +0.238: 来自谱行列式的严格证明; κ=1: 经验O(1)观察值
+    # ⚠ κ缺失部分 (Δκ ≈ 0.796) 为开放问题 B4' (操作子层面 Wodzicki 留数)
     exp_factor = mp.exp(-2/C)
     GN_leading = I * lambda_c * C**2 * E_1 / (m_p**2) * exp_factor
     
-    # κ = 1 (自然 O(1) 假设)
-    kappa_GN = mp.mpf(1)
-    GN_k1 = GN_leading * (1 + kappa_GN * C)
+    # κ_spec = +0.238 (严格证明, 仅谱行列式部分)
+    kappa_spec = mp.mpf('0.238')
+    GN_kappa_spec = GN_leading * (1 + kappa_spec * C)
+    
+    # κ = 1 (经验O(1)值, 非推导)
+    kappa_GN_emp = mp.mpf(1)
+    GN_k1 = GN_leading * (1 + kappa_GN_emp * C)
     
     results['GN_exp_factor']   = exp_factor
     results['GN_leading']      = GN_leading
+    results['kappa_spec']      = kappa_spec
+    results['GN_kappa_spec']   = GN_kappa_spec
     results['GN_k1']           = GN_k1
-    results['G_N_GeVm2']       = GN_k1   # 使用 κ=1 作为主结果
+    results['G_N_GeVm2']       = GN_kappa_spec   # 主结果: 严格证明部分
     
     # ---- 4.9 GUT 统一耦合 (定理 7.6) ----
     alpha_GUT_C = C * lambda_c
@@ -279,7 +285,7 @@ def print_results(r):
     sep = "=" * 72
     
     print(sep)
-    print("  CNT v3 第一性原理完整计算")
+    print("  CNT 第一性原理完整计算")
     print("  闭合核理论 — 从物质再生产到全部电磁/引力常数")
     print(sep)
     
@@ -387,7 +393,8 @@ def print_results(r):
     print(f"    {'ρ₂ (角向重叠 ℓ=2)':<30} = {float(r['rho_2']):.5f}   (sin2θ·N₂², N₂²=11/12)")
     print(f"    {'ρ₃ (角向重叠 ℓ=3)':<30} = {float(r['rho_3']):.5f}   (cos4θ·N₃², N₃²=8/9)")
     print(f"    {'G_N (leading, κ=0)':<30} = {float(r['GN_leading']):.3e} GeV⁻²")
-    print(f"    {'G_N (κ=1)':<30} = {float(r['GN_k1']):.3e} GeV⁻²")
+    print(f"    {'G_N (κ_spec=+0.238, 严格)':<30} = {float(r['GN_kappa_spec']):.3e} GeV⁻²")
+    print(f"    {'G_N (κ=1, 经验)':<30} = {float(r['GN_k1']):.3e} GeV⁻²")
     
     # ---- g_s^IR 特别说明 ----
     g_s_ir_val = float(r['g_s_IR'])
@@ -428,7 +435,7 @@ def print_results(r):
     print(f"    C_th = C/E_1 = {float(r['C'])/float(r['E_1']):.2e}")
     
     print(f"\n{sep}")
-    print("  CNT v3 计算结果。实际推导第一性。文档不一致处以计算为准。")
+    print("  CNT 计算结果。实际推导第一性。文档不一致处以计算为准。")
     print(f"{sep}\n")
 
 
