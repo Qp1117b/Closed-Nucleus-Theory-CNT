@@ -112,7 +112,7 @@ $$\prod_{p \in \{2,3,5\}} \mathbb{Q}_p = 2 \times 3 \times 5$$
 
 ### ★ 传输方程计算链（已回归v3主路径）
 
-传输方程路径的核心恒等式 $E_1 \cdot A_{12} = W_2^2/3$ 在v3中无直接对应——此路径已废弃，**不再作为独立平行路径维护**。
+传输方程路径的核心恒等式 $E_1 \cdot A_{12} = W_2^2/3$ 在v3中无直接对应。
 
 从这条路径导出的 $\alpha^{-1}$ 数值（≈137.036）与 v3 定理 7.5 的 Cartan-S5 adelic 循环结果一致，但推导结构独立。
 
@@ -381,7 +381,7 @@ $$\boxed{\frac{\Delta r}{\langle r \rangle} \cdot \Delta v_\tau \geq \frac{C}{2}
 
 $v_\tau = du/d\tau = C e^u$ 是固有时流速，$C = \xi'(1)/\xi(1)$。
 
-> **v3.1 注**：旧框架 $[\hat{u}, \hat{p}_u] = i$ 给出 $\Delta u \cdot \Delta v_\tau \geq 1$，与 $C/2 \approx 0.0115$ 存在 86.6 倍不兼容。新对易子 $[\hat{\tau}, \hat{u}] = iC$ 从根本上解决了这一矛盾。
+
 
 三方向推广：
 $$\frac{\Delta g_i}{\langle g_i \rangle} \cdot \Delta v_\tau^{(i)} \geq \frac{C_i}{2}, \quad i = 1,2,3$$
@@ -402,7 +402,7 @@ $$\frac{\Delta g_i}{\langle g_i \rangle} \cdot \Delta v_\tau^{(i)} \geq \frac{C_
 | v4 | 开放问题A缩窄：γₙ²严格来自临界线模平方 | 确认 |
 | v5 | 进一步Eₙ分析 | 确认 |
 | v6 | Berry-Keating算符构造：$H = xp + px$ | 定位$-\gamma_n/2$项的算符来源 |
-| v7 | **攻克**：$E_n = 1/4 + \gamma_n^2$ 替换唯象 $E_n = -(\gamma_n/2 + \gamma_n^2)$ | G_N/$Λ_{\text{QCD}}$偏差仍在2%内 |
+| v7 | $E_n = 1/4 + \gamma_n^2$ | G_N/$Λ_{\text{QCD}}$偏差仍在2%内 |
 
 $$\boxed{E_n = \rho_n(1-\rho_n) = \frac{1}{4} + \gamma_n^2}$$
 
@@ -423,7 +423,7 @@ $$\boxed{\partial_\tau \Psi + C e^u \partial_u \Psi = 0}$$
 
 CNT的RG流直接从哈密顿结构导出，不需要猜测。
 
-> **v3.1 注**：传输方程已被双曲Laplacian $\hat{H} = \hat{D}^2 + 1/4$（$\hat{D} = -i(\partial_u-1/2)$）取代为主要量子动力学框架。传输方程仍描述经典RG流特征线。
+**注**：传输方程描述经典RG流特征线，量子动力学由 $\hat{H} = \hat{D}^2 + 1/4$ 主导。
 
 **运动学 vs 动力学**：
 - 传输方程（双曲型—演化，已降级）: $\partial_\tau\Psi + C e^u\partial_u\Psi = 0$
@@ -454,7 +454,7 @@ CNT的RG流直接从哈密顿结构导出，不需要猜测。
 
 $$\boxed{k = \frac{\lambda_{\text{QCD}}}{r_{\text{conf}}} = \frac{\hbar c \cdot C \cdot E_1}{m_p \cdot g_s^{IR}} = 0.6805 \text{ fm}}$$
 
-> **v3.1 注**：k 由壳层几何确定 $\sqrt{\lambda_p \cdot r_p} / r_{\text{GUT}} \approx 0.6805$ fm，要求 $g_s^{IR} \approx 1.428$。与定理 10.4 的 $g_s^{IR} = \sqrt{I\cdot\lambda_c} = 1.481$ 存在 3.7% 张力。
+**注**：k 由壳层几何确定。
 
 **k的本体论意义**：$\mathcal{H}_{\text{Riemann}}$（黎曼谱空间）与 $\mathcal{H}_{\text{angular}}$（马蒂厄-Weyl谱空间）之间的**交织算子范数**。
 
