@@ -1,1 +1,0 @@
-# Closed-Nucleus-Theory-CNT
