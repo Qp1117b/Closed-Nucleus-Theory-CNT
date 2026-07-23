@@ -1,4 +1,4 @@
-﻿# CNTFormal 项目编译指南
+# CNTFormal 项目编译指南
 
 ## 项目概述
 
@@ -94,12 +94,12 @@ CNTFormal/
 │       ├── Conjectures/
 │       └── Proven/
 ├── Level2/                # 二级量变质变理论
-│   ├── *.md              # 理论文档（03-二级量变质变理论.md, 01-公理体系/4-单纯形路径_历史记录与降级说明.md（原文档二））
+│   ├── *.md              # 理论文档（03-二级量变质变理论.md, 02-自旋泡沫理论.md）
 │   └── lean/
 │       └── Proven/
 ├── Papers/                # 学术论文与研究文档
 │   ├── cnt_theory_paper.md               # CNT主论文（含§1.6哲学基础）
-│   ├── LQG-CNT系统对比（已整合）          # 权威整合：LQG-CNT对比、电荷起源
+│   ├── LQG-CNT系统对比.md                # 权威整合：LQG-CNT对比、电荷起源
 │   ├── 质能方程与G的完整推导.md            # E=mc² + G + α 三合一推导 → 已移至 Foundations/
 ├── lakefile.toml          # Lake 构建配置
 └── lean-toolchain         # Lean 版本指定
