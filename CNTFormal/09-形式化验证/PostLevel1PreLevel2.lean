@@ -1,4 +1,0 @@
-import PostLevel1PreLevel2.lean.Conjectures.RepRadioSpeed
-import PostLevel1PreLevel2.lean.Proven.ReproductionEnergy
-import PostLevel1PreLevel2.lean.Conjectures.ScaleEmergence
-import PostLevel1PreLevel2.lean.Proven.NetworkMass
