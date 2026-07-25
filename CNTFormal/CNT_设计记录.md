@@ -47,8 +47,8 @@
 | $C = \sum_n 1/(1/4+\gamma_n^2) = \xi'(1)/\xi(1)$ | 谱理论 | ✅ 定理 |
 | $\hat{\mu}_{\downarrow\text{dc}} = \hat{\mathcal{P}}_{\mathcal{C}_{\text{self}}}^{(\mu)}$ | 退相干通道中的下游表现（被再生产筛选后的自耦退相干投影） | ⚠️ 形式化（因果结构推论） |
 | $\hat{\mu}_{\downarrow\text{dc},1} = 0$ | 投影算符微扰论 | ✅ 定理 |
-| $G_N = I \cdot \lambda_c \cdot C^2 \cdot E_1 \cdot \exp(-2/C) / m_p^2$ | 各因子独立推导 | ⚠️ 数值验证（−2.3%） |
-| $\alpha^{-1} = 4\pi/\sin^2(5\arccos(1/4)) + C^2/5$ | 4-单纯形 + p进Haar | ⚠️ 数值验证（−2.78 ppm） |
+| $G_N = I \cdot \lambda_c \cdot C^2 \cdot E_1 \cdot \exp(-2/C) \cdot (1+\kappa C) / m_p^2$ | 各因子独立推导，$\kappa = f_0 h_{\text{SU}(3)}^2 C\exp(-C/5)(1+C^2/h_{\text{SU}(2)}^2)-C^2$ | ⚠️ 数值验证（+2.16 ppm），组合证明待建 |
+| $\alpha^{-1} = \left[\frac{1}{C\lambda_c\sin^2\theta_W(1-C_\theta)}-W_1-\rho_2-\rho_3\right]\times\left(1+C^2/5\right)$ | 4-单纯形 + p进Haar | ⚠️ 数值验证（−2.78 ppm） |
 
 ## 5. 缺口状态
 

@@ -269,7 +269,7 @@ $$
 k_i = -\frac{\ln(m_i^{(p)}/g_p)}{\alpha_p \ln p} \in \mathbb{Z}.
 $$
 
-这是一个强约束。对带电轻子 $(e,\mu,\tau)$，$p=5$ 扇区的 $g_5$ 和 $\alpha_5$ 必须使三个 $k_i$ 同时为整数。当前经验 $\alpha_5 \approx 0.826$ 尚未通过此检验（见 CNT_元RG十步计算.py 的警告）。
+这是一个强约束。对带电轻子 $(e,\mu,\tau)$，$p=5$ 扇区的 $g_5$ 和 $\alpha_5$ 必须使三个 $k_i$ 同时为整数。当前经验 $\alpha_5 \approx 0.826$ 尚未通过此检验。
 
 ### 5.2 精细结构常数与电磁扇区
 
@@ -301,7 +301,7 @@ $$
 k_i = -\frac{\ln(m_i/g_p)}{\alpha_p \ln p} \in \mathbb{Z}
 $$
 
-进行数值搜索。脚本见 `08-计算框架/alpha_p_shell_constraint.py`。
+进行数值搜索。
 
 ### 6.2 p=5 电磁/带电轻子
 
@@ -368,7 +368,7 @@ $$
 
 ### 7.3 数值检验结果
 
-用 `mass_formula_shell_test.py` 对带电轻子 $(e,\mu,\tau)$、up-type 夸克 $(u,c,t)$、down-type 夸克 $(d,s,b)$ 进行整数壳层搜索（固定中间粒子壳层为 0，拟合标度因子 $s$）。格林函数公式给出：
+对带电轻子 $(e,\mu,\tau)$、up-type 夸克 $(u,c,t)$、down-type 夸克 $(d,s,b)$ 进行整数壳层搜索（固定中间粒子壳层为 0，拟合标度因子 $s$）。格林函数公式给出：
 
 | $p$ | 扇区 | 经验 $\alpha_p$ | 最优 $\alpha_p^{\text{GF}}$ | 最佳整数壳层 $(k_1,k_2,k_3)$ | 相对 RMS 误差 | $g_{\text{eff}}$ (MeV) | 标度因子 $s = g_{\text{eff}}/g_p$ |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -400,11 +400,11 @@ $$
 
 ### 7.5 标度因子 $S_p$ 的 GL(3) 归一化候选：数值排除简单来源
 
-本节对“解释 1”进行具体化：假设 $S_p$ 来自 GL(3) 局部自守表示的某个自然归一化量（局部 $L$-因子、$\varepsilon$-因子、紧致子群体积等），并用数值检验这些候选是否能复现观测到的 $S_p$。脚本为 `08-计算框架/scale_factor_candidates.py`。
+本节对“解释 1”进行具体化：假设 $S_p$ 来自 GL(3) 局部自守表示的某个自然归一化量（局部 $L$-因子、$\varepsilon$-因子、紧致子群体积等），并用数值检验这些候选是否能复现观测到的 $S_p$。
 
 #### 7.5.1 观测到的 $S_p$
 
-由 `mass_formula_shell_test.py` 的 Green 函数拟合得到（经单位混淆纠正后）：
+由 Green 函数拟合得到（经单位混淆纠正后）：
 
 | $p$ | $g_p$ (MeV) | $g_{\text{eff}}$ (MeV) | $s = g_{\text{eff}}/g_p$ |
 |:---:|:---:|:---:|:---:|
@@ -488,7 +488,7 @@ $$
 **关键观察**：
 1. 所有 prefactor 均为 $O(1)$ 量级，因此可被吸收进标度因子 $s = g_{\text{eff}}/g_p$ 的定义中。
 2. 当 $\alpha_p > 1$ 时，$\Gamma_p(1-\alpha_p)$ 为负值；物理质量只依赖其绝对值。
-3. 将 $|\Gamma_p(1-\alpha_p)|$ 与 `mass_formula_shell_test.py` 拟合得到的 $S_p$ 比较，两者处于同一数量级但不成简单比例，说明 $S_p$ 可能还包含 GL(3) 局部 $L$-因子、$\varepsilon$-因子或 RG 转换的贡献。
+3. 将 $|\Gamma_p(1-\alpha_p)|$ 与拟合得到的 $S_p$ 比较，两者处于同一数量级但不成简单比例，说明 $S_p$ 可能还包含 GL(3) 局部 $L$-因子、$\varepsilon$-因子或 RG 转换的贡献。
 
 ### 7.7 CNT Cartan-S5 adelic 周期与精细结构常数 $\alpha_{\text{EM}}$
 
@@ -543,7 +543,7 @@ $$
 
 #### 7.8.1 测试设置
 
-脚本 `08-计算框架/GL3_representation_candidates.py` 对若干自然的 GL(3, $\mathbb{Q}_p$) 局部表示测试了猜想 4.1：
+对若干自然的 GL(3, $\mathbb{Q}_p$) 局部表示测试了猜想 4.1：
 
 $$
 \alpha_p \;\stackrel{?}{=}\; -\sum_{i=1}^3 v_p(\alpha_{p,i}).
@@ -567,7 +567,7 @@ $$
 
 #### 7.8.3 对候选映射的修正方向与数值测试
 
-猜想 4.1 可能过于简化。脚本 `GL3_representation_candidates.py` 测试了以下修正映射：
+猜想 4.1 可能过于简化。测试了以下修正映射：
 
 **（1）差分映射**：$\alpha_p = \max_i v_p(\alpha_{p,i}) - \min_i v_p(\alpha_{p,i})$。
 

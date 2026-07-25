@@ -22,7 +22,7 @@
                ▼
        层析论相空间（闭合轨道）
                │
-               ├── 统计平均 ⟨T_{μν}^{(QCD)}⟩ → 爱因斯坦方程 G_{μν} = κ⟨T_{μν}⟩
+               ├── 统计平均 ⟨T_{μν}^{(QCD)}⟩ → 爱因斯坦方程 G_{μν} = 8πG_N ⟨T_{μν}⟩
                │
                └── 引力常数 G_N = gs 的外部表现
                            │
@@ -50,7 +50,7 @@
 - 其能动张量 $T\_{\mu\nu}^{(QCD)}$ 是**内部涨落**在统计极限下的**残余投影**
 - 这个残余不是"源"，而是**收敛后的几何痕迹**
 
-**关键**：爱因斯坦方程 $G\_{\mu\nu} = \kappa \langle T\_{\mu\nu}^{(QCD)} \rangle$ 不是"QCD产生引力"，而是\*\*"QCD的统计收敛呈现为几何约束"\*\*。
+**关键**：爱因斯坦方程 $G_{\mu\nu} = 8\pi G_N \langle T_{\mu\nu}^{(QCD)} \rangle$ 不是"QCD产生引力"，而是**"QCD的统计收敛呈现为几何约束"**。
 
 ### 为什么强力（p=2）是引力的主导源头？
 
@@ -145,8 +145,8 @@ $$g\_s^{\text{IR}} = \sqrt{I \cdot \lambda\_c} = \sqrt{\frac{5}{3} \cdot 1.31602
 - $N \sim 10^{40}$ 个核子/宏观区域
 - 大数定律严格适用：$\text{Var}\[\langle T\_{\mu\nu} \rangle] \sim 1/N \to 0$
 - $\langle T\_{\mu\nu}^{(QCD)} \rangle$ 锁定光滑值
-- **黎曼几何涌现**——爱因斯坦方程作为有效描述：$G\_{\mu\nu} = \kappa \langle T\_{\mu\nu}^{(QCD)} \rangle$
-- κ 由 CNT 第一性原理确定：$\kappa = C\_\theta/ C \cdot \mathcal{N}\_{\text{层级}} / m\_p^2$
+- **黎曼几何涌现**——爱因斯坦方程作为有效描述：$G_{\mu\nu} = 8\pi G_N \langle T_{\mu\nu}^{(QCD)} \rangle$
+- $8\pi G_N$ 由 CNT 第一性原理确定：$8\pi G_N = C_\theta / C \cdot \mathcal{N}_{\text{层级}} / m_p^2$
 
 ***
 
@@ -158,7 +158,7 @@ $$g\_s^{\text{IR}} = \sqrt{I \cdot \lambda\_c} = \sqrt{\frac{5}{3} \cdot 1.31602
 
 $$\hat{T}\_{\mu\nu}^{\text{代数}} = \text{壳层空间上的Noether流}$$
 
-在约束壳 $\chi(u,p\_u) = 0$ 上，$\hat{T}\_{\mu\nu}^{\text{代数}}$ 的期望值满足：
+在 Neumann 边界条件 $\partial_u\phi(0)=0$ 下，$\hat{T}\_{\mu\nu}^{\text{代数}}$ 的期望值满足：
 
 $$\nabla^\mu \langle \hat{T}\_{\mu\nu}^{\text{代数}} \rangle = 0$$
 
@@ -174,11 +174,11 @@ $$\langle T\_{\mu\nu} \rangle = \frac{1}{N\_{\text{层级}}} \sum\_{k=1}^{N\_{\t
 
 ### 步骤3：守恒 → 爱因斯坦方程
 
-协变守恒 + 双曲几何的 Bianchi 恒等式 $ \nabla^\mu (G\_{\mu\nu} - \kappa \langle T\_{\mu\nu} \rangle) = 0$ 自然导出：
+协变守恒 + 双曲几何的 Bianchi 恒等式 $\nabla^\mu (G_{\mu\nu} - 8\pi G_N \langle T_{\mu\nu} \rangle) = 0$ 自然导出：
 
-$$G\_{\mu\nu} = \kappa \langle T\_{\mu\nu}^{(QCD)} \rangle$$
+$$G_{\mu\nu} = 8\pi G_N \langle T_{\mu\nu}^{(QCD)} \rangle$$
 
-$$\kappa = \frac{C\_\theta}{C} \cdot \frac{1}{m\_p^2} \cdot \mathcal{N}\_{\text{层级}}$$
+$$8\pi G_N = \frac{C_\theta}{C} \cdot \frac{1}{m_p^2} \cdot \mathcal{N}_{\text{层级}}$$
 
 **这不是"假设引力"——这是群论+统计力学的必然推论。**
 
