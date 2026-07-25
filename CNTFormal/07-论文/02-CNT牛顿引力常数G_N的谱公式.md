@@ -97,7 +97,7 @@ $$
 
 2. **SU(5) 位于禁闭边界**: 这是"非交换 $\leftrightarrow$ 交换"过渡的临界点。4-单纯形的面元结构同时编码了 U(1) 顶点（5个）、SU(2) 边（10条）、SU(3) 三角形（10个），通过同一个边-面关联矩阵 $E$ 耦合，产生同一个 Cartan 曲率算子 $M = E^T E$。
 
-3. **电磁 U(1) 不贡献独立 Cartan 曲率**: U(1) 是 Abel 群，没有非平凡的卡当矩阵（结构常数 $f^{abc} = 0$）。其"曲率"只是电磁场强 $F_{\mu\nu}$，不是时空曲率。U(1) 对应的 0-维顶点不通过 $E$ 矩阵进入曲率算子。
+3. **电磁 U(1) 不贡献独立 Cartan 曲率**: U(1) 是 Abel 群，没有非平凡的嘉当矩阵（结构常数 $f^{abc} = 0$）。其"曲率"只是电磁场强 $F_{\mu\nu}$，不是时空曲率。U(1) 对应的 0-维顶点不通过 $E$ 矩阵进入曲率算子。
 
 4. **弱力被屏蔽**: $m_W \sim 80$ GeV 意味着弱力康普顿波长 $\lambda_W \sim 0.0025$ fm，远小于质子尺度。弱力的几何贡献被指数压制，无论其是否交换。
 
@@ -231,17 +231,10 @@ $N_{\text{faces}} = 31$ 是整数组合不变量（4-单纯形非空面元数）
 ### 7.1 完整公式
 
 $$
-\boxed{G_N = \frac{I \cdot \lambda_c \cdot C^2 \cdot \mathcal{E}_1}{m_p^4} \cdot \exp\!\left(-\frac{2}{C}\right) \cdot \left(1 + \frac{31 + C}{30} \cdot C\right)}
+\boxed{G_N = \frac{I \cdot \lambda_c \cdot C^2 \cdot E_1}{m_p^2} \cdot \exp\!\left(-\frac{2}{C}\right) \cdot \left(1 + \frac{31 + C}{30} \cdot C\right)}
 $$
 
-> **量纲注**：
-> - $[I] = [\lambda_c] = [C] = [\kappa] = 1$（无量纲）
-> - $[\mathcal{E}_1] = [M]^2$（物理谱能平方）
-> - $[m_p^4] = [M]^4$
-> - $[\exp(-2/C)] = 1$
-> - $[G_N] = [M]^{-2}$（自然单位制）✓
-> 
-> 原公式 $G_N = \frac{I \lambda_c C^2 E_1}{m_p^2} \exp(-2/C)(1+\kappa C)$ 中的 $E_1$ 实为无量纲纯数 $\tilde{E}_1$。本修订版将 $E_1$ 提升为物理谱能 $\mathcal{E}_1 = m_p^2 \tilde{E}_1$，并相应将分母从 $m_p^2$ 调整为 $m_p^4$，保持数值不变但量纲结构显式自洽。
+其中 $E_1 = 1/4 + \gamma_1^2 = 200.0405$ 为第一黎曼零点对应的谱不变量（无量纲）。量纲：$[E_1]=[1]$，$[1/m_p^2]=[M]^{-2}$ → $[G_N]=[M]^{-2}$ ✓。
 
 ### 7.2 逐参数推导流程
 
@@ -250,16 +243,16 @@ $$
 |      **$I = 5/3$**      | SU(5) 李代数 $\to$ Dynkin 指数 $\to$ $I = 5/3$                                                | 李群论标准结果           | $1$ |
 |  **$\lambda_c = 1.316...$**   | Mathieu 方程 $\to$ 周期解 $\to$ 连分数极限                                                       | 特殊函数存在唯一性定理       | $1$ |
 |   **$C = 0.023...$**    | $\xi(s)$ Hadamard 乘积 $\to$ $\log \xi(s)$ 在 $s=1$ 展开 $\to$ $C = \xi'(1)/\xi(1)$                          | 解析数论 Hadamard 定理  | $1$ |
-| **$\mathcal{E}_1 = \Lambda_{\text{CNT}}^2(1/4+\gamma_1^2)$**  | Berry-Keating 算符 $\to$ 自伴扩张 $\to$ 边界条件 $\vartheta_n = -\theta(\mathcal{E}_n)$ $\to$ $\mathcal{E}_n = \Lambda_{\text{CNT}}^2(1/4+\gamma_n^2)$              | Sierra-CNT 谱定理    | $[M]^2$ |
+| **$E_1 = 1/4+\gamma_1^2$**  | Berry-Keating 算符 $\to$ 自伴扩张 $\to$ 边界条件 $\vartheta_n = -\theta(\mathcal{E}_n)$ $\to$ $E_n = 1/4+\gamma_n^2$（$\mathcal{E}_n = m_p^2 E_n$）              | Sierra-CNT 谱定理    | $1$ |
 |     **$\exp(-2/C)$**     | Adele 自对偶 $\det_\zeta^{(\infty)} \cdot \det_\zeta^{\text{UV}} = 1$ $\to$ $J = [\det_\zeta^{\text{UV}}]^{-2}$ $\to$ $\log J = -2/C$        | Tate thesis + 本工作 | $1$ |
-|   **$\kappa = (31+C)/30$**   | 4-单纯形面元数 $N_{\text{faces}} = 31 = 2^h-1$ $\to$ Adele 周期 $N_{\text{cycle}} = 30 = \operatorname{primorial}(h)$ $\to$ 函子异常 $+C$ | 组合定理 + 数论 + 本工作   | $1$ |
+| **$\kappa = (31+C)/30$** | 4-单纯形面元数 $N_{\text{faces}} = 31 = 2^h-1$ $\to$ Adele 周期 $N_{\text{cycle}} = 30 = \operatorname{primorial}(h)$ $\to$ 函子异常 $+C$ | 组合定理 + 数论 + 本工作 | $1$ |
 | **$m_p = 938.272$ MeV** | **实验输入**（待从谱 zeta 极点重建）                                                        | CODATA 2018       | $[M]$ |
 
 ### 7.3 数值验证
 
 | 量 | 数值 |
 |:---|:---|
-| 几何因子 $I \cdot \lambda_c \cdot C^2 \cdot \mathcal{E}_1 / m_p^4$ | $2.658 \times 10^{-7} \text{ MeV}^{-2}$ |
+| 几何因子 $I \cdot \lambda_c \cdot C^2 \cdot E_1 / m_p^2$ | $2.658 \times 10^{-7} \text{ MeV}^{-2}$ |
 | Jacobian $\exp(-2/C)$ | $2.4647 \times 10^{-38}$ |
 | $\kappa = (31+C)/30$ | $1.034103...$ |
 | $G_N$(CNT) | $6.708813 \times 10^{-45} \text{ MeV}^{-2}$ |
@@ -277,10 +270,10 @@ $$
 | $I = 5/3$          | ✅ 严格 | SU(5) Dynkin 指数    | $1$ |
 | $\lambda_c$              | ✅ 严格 | Mathieu 连分数存在唯一性   | $1$ |
 | $C = \xi'(1)/\xi(1)$   | ✅ 严格 | Hadamard 乘积定理      | $1$ |
-| $\mathcal{E}_1 = \Lambda_{\text{CNT}}^2(1/4+\gamma_1^2)$ | ✅ 严格 | Sierra-CNT 谱定理     | $[M]^2$ |
+| $E_1 = 1/4+\gamma_1^2$ | ✅ 严格 | Sierra-CNT 谱定理     | $1$ |
 | $m_p$（输入）          | ✅ 输入 | **唯一实验输入**         | $[M]$ |
 | $\exp(-2/C)$        | ✅ 定理 | **交换几何导致的平方**（本工作） | $1$ |
-| $\kappa = (31+C)/30$    | ✅ 定理 | 纯粹几何公式（本工作）        | $1$ |
+| $\kappa = (31+C)/30$    | ✅ 定理 | 纯粹几何公式（本工作） | $1$ |
 
 ---
 
