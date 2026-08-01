@@ -61,7 +61,7 @@ CQM 是建立在**因果集**、**关系量子力学**与**圈量子引力**三�
 
 | 文档 | 内容 |
 |:---|:---|
-| [06 Lean形式化/](06 Lean形式化/) | CQM 的 Lean 4 形式化验证项目。包含因果集公理、嘉当矩阵谱、$G_N$ 公式等核心定理的形式化 |
+| [06 Lean形式化/](06 Lean形式化/) | CQM 的 Lean 4 形式化验证项目。6 库全部编译通过：CausalSet（因果集公理）、CouplingSpace（耦合空间）、CartanAlgebra（嘉当矩阵）、SpectralGeometry（谱几何）、Decoherence（退相干）、PhysicalConstants（物理常数） |
 
 ### 07 推导与数学
 

@@ -1,25 +1,29 @@
-name = "CNTFormal"
-version = "0.1.0"
-defaultTargets = ["Foundations", "PreLevel1", "Level1", "PostLevel1PreLevel2", "Level2"]
+name = "CQMFormal"
+version = "0.2.0"
+defaultTargets = ["CausalSet", "CouplingSpace", "CartanAlgebra", "SpectralGeometry", "Decoherence", "PhysicalConstants"]
 
 [[lean_lib]]
-name = "Foundations"
+name = "CausalSet"
 leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
 
 [[lean_lib]]
-name = "PreLevel1"
+name = "CouplingSpace"
 leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
 
 [[lean_lib]]
-name = "Level1"
+name = "CartanAlgebra"
 leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
 
 [[lean_lib]]
-name = "PostLevel1PreLevel2"
+name = "SpectralGeometry"
 leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
 
 [[lean_lib]]
-name = "Level2"
+name = "Decoherence"
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
+
+[[lean_lib]]
+name = "PhysicalConstants"
 leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
 
 [[require]]
