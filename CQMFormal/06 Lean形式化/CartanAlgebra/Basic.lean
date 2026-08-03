@@ -67,19 +67,34 @@ theorem cartanA4_symmetric : ∀ i j : Fin 4, cartanA4 i j = cartanA4 j i := by
 
 /-! ## 行列式 — 核心不变量 -/
 
-/-- A₄ 嘉当矩阵的行列式（ℤ 值）。
-    直接计算 4×4 行列式：
-    det = 2·(2·(2·2 - (-1)·(-1)) - (-1)·((-1)·2 - 0)) - (-1)·((-1)·(2·2 - 0) - 0) = 5 -/
-noncomputable def cartanA4_det_val : ℤ := 5
+/-- 1×1 矩阵的行列式（显式公式） -/
+def det1 (M : Matrix (Fin 1) (Fin 1) ℤ) : ℤ := M 0 0
+
+/-- 2×2 矩阵的行列式（显式公式）：ad - bc -/
+def det2 (M : Matrix (Fin 2) (Fin 2) ℤ) : ℤ := M 0 0 * M 1 1 - M 0 1 * M 1 0
+
+/-- 3×3 矩阵的行列式（显式公式，按第一行展开） -/
+def det3 (M : Matrix (Fin 3) (Fin 3) ℤ) : ℤ :=
+  M 0 0 * (M 1 1 * M 2 2 - M 1 2 * M 2 1)
+  - M 0 1 * (M 1 0 * M 2 2 - M 1 2 * M 2 0)
+  + M 0 2 * (M 1 0 * M 2 1 - M 1 1 * M 2 0)
+
+/-- 4×4 矩阵的行列式（显式公式，按第一行展开） -/
+def det4 (M : Matrix (Fin 4) (Fin 4) ℤ) : ℤ :=
+  M 0 0 * (M 1 1 * (M 2 2 * M 3 3 - M 2 3 * M 3 2) - M 1 2 * (M 2 1 * M 3 3 - M 2 3 * M 3 1) + M 1 3 * (M 2 1 * M 3 2 - M 2 2 * M 3 1))
+  - M 0 1 * (M 1 0 * (M 2 2 * M 3 3 - M 2 3 * M 3 2) - M 1 2 * (M 2 0 * M 3 3 - M 2 3 * M 3 0) + M 1 3 * (M 2 0 * M 3 2 - M 2 2 * M 3 0))
+  + M 0 2 * (M 1 0 * (M 2 1 * M 3 3 - M 2 3 * M 3 1) - M 1 1 * (M 2 0 * M 3 3 - M 2 3 * M 3 0) + M 1 3 * (M 2 0 * M 3 1 - M 2 1 * M 3 0))
+  - M 0 3 * (M 1 0 * (M 2 1 * M 3 2 - M 2 2 * M 3 1) - M 1 1 * (M 2 0 * M 3 2 - M 2 2 * M 3 0) + M 1 2 * (M 2 0 * M 3 1 - M 2 1 * M 3 0))
 
 /-- [THEOREM] A₄ 嘉当矩阵的行列式 = 5。
+    通过显式行列式公式 `det4` 直接计算，由 `native_decide` 验证。
     注意：对于 Aₙ 型嘉当矩阵，det(Aₙ) = n+1。
     A₄ 的 det = 5 = rank(SU(5)) + 1。 -/
-theorem cartanA4_det_eq_5 : cartanA4_det_val = 5 := by
-  unfold cartanA4_det_val; rfl
+theorem cartanA4_det_eq_5 : det4 cartanA4 = 5 := by
+  native_decide
 
 /-- A₄ 行列式 > 0（正定性的必要条件） -/
-theorem cartanA4_det_pos : (0 : ℤ) < cartanA4_det_val := by
+theorem cartanA4_det_pos : (0 : ℤ) < det4 cartanA4 := by
   rw [cartanA4_det_eq_5]; norm_num
 
 /-! ## 主子式 — Aₙ 行列式 = n+1 的完整序列 -/
@@ -88,8 +103,9 @@ theorem cartanA4_det_pos : (0 : ℤ) < cartanA4_det_val := by
 def cartanA1 : Matrix (Fin 1) (Fin 1) ℤ :=
   λ _ _ => 2
 
-/-- A₁ 行列式 = 2 = 1+1 -/
-noncomputable def cartanA1_det_val : ℤ := 2
+/-- A₁ 行列式 = 2 = 1+1（通过 native_decide 计算） -/
+theorem cartanA1_det_eq_2 : det1 cartanA1 = 2 := by
+  native_decide
 
 /-- A₂ 嘉当矩阵（2×2）：[[2, -1], [-1, 2]] -/
 def cartanA2 : Matrix (Fin 2) (Fin 2) ℤ :=
@@ -98,8 +114,9 @@ def cartanA2 : Matrix (Fin 2) (Fin 2) ℤ :=
     else if (i.val + 1 = j.val) ∨ (j.val + 1 = i.val) then -1
     else 0
 
-/-- A₂ 行列式 = 2·2 - (-1)·(-1) = 4 - 1 = 3 -/
-noncomputable def cartanA2_det_val : ℤ := 3
+/-- A₂ 行列式 = 2·2 - (-1)·(-1) = 4 - 1 = 3（通过 native_decide 计算） -/
+theorem cartanA2_det_eq_3 : det2 cartanA2 = 3 := by
+  native_decide
 
 /-- A₃ 嘉当矩阵（3×3）：[[2, -1, 0], [-1, 2, -1], [0, -1, 2]] -/
 def cartanA3 : Matrix (Fin 3) (Fin 3) ℤ :=
@@ -108,15 +125,16 @@ def cartanA3 : Matrix (Fin 3) (Fin 3) ℤ :=
     else if (i.val + 1 = j.val) ∨ (j.val + 1 = i.val) then -1
     else 0
 
-/-- A₃ 行列式 = 2·(2·2 - (-1)·(-1)) - (-1)·((-1)·2) = 2·3 - 2 = 4 -/
-noncomputable def cartanA3_det_val : ℤ := 4
+/-- A₃ 行列式 = 2·(2·2 - (-1)·(-1)) - (-1)·((-1)·2) = 2·3 - 2 = 4（通过 native_decide 计算） -/
+theorem cartanA3_det_eq_4 : det3 cartanA3 = 4 := by
+  native_decide
 
 /-- [THEOREM] Aₙ 行列式模式：det(Aₙ) = n+1。
     A₁: 2, A₂: 3, A₃: 4, A₄: 5。
-    此模式对任意 n 成立。 -/
-theorem cartanA_det_pattern : cartanA1_det_val = 2 ∧ cartanA2_det_val = 3 ∧
-    cartanA3_det_val = 4 ∧ cartanA4_det_val = 5 := by
-  unfold cartanA1_det_val cartanA2_det_val cartanA3_det_val cartanA4_det_val
+    所有值通过显式行列式公式 + `norm_num` 从矩阵定义直接计算。 -/
+theorem cartanA_det_pattern : det1 cartanA1 = 2 ∧ det2 cartanA2 = 3 ∧
+    det3 cartanA3 = 4 ∧ det4 cartanA4 = 5 := by
+  rw [cartanA1_det_eq_2, cartanA2_det_eq_3, cartanA3_det_eq_4, cartanA4_det_eq_5]
   exact ⟨rfl, rfl, rfl, rfl⟩
 
 /-! ## 本征值 — 精确代数表达式 -/
@@ -237,11 +255,16 @@ def charPolyCoeffs : List ℤ := [1, -8, 21, -20, 5]
 /-- 特征多项式在 x 处的值（ℤ 版本） -/
 def charPoly (x : ℤ) : ℤ := x^4 - 8*x^3 + 21*x^2 - 20*x + 5
 
-/-- 验证第一本征值满足特征多项式（用 ℚ 逼近）：
-    p(λ₁) = 0。由于 λ₁ = (3-√5)/2 是无理数，
-    此证明需要使用代数数域 ℚ(√5) 而非 ℝ。
-    此处声明为待证（需要 AlgebraicNumber 或 RingOfIntegers 策略）。 -/
-theorem eigenvalue1_satisfies_charPoly : True := by trivial
+/-! 验证第一本征值满足特征多项式（待形式化）：
+
+    p(λ₁) = 0，其中 λ₁ = (3-√5)/2。
+    由于 λ₁ 是无理数，此证明需要使用代数数域 ℚ(√5) 而非 ℝ。
+    可以通过 `AlgebraicNumber` 或直接代入特征多项式 p(x) = x⁴ - 8x³ + 21x² - 20x + 5
+    来验证，展开后利用 (√5)² = 5 化简。
+
+    当前状态：待引入代数数域策略后完成。手动展开验证：
+    p(λ₁) = ((3-√5)/2)⁴ - 8((3-√5)/2)³ + 21((3-√5)/2)² - 20((3-√5)/2) + 5
+    展开后所有 √5 项抵消，常数项归零。 -/
 
 /-! ## 逆嘉当矩阵 A₄⁻¹ -/
 
@@ -271,16 +294,30 @@ theorem cartanA4_inv_sum_eq_10 : cartanA4_inv_sum = 10 := by
 /-! ## 正定性 — 所有主子式 > 0 -/
 
 /-- [THEOREM] A₄ 嘉当矩阵是正定的。
-    证明：所有主子式 > 0。
-    - 第一主子式（1×1）：2 > 0
-    - 第二主子式（2×2）：3 > 0
-    - 第三主子式（3×3）：4 > 0
-    - 第四主子式（4×4 = det）：5 > 0 -/
-theorem cartanA4_positive_definite : (0 : ℤ) < 2 ∧ (0 : ℤ) < 3 ∧ (0 : ℤ) < 4 ∧ (0 : ℤ) < 5 := by
+    
+    由 Sylvester 判据：对称矩阵正定当且仅当所有主子式 > 0。
+    通过显式行列式公式 + `norm_num` 直接计算各阶主子式行列式：
+    - 第一主子式（1×1 A₁）：det = 2 > 0
+    - 第二主子式（2×2 A₂）：det = 3 > 0
+    - 第三主子式（3×3 A₃）：det = 4 > 0
+    - 第四主子式（4×4 A₄）：det = 5 > 0 -/
+theorem cartanA4_positive_definite : (0 : ℤ) < det1 cartanA1 ∧ (0 : ℤ) < det2 cartanA2 ∧
+    (0 : ℤ) < det3 cartanA3 ∧ (0 : ℤ) < det4 cartanA4 := by
+  have h1 : det1 cartanA1 = 2 := cartanA1_det_eq_2
+  have h2 : det2 cartanA2 = 3 := cartanA2_det_eq_3
+  have h3 : det3 cartanA3 = 4 := cartanA3_det_eq_4
+  have h4 : det4 cartanA4 = 5 := cartanA4_det_eq_5
+  rw [h1, h2, h3, h4]
   exact ⟨by norm_num, by norm_num, by norm_num, by norm_num⟩
 
 /-- 嘉当矩阵正定性在 ℝ 上的推论：所有主子式 > 0（ℝ 版本） -/
-theorem cartanA4_positive_definite_real : (0 : ℝ) < 2 ∧ (0 : ℝ) < 3 ∧ (0 : ℝ) < 4 ∧ (0 : ℝ) < 5 := by
+theorem cartanA4_positive_definite_real : (0 : ℝ) < (det1 cartanA1 : ℝ) ∧ (0 : ℝ) < (det2 cartanA2 : ℝ) ∧
+    (0 : ℝ) < (det3 cartanA3 : ℝ) ∧ (0 : ℝ) < (det4 cartanA4 : ℝ) := by
+  have h1 : (det1 cartanA1 : ℝ) = 2 := by exact_mod_cast cartanA1_det_eq_2
+  have h2 : (det2 cartanA2 : ℝ) = 3 := by exact_mod_cast cartanA2_det_eq_3
+  have h3 : (det3 cartanA3 : ℝ) = 4 := by exact_mod_cast cartanA3_det_eq_4
+  have h4 : (det4 cartanA4 : ℝ) = 5 := by exact_mod_cast cartanA4_det_eq_5
+  rw [h1, h2, h3, h4]
   exact ⟨by norm_num, by norm_num, by norm_num, by norm_num⟩
 
 /-- 嘉当矩阵正定性保证本征值全为正 -/
@@ -366,16 +403,16 @@ def cartanRank : ℕ := 4
 theorem cartanRank_eq_rankSU5 : cartanRank = rankSU5 := by
   unfold cartanRank rankSU5; rfl
 
-/-- [THEOREM] SU(5) 的 Weyl 群 = S₅（5 个字母的对称群）。
+/-! [THEOREM — 声明] SU(5) 的 Weyl 群 = S₅（5 个字母的对称群）。
+
     S₅ 也是正四单纯形的对称群！
     这是 SU(5) 规范群与 4-单纯形几何之间的深层联系。
-    
+
     因此，H3.3（退相干稳态 = 正四单纯形）等价于：
-    退相干稳态的对称群是 S₅，即 SU(5) 的 Weyl 群。 -/
-theorem SU5_Weyl_group_is_S5 : True := by
-  -- SU(5) 的 Weyl 群 = S₅ = 4-单纯形的对称群
-  -- 这是李代数理论的标准结果
-  trivial
+    退相干稳态的对称群是 S₅，即 SU(5) 的 Weyl 群。
+
+    这是李代数理论的标准结果（见 Humphreys 1972）。
+    当前状态：声明，待从 A₄ 根系形式化证明。 -/
 
 /-- SU(5) Weyl 群的阶 = 5! = 120 -/
 def orderS5 : ℕ := 120
@@ -386,16 +423,17 @@ theorem Weyl_group_order_SU5 : orderS5 = 120 := by
 
 /-! ## 嘉当矩阵与物理常数的连接 -/
 
-/-- 本征值比例 9:4:1 的声明：
+/-! 本征值比例 9:4:1 的声明（待严格推导）：
+
     λ₄ : λ₂ : λ₁ ≈ 3.618 : 1.382 : 0.382 ≈ 9.47 : 3.62 : 1
-    
+
     这不是精确的 9:4:1。CQM 中的 9:4:1 比例
     可能与 A₄ 本征值的某种有理逼近或逆嘉当矩阵条目比例有关。
     此关系待进一步严格推导。 -/
-theorem eigenvalue_ratio_claim : True := by trivial
 
-/-- 谱常数 C 与嘉当矩阵的关系：
+/-! 谱常数 C 与嘉当矩阵的关系（声明，待严格推导）：
+
     C = 0.02309570897 远小于 A₄ 的最小本征值 λ₁ = 0.382。
     谱量子 C 是由 ζ 函数导出的独立常数，
-    与 A₄ 本征值的关系通过 Mathieu 方程建立。 -/
-theorem spectral_quantum_vs_cartan : True := by trivial
+    与 A₄ 本征值的关系通过 Mathieu 方程建立。
+    此关系是 CQM 中待填补的核心推导链之一。 -/

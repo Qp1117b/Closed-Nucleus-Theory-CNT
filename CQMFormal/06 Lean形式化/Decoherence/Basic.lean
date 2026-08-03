@@ -68,19 +68,17 @@ theorem sprinklingDensity_at_confinement (L : ℝ) (hL : L > 0) :
     量子叠加态丧失干涉能力。 -/
 def decoherenceCondition (rho L : ℝ) : Prop := rho ≥ L
 
-/-- [HYPOTHESIS H3.1] 引用：禁闭 ⇔ 退相干等价。
-    定义在 CausalSet.Axioms 中。待从因果集第一性原理证明（缺口 G5）。 -/
-theorem confinement_equiv_decoherence_ref : True := confinement_equiv_decoherence
+/-! [HYPOTHESIS H3.1] 引用：禁闭 ⇔ 退相干等价。
+    定义在 CausalSet.Axioms 中，类型为 `physical_hypothesis`（不透明命题）。
+    待从因果集第一性原理证明（缺口 G5）。 -/
 
-/-- [HYPOTHESIS H3.2] 引用：非交换几何 → 交换几何的相变。
-    定义在 CausalSet.Axioms 中。待从因果集第一性原理证明（缺口 G5）。 -/
-theorem noncommutative_phase_transition_ref : True :=
-  noncommutative_to_commutative_phase_transition
+/-! [HYPOTHESIS H3.2] 引用：非交换几何 → 交换几何的相变。
+    定义在 CausalSet.Axioms 中，类型为 `physical_hypothesis`（不透明命题）。
+    待从因果集第一性原理证明（缺口 G5）。 -/
 
-/-- [HYPOTHESIS H3.3] 引用：退相干稳态是正四单纯形。
-    定义在 CausalSet.Axioms 中。这是 CQM 的 SU(5) 规范群涌现的几何根源（缺口 A）。 -/
-theorem decoherence_steady_state_ref : True :=
-  decoherence_steady_state_is_4simplex
+/-! [HYPOTHESIS H3.3] 引用：退相干稳态是正四单纯形。
+    定义在 CausalSet.Axioms 中，类型为 `physical_hypothesis`（不透明命题）。
+    这是 CQM 的 SU(5) 规范群涌现的几何根源（缺口 A）。 -/
 
 /-! ## 退相干速率 -/
 

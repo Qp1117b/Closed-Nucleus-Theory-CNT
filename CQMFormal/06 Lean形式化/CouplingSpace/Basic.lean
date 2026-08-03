@@ -81,10 +81,12 @@ class CanonicalCommutation (H : Type*) [AddCommGroup H] [Module ℝ H] where
 def uncertaintyRelation (Δr_div_r Δvτ C : ℝ) : Prop :=
   Δr_div_r * Δvτ ≥ C / 2
 
-/-- 不确定性关系在 C > 0 时有非平凡下界 -/
-theorem uncertaintyRelation_nonzero_bound (C : ℝ) (hC : C > 0) :
+/-- 不确定性关系在 C > 0 时有非平凡下界：
+    当 C > 0 时，C/2 > 0，因此存在值使得不确定性关系不成立
+    （例如 Δr = 0 时，乘积为 0 < C/2）。
+    这验证了不确定性关系的非平凡性：下界 C/2 > 0 是严格的。 -/
+theorem uncertaintyRelation_nontrivial_bound (C : ℝ) (hC : C > 0) :
     ∃ Δr Δv, ¬ uncertaintyRelation (Δr/1) Δv C := by
-  -- 当 Δr → 0 时，乘积趋于 0 小于 C/2
   use 0, 0
   unfold uncertaintyRelation
   have h : C / 2 > 0 := by linarith

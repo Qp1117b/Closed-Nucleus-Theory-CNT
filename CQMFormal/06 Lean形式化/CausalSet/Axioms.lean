@@ -56,14 +56,34 @@ open CausalSet
 
 /-! ## 层级 3：物理假设（待从公理证明） -/
 
+/-- [HYPOTHESIS] 不透明命题类型，用于标记尚未从数学公理证明的物理假设。
+    每个 `physical_hypothesis` 类型的项代表一个被假定为真但尚未证明的物理陈述。
+    此类型不可被 `trivial` 或任何常规策略证明——它是真正的不透明假设。 -/
+axiom physical_hypothesis : Prop
+
 /-- [HYPOTHESIS H3.1] 禁闭 ⇔ 退相干等价。
+    
+    物理内容：在 CQM 中，规范禁闭（夸克/胶子被限制在耦合空间的有界区域内）
+    与量子退相干（叠加态在禁闭边界丧失干涉能力）是同一物理过程的两个侧面。
+    两者由同一因果集 Sprinkling 结构驱动，在禁闭边界 u = ln L 处同时发生。
+    
     对应严格性缺口 G5。待从因果集第一性原理证明。 -/
-axiom confinement_equiv_decoherence : True
+axiom confinement_equiv_decoherence : physical_hypothesis
 
 /-- [HYPOTHESIS H3.2] 禁闭边界处非交换几何 → 交换几何的相变。
+    
+    物理内容：在禁闭边界 L2 处，耦合空间的几何结构从非交换（量子）
+    相变为交换（经典）。这对应于 L1（内部，非交换）→ L2（边界，相变）
+    → L3+（外部，交换）的三层因果结构。
+    
     对应严格性缺口 G5。 -/
-axiom noncommutative_to_commutative_phase_transition : True
+axiom noncommutative_to_commutative_phase_transition : physical_hypothesis
 
 /-- [HYPOTHESIS H3.3] 退相干稳态是正四单纯形。
+    
+    物理内容：退相干过程的稳态具有正四单纯形（4-simplex）的组合几何结构：
+    5 个顶点、10 条边、10 个面、5 个胞腔。这直接导致 SU(5) 规范群作为
+    4-单纯形的对称群 S₅ 涌现——这是 CQM 中规范群起源的几何机制。
+    
     对应严格性缺口 A（核心缺口）。 -/
-axiom decoherence_steady_state_is_4simplex : True
+axiom decoherence_steady_state_is_4simplex : physical_hypothesis
