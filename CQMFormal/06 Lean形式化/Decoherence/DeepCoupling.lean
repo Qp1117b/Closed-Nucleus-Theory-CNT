@@ -5,10 +5,10 @@ import CausalSet.Axioms
 import Decoherence.Basic
 
 /-!
-# 跨层级深耦合与唯一性难题 (Deep Cross-Layer Coupling & Uniqueness Problem)
+# 跨层级退相干深耦合与唯一性难题 (Deep Cross-Layer Coupling & Uniqueness Problem)
 
 本模块完善 CQM 退相干理论中解决"唯一性难题"的核心机制：
-跨层级深耦合 (Deep Cross-Layer Coupling)。
+跨层级退相干深耦合 (Deep Cross-Layer Coupling)。
 
 ## 问题背景
 
@@ -20,9 +20,9 @@ import Decoherence.Basic
 
 ## CQM 的解决方案
 
-CQM 提出"跨层级深耦合"机制：
+CQM 提出"跨层级退相干深耦合"机制：
 
-1. **退相干是连续谱**：深耦合与浅耦合没有本质区别，只是
+1. **退相干是连续谱**：退相干深耦合与浅耦合没有本质区别，只是
    耦合深度的程度差异。从叠加态 → 经典概率 → 确定结果
    是同一退相干机制在不同深度上的表现。
 
@@ -36,14 +36,14 @@ CQM 提出"跨层级深耦合"机制：
    自动涌现。
 
 4. **能动性的物理作用**：上层能动主体可以选择耦合方式
-   和深度，从而参与深耦合过程。能动性不再是可有可无的
+   和深度，从而参与退相干深耦合过程。能动性不再是可有可无的
    副现象，而是组织事物、建立因果联系的实际力量。
 
-## 两种深耦合
+## 两种退相干深耦合
 
-- **自举深耦合**：由环境引力结构和环境自举完成，与上层
+- **自举退相干深耦合**：由环境引力结构和环境自举完成，与上层
   无关。这解释了宏观时空的经典确定性。
-- **情景深耦合**：需要进一步主动深耦合，对应测量、选择、
+- **情景退相干深耦合**：需要进一步主动退相干深耦合，对应测量、选择、
   能动干预过程。
 
 ## 物质内禀不确定性
@@ -78,9 +78,9 @@ open scoped BigOperators
     - 0：完全隔离，量子叠加保持
     - 浅耦合 (0 < d < d_classical)：叠加态部分退相干
     - 经典耦合 (d = d_classical)：退相干完成，得到经典概率分布
-    - 深耦合 (d > d_classical)：进一步筛出唯一确定结果
+    - 退相干深耦合 (d > d_classical)：进一步筛出唯一确定结果
 
-    深耦合与浅耦合没有本质区别，只是连续谱上的不同位置。 -/
+    退相干深耦合与浅耦合没有本质区别，只是连续谱上的不同位置。 -/
 abbrev CouplingDepth := ℝ
 
 /-- 经典耦合深度的阈值：当耦合深度达到此值时，叠加态完全
@@ -92,7 +92,7 @@ def classicalCouplingThreshold : CouplingDepth := 1
 theorem classicalCouplingThreshold_pos : classicalCouplingThreshold > 0 := by
   unfold classicalCouplingThreshold; norm_num
 
-/-- 耦合深度是连续谱：深耦合只是比经典耦合更深的耦合。
+/-- 耦合深度是连续谱：退相干深耦合只是比经典耦合更深的耦合。
     不存在从"浅"到"深"的离散跳跃，只有程度的差异。 -/
 theorem coupling_depth_is_spectrum (d : CouplingDepth) :
     d < classicalCouplingThreshold ∨
@@ -148,7 +148,7 @@ theorem classical_stage (d : CouplingDepth) (hd : d = classicalCouplingThreshold
     exact lt_irrefl classicalCouplingThreshold
   rw [if_neg h1, if_pos hd]
 
-/-- 确定结果阶段：耦合深度超过经典阈值（深耦合）。 -/
+/-- 确定结果阶段：耦合深度超过经典阈值（退相干深耦合）。 -/
 theorem determined_stage (d : CouplingDepth) (hd : d > classicalCouplingThreshold) :
     decoherenceStateFromDepth d = DecoherenceState.determined := by
   unfold decoherenceStateFromDepth
@@ -159,9 +159,9 @@ theorem determined_stage (d : CouplingDepth) (hd : d > classicalCouplingThreshol
     linarith
   rw [if_neg h1, if_neg h2]
 
-/-! ## 跨层级深耦合 — 解决唯一性难题 -/
+/-! ## 跨层级退相干深耦合 — 解决唯一性难题 -/
 
-/-- 跨层级深耦合 (Deep Cross-Layer Coupling)：上层系统通过
+/-- 跨层级退相干深耦合 (Deep Cross-Layer Coupling)：上层系统通过
     引力/因果限制场与下层量子系统建立足够深入的耦合，
     从而从经典概率中筛出唯一确定结果。
 
@@ -172,7 +172,7 @@ structure DeepCrossLayerCoupling where
   depth : CouplingDepth
   hpos : depth > 0
 
-/-- 深耦合严格超过经典阈值：能够产生确定结果。
+/-- 退相干深耦合严格超过经典阈值：能够产生确定结果。
     这是从经典概率跃迁到唯一性的临界条件。 -/
 def DeepCrossLayerCoupling.isDeterministic (c : DeepCrossLayerCoupling) : Prop :=
   c.depth > classicalCouplingThreshold
@@ -185,7 +185,7 @@ structure ClassicalProbability where
   hpos : ∀ i ∈ outcomes, weights i > 0
   hsum : ∑ i ∈ outcomes, weights i = 1
 
-/-- [POSTULATE] 唯一性通过深耦合实现：当系统与足够深层的
+/-- [POSTULATE] 唯一性通过退相干深耦合实现：当系统与足够深层的
     因果结构耦合时，经典概率分布坍缩（在 CQM 意义上——
     不是瞬时的波包坍缩，而是退相干连续谱的延伸）为唯一结果。
 
@@ -201,7 +201,7 @@ axiom uniquenessByDeepCoupling :
 
 /-- 能动性 (Agency)：上层系统选择耦合方式和深度的能力。
     在 CQM 中，能动性不是副现象，而是物理过程的一部分：
-    能动主体通过选择深耦合来建立与事物的因果联系。
+    能动主体通过选择退相干深耦合来建立与事物的因果联系。
 
     注意：CQM 明确意识是物质发展到一定阶段的产物，物理层级
     中没必要也不需要意识。能动性在这里是广义的"组织因果
@@ -209,7 +209,7 @@ axiom uniquenessByDeepCoupling :
 structure Agency where
   chosenDepth : CouplingDepth
 
-/-- 能动性选择更深的耦合 → 从经典概率得到确定结果。
+/-- 能动性选择退相干深耦合 → 从经典概率得到确定结果。
     能动性的作用不是创造结果，而是提供足够的耦合深度
     让退相干连续谱延伸到确定阶段。 -/
 theorem agency_enables_uniqueness (a : Agency) (P : ClassicalProbability)
@@ -227,13 +227,13 @@ theorem agency_enables_uniqueness (a : Agency) (P : ClassicalProbability)
 --
 -- 注意：从浅耦合不能得到唯一性的严格证明需要
 -- `uniquenessByDeepCoupling` 公理的逆否命题。当前公理只断言
--- 深耦合 ⇒ 唯一性，未断言其逆否。因此此处不以定理形式
+-- 退相干深耦合 ⇒ 唯一性，未断言其逆否。因此此处不以定理形式
 -- 给出，而以概念注释保留，待后续公理化改进时完善。
 
-/-! ## 两种深耦合模式 -/
+/-! ## 两种退相干深耦合模式 -/
 
-/-- 自举深耦合 (Bootstrapped Deep Coupling)：由环境引力结构
-    和环境自举完成的深耦合，不需要上层参与。
+/-- 自举退相干深耦合 (Bootstrapped Deep Coupling)：由环境引力结构
+    和环境自举完成的退相干深耦合，不需要上层参与。
 
     这解释了宏观时空的经典确定性：大量环境引力自由度
     已经提供了足够的耦合深度，使得日常物体自动处于
@@ -241,22 +241,22 @@ theorem agency_enables_uniqueness (a : Agency) (P : ClassicalProbability)
 structure BootstrappedDeepCoupling extends DeepCrossLayerCoupling where
   hself : depth > classicalCouplingThreshold
 
-/-- 情景深耦合 (Situational Deep Coupling)：需要进一步主动
-    深耦合的情况。对应测量、选择、能动干预等过程。
+/-- 情景退相干深耦合 (Situational Deep Coupling)：需要进一步主动
+    退相干深耦合的情况。对应测量、选择、能动干预等过程。
 
-    当环境自举不足以完成深耦合时，上层能动系统的参与
+    当环境自举不足以完成退相干深耦合时，上层能动系统的参与
     可以提供额外的耦合深度。 -/
 structure SituationalDeepCoupling extends DeepCrossLayerCoupling where
   hrequiresAgency : depth > classicalCouplingThreshold
 
-/-- 自举深耦合足以产生确定结果。 -/
+/-- 自举退相干深耦合足以产生确定结果。 -/
 theorem bootstrapped_yields_uniqueness (b : BootstrappedDeepCoupling) (P : ClassicalProbability) :
     ∃! (i : ℕ), i ∈ P.outcomes := by
   let c : DeepCrossLayerCoupling := b.toDeepCrossLayerCoupling
   have h : c.isDeterministic := b.hself
   exact uniquenessByDeepCoupling c P h
 
-/-- 情景深耦合足以产生确定结果。 -/
+/-- 情景退相干深耦合足以产生确定结果。 -/
 theorem situational_yields_uniqueness (s : SituationalDeepCoupling) (P : ClassicalProbability) :
     ∃! (i : ℕ), i ∈ P.outcomes := by
   let c : DeepCrossLayerCoupling := s.toDeepCrossLayerCoupling
