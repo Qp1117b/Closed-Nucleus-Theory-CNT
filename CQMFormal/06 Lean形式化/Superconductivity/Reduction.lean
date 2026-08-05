@@ -32,13 +32,13 @@ open Filter
 2. 态密度×耦合乘积取 BCS 耦合常数：N(0)·V ≡ d·c
 
 ## 还原的公式
-- BCS 临界温度：k_B T_c = (2e^γ/π)·ħω_D·exp(−1/(N(0)V))，其中 2e^γ/π ≈ 1.1338
+- BCS 临界温度：k_B T_c = (2e^γ/π)·ħω_D·exp(−1/(N(0)V))，其中 2e^γ/π ≈ 1.1339
   （文献公式常写 1.13，那是该系数的三位近似）
 - BCS 零温能隙：由 T=0 能隙方程 1 = λ·arsinh(ω_D/Δ) 精确解得
   Δ = ω_D/sinh(1/λ)（见 `bcs_gap_equation`、`bcs_gap_equation_unique`）；
   弱耦合极限 λ→0⁺ 时该解渐近于 BCS 标准式 Δ₀ = 2·ħω_D·exp(−1/λ)
   （见 `bcs_gap_weak_coupling_limit`，这是极限定理而非有限 λ 的等式）
-- 普适能隙比：2Δ₀/(k_B T_c) = 2πe^{−γ} ≈ 3.5279（文献数值 3.53 为近似）
+- 普适能隙比：2Δ₀/(k_B T_c) = 2πe^{−γ} ≈ 3.5278（文献数值 3.53 为近似）
 - 同位素定律：T_c ∝ M^(−1/2)（α = 1/2）
 - McMillan–Dynes 强耦合公式
 - London 穿透深度、BCS 相干长度、磁通量子
@@ -64,7 +64,7 @@ namespace CQM
 /-! ## BCS 标准公式（自然单位 k_B = ℏ = c = 1） -/
 
 /-- BCS 临界温度：k_B T_c = (2e^γ/π)·ħω_D·exp(−1/(N(0)·V))。
-     `bcsExactConstant = 2e^γ/π ≈ 1.1338`，文献公式常写 1.13（三位近似）。
+     `bcsExactConstant = 2e^γ/π ≈ 1.1339`，文献公式常写 1.13（三位近似）。
      与 CQM 的 `criticalTemperature` 同构（见退化定理）。 -/
 noncomputable def bcsCriticalTemperature (wDebye n0V : ℝ) : ℝ :=
   bcsExactConstant * wDebye * Real.exp (-1 / n0V)
@@ -190,7 +190,7 @@ theorem bcs_gap_weak_coupling_limit {w : ℝ} (hw : w > 0) :
   exact (bcs_gap_ratio_eq (ne_of_gt hw) (ne_of_gt hlam)).symm
 
 /-- BCS 普适能隙比（精确）：2Δ₀/(k_B T_c) = 2πe^{−γ}。
-     数值 2πe^{−γ} ≈ 3.5279，文献常写 3.53（为四位近似）。
+     数值 2πe^{−γ} ≈ 3.5278，文献常写 3.53（为三位近似）。
      比值与材料参数（ω_D、耦合常数）无关，故称"普适"。 -/
 theorem bcs_universal_gap_ratio (wDebye n0V : ℝ) (hw : wDebye ≠ 0) :
     2 * bcsGap wDebye n0V / bcsCriticalTemperature wDebye n0V =

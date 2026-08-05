@@ -12,7 +12,7 @@ import Superconductivity.Gravity
 ## 核心公式（自然单位 k_B = ℏ = 1）
 k_B T_c = (2e^γ/π) · ℏ ω_causal · exp(−1/(N(0)·V₀))，  ω_causal = 2π M_eff c²/ℏ
 
-其中 γ 为欧拉-马歇罗尼常数（`eulerMascheroniConstant`），系数 2e^γ/π ≈ 1.1338；
+其中 γ 为欧拉-马歇罗尼常数（`eulerMascheroniConstant`），系数 2e^γ/π ≈ 1.1339；
 文献公式常写 1.13，那只是 2e^γ/π 的三位数值近似。Lean 内一律用精确常数
 `bcsExactConstant`，数值近似仅在文档字符串中标注、不作为定理结论。
 
@@ -38,7 +38,7 @@ namespace CQM
 
 /-! ## BCS 弱耦合精确常数 -/
 
-/-- BCS 弱耦合临界温度的精确系数：2e^γ/π ≈ 1.1338，其中 γ 为欧拉-马歇罗尼
+/-- BCS 弱耦合临界温度的精确系数：2e^γ/π ≈ 1.1339，其中 γ 为欧拉-马歇罗尼
     常数（≈ 0.5772）。文献公式常以三位近似 1.13 代替；本模块一律使用精确常数，
     数值近似仅在文档字符串中标注、不作为定理结论。 -/
 noncomputable def bcsExactConstant : ℝ :=

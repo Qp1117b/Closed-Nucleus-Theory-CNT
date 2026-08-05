@@ -263,13 +263,22 @@ $$
 - $\mathcal{K}_{\text{causal}} = \Theta(\omega_{\text{causal}} - \omega)$（阶梯截断）
 - $V_{\text{eff}}$ = 常数 $V_0$（费米面附近）
 
-得到标准的 BCS $T_c$ 公式，但截断频率替换为因果截断频率：
+**严格性注记（这一步是纸上推导，Lean 未形式化"积分→T_c"）**：由上述三个近似假设把
+涌现积分压成 BCS 形 $T_c$ 公式，是《涌现积分》理论文档的**手推步骤**，利用的是
+BCS 文献结果。Lean 中只形式化了其中的**单个符号对象**：`causalCutoffFrequency`
+（即 $\omega_{\text{causal}} = 2\pi M_{\text{eff}}$，Gravity 模块，是定义）与
+`criticalTemperature`（即下述 $T_c$ 公式，TransitionTemperature 模块，是定义），
+以及它们的运算性质（正性、单调、同位素位移）——**没有**一个 Lean 定理把
+`emergenceIntegral` 的极限过程推到这个 $T_c$。若要补上，需先形式化 BCS 配分
+函数/自洽方程（属于超出当前 7 模块的扩展，记录为 G 类缺口）。
+
+在上述三个假设下、按 BCS 文献得到：
 
 $$
 \boxed{k_B T_c \approx 1.13 \, \hbar \omega_{\text{causal}} \, \exp\left(-\frac{1}{N(0)V_0}\right)}
 $$
 
-其中：
+其中（Lean 精确形式见 `causalCutoffFrequency`；1.13 是 $2e^\gamma/\pi \approx 1.1339$ 的三位近似）：
 
 $$
 \boxed{\omega_{\text{causal}} = \frac{2\pi M_{\text{eff}}c^2}{\hbar}}

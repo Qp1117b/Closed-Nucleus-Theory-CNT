@@ -149,6 +149,7 @@ lake build Superconductivity  # 编译强引力超导库（7 模块）
 - **同位素定律**：α = 1/2（`criticalTemperature_isotope_shift`）、氢/氘位移 T_c(D) = T_c(H)/√2（`hydrogen_deuterium_isotope_shift`）
 - **朴素 CQM 异常（条件定理）**：`naive_cqm_isotope_anomaly` 只证明朴素替换下 T_c 随质量单调不减、与实验相反；它标示、而非证明退化的必要性
 - **严格性整治**：消除 4/1.13 循环论证；能隙公式从凭空定义改为能隙方程推导；所有数值近似（1.13、3.53、0.707、1.2、1.04）在文档字符串中如实标注，不冒充定理结论
+- **公理依赖审计（`#print axioms`）**：`criticalTemperature_pos`、`bcs_universal_gap_ratio`、`bcs_gap_equation(_unique)`、`bcs_gap_weak_coupling_limit`、同位素三定理、`emergenceIntegral_pos`、`strong_gravity_keeps_pairing_channels` 等全部只依赖 Lean 内核逻辑公理（`propext`、`Classical.choice`、`Quot.sound`），**不依赖任何 `physical_hypothesis` 本体论公理**——物理假设仅作公理存在、未冒充定理结论
 - **金属氢机制文档与计算器**：`08 超导/CQM 超导 金属氢机制与计算框架.md`（H3S 203 K / LaH10 250 K / MgB2 39 K 验证）+ `CQM超导Tc计算器.py`（BCS/McMillan–Dynes/同位素）
 - **室温方向文档**：`08 超导/CQM 室温超导方向.md`（三条路线 + 同位素指数 α(P) 判别性实验）
 

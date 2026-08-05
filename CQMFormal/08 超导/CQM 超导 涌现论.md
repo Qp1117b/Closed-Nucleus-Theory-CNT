@@ -218,7 +218,7 @@ CQM 的独特预言：
 
 ## 第十层：总结——完整的公理-定理-公式体系
 
-### 公理层
+### 公理层（物理假设，非可证命题）
 
 | 编号 | 内容 | Lean 形式化 |
 |------|------|------------|
@@ -226,18 +226,24 @@ CQM 的独特预言：
 | A2 | 质子禁闭几何 = 正四单纯型 | `proton_confinement_geometry_is_4simplex` |
 | A3 | 正四单纯型内部 = 量子引力 | `confinement_interior_is_quantum_gravity` |
 | A4 | 经典引力 + 经典时空 = 量子引力退相干后的涌现 | 引用 H3.1 / H3.2 |
-| A5 | 正四单纯型组合构型 → 丰富引力拓扑 → 丰富退相干类型 | `simplexFVectorSum = adeleCycle` |
+| A5 | 正四单纯型组合构型 → 丰富引力拓扑 → 丰富退相干类型（"组合构型足以产生丰富引力拓扑"是本体的物理主张，非纯数学命题） | 支撑等式见定理层 T2b |
 | A6 | 引力场 = 因果限制退相干场 | 《CQM 退相干 引力因果场》 |
+| A7 | 电子 = 质子-中子对的关系历史产物（非基本存在的本体，而是关系封装物） | `electron_is_proton_neutron_product`（**公理**，非定理） |
 
-### 定理层
+> 注意：A7 的原文字是"电子 = 质子-中子对的关系历史产物"。该陈述以 `axiom` 声明，
+> 不可被 Lean 证明——它是本体论选择，不是推导结论。
+
+### 定理层（可计算结构，Lean 已证明其数学含金）
 
 | 编号 | 内容 | Lean 形式化 |
 |------|------|------------|
-| T1 | 电子 = 质子-中子对的关系历史产物 | `electron_is_proton_neutron_product` |
-| T2 | 电子有随附自由度（关系性+组合性封装） | `electronCharge_neg` 等 |
-| T3 | 超导自由度来自大量有限本体的关系网络 | `no_superconductivity_without_pair_network` |
-| T4 | 超导 = 电子被引力场网络关系性-组合性封装升级 | `relationalManifestation_grows_with_coupling` |
-| T5 | 强引力场不破坏超导，反而可能催生新超导态 | `strong_gravity_does_not_lower_causal_cutoff` |
+| T1a | 电子电荷为负（随附属性符号） | `electronCharge_neg`（`electronCharge` 是定义，符号是证明） |
+| T1b | 电子自旋为正、质量为正且远小于质子质量 | `electronSpin_pos`、`electronMass_pos`、`electronMass_lt_protonMass` |
+| T2 | 正四单纯型 Euler 示性数为 0（组合学支撑禁闭几何） | `fourSimplex_euler_char_zero` |
+| T2b | 正四单纯型 f-向量之和 = Adele 周期 30（代数事实，由 SpectralGeometry 证明；仅支撑 A5 的"组合富足"部分，不证明 A5 的物理结论） | `fourSimplex_fvector_sum_eq_adele_cycle` ≡ `simplexFVectorSum_eq_adeleCycle` |
+| T3 | 组合性超导自由度 = 关系对 × 每对通道（模型性定义；"本体为 0 时无通道"是证明的事实） | `combinatorialChannels`（定义）、`no_superconductivity_without_relation_network`（0×c=0） |
+| T4 | 关系性显现随耦合强度单调增长 | `relationalManifestation_grows_with_coupling`（`relationalManifestation` 为定义） |
+| T5 | 强引力（增强有效质量 M→Mg）**不降低**因果截断频率 | `strong_gravity_does_not_lower_causal_cutoff`（该引理只证"频率"；"不破坏超导"需结合 T_c 公式，非单独保证） |
 
 ### 公式层
 

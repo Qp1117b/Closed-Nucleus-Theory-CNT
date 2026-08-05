@@ -41,21 +41,38 @@ $$k_B T_c = \frac{2e^\gamma}{\pi} \cdot \hbar\omega_{\text{causal}} \cdot \exp\l
 1. **配对通道 = 晶格声子扇区**：因果截断频率取德拜频率 ω_D = √(k/M_ion)（`debyeFrequency`）。晶格振动是质子有限本体网络在其禁闭几何（正四单纯形）中的因果锁定周期运动——"声子"就是 CQM 晶格扇区的因果截断激发。
 2. **耦合常数对应**：态密度 × 耦合乘积 N(0)·V₀ ≡ d·c。
 
-### 1.2 还原的公式（公式层均 Lean 证明；数值列均为文献近似）
+### 1.2 还原的公式（三层严格区分：公式定义 / 性质定理 / 文献数值近似）
 
-| BCS 公式 | 数值 | Lean 定理 |
-|:---|:---|:---|
-| T_c = (2e^γ/π)·ω_D·exp(−1/(N(0)V)) | 2e^γ/π ≈ 1.1339（文献写 1.13） | `criticalTemperature` ≡ `bcsCriticalTemperature`（`cqm_reduces_to_bcs`） |
-| 零温能隙 Δ₀ = 2·ω_D·exp(−1/(N(0)V)) | — | `bcsGap` + `bcsGap_pos`（弱耦合极限式） |
-| 能隙方程闭式解 Δ = ω_D/sinh(1/λ) | — | `bcs_gap_equation` + `bcs_gap_equation_unique`（能隙方程 1 = λ·arsinh(ω_D/Δ) 的唯一解） |
-| 弱耦合退化 | λ→0⁺ 时 Δ 渐近于 2ω_D·e^{−1/λ} | `bcs_gap_weak_coupling_limit`（极限定理，非有限 λ 等式） |
-| **普适能隙比** 2Δ₀/(k_B T_c) | 2πe^{−γ} ≈ **3.5278**（文献常写 3.53） | `bcs_universal_gap_ratio`（精确定理） |
-| **同位素定律** T_c ∝ M^(−1/2) | α = 1/2 | `criticalTemperature_isotope_shift`、`criticalTemperature_decreases_with_ion_mass` |
-| 氢/氘位移 T_c(D) = T_c(H)/√2 | √(1/2) ≈ 0.707 | `hydrogen_deuterium_isotope_shift` |
-| McMillan–Dynes 强耦合 | 1.2 与 1.04 为文献经验系数 | `mcmillanDynesTc` + `mcmillanDynesTc_pos` + `mcmillan_strong_coupling_condition` |
-| London 穿透深度 λ_L | — | `londonPenetrationDepth` + `londonPenetrationDepth_pos` |
-| BCS 相干长度 ξ₀ | — | `bcsCoherenceLength` + `bcsCoherenceLength_pos` |
-| 磁通量子 Φ₀ = h/2e | π（自然单位） | `fluxQuantum` + `fluxQuantum_eq_pi` |
+> **严格性注记（勿把定义当证明）**：下表每行"公式层"列给出 BCS 公式的结构，
+> "Lean 定义"列是**公式的正式声明**（`noncomputable def`，即"把 BCS 公式本身
+> 定义为数学对象"，这一步不是"证明公式成立"）；"性质定理"列才是 **Lean 已证明
+> 的结论**（正性、单调性、方程解、恒等式、极限）。凡数值（1.13、3.53、0.707、
+> 1.2、1.04）均为文献近似，仅在注释中标示，**不冒充定理**。
+>
+> 公理化边界：这些定义所依据的物理前提（如声子机制、BCS 近似的成立域）不在
+> 本模块内证明，而是 `physical_hypothesis` 公理或文献输入——证明的是"在此
+> 前提下，所定义的量满足这些数学性质"。
+
+| BCS 公式 | 数值（文献近似） | Lean 定义 | 性质定理（已证） |
+|:---|:---|:---|:---|
+| T_c = (2e^γ/π)·ω_D·exp(−1/(N(0)V)) | 2e^γ/π ≈ 1.1339（文献写 1.13） | `bcsCriticalTemperature`、`criticalTemperature` | `bcsCriticalTemperature_pos`、`criticalTemperature_pos`、`criticalTemperature_monotone_in_cutoff` |
+| CQM→BCS 退化（记号对应） | — | `cqm_reduces_to_bcs`、`cqm_debye_reduction` | 两个都只是 `rfl`/定义展开的记号等同，**不是** BCS 物理的独立推导 |
+| 零温能隙 Δ₀ = 2·ω_D·exp(−1/(N(0)V)) | — | `bcsGap` | `bcsGap_pos`（弱耦合极限式，有限 λ 的逼近见下两行） |
+| 能隙方程闭式解 Δ = ω_D/sinh(1/λ) | — | `bcsGapFromGapEquation` | `bcs_gap_equation`（确为能隙方程的解）、`bcs_gap_equation_unique`（唯一解） |
+| 弱耦合退化 | — | — | `bcs_gap_weak_coupling_limit`（λ→0⁺ 精确解/标准式 → 1，极限定理非等式）、`bcs_gap_ratio_eq`（比值恒等式 (1−e^{−2/λ})⁻¹） |
+| **普适能隙比** 2Δ₀/(k_B T_c) | 2πe^{−γ} ≈ **3.5278**（文献常写 3.53） | — | `bcs_universal_gap_ratio`（精确定理，与 ω_D、N(0)V 无关） |
+| **同位素定律** T_c ∝ M^(−1/2) | α = 1/2 | `debyeFrequency` | `debyeFrequency_decreases_with_mass`、`criticalTemperature_isotope_shift`、`criticalTemperature_decreases_with_ion_mass` |
+| 氢/氘位移 T_c(D) = T_c(H)/√2 | √(1/2) ≈ 0.707 | — | `hydrogen_deuterium_isotope_shift` |
+| McMillan–Dynes 强耦合 | 1.2 与 1.04 为文献经验系数 | `mcmillanDynesTc` | `mcmillanDynesTc_pos`、`mcmillan_strong_coupling_condition` |
+| London 穿透深度 λ_L | — | `londonPenetrationDepth` | `londonPenetrationDepth_pos` |
+| BCS 相干长度 ξ₀ | — | `bcsCoherenceLength` | `bcsCoherenceLength_pos` |
+| 磁通量子 Φ₀ = h/2e | π（自然单位） | `fluxQuantum` | `fluxQuantum_eq_pi` |
+
+> **注意**：T_c、能隙、London、ξ₀、Φ₀ 的"公式本身"在 Lean 中都是**定义**——
+> 它们把 BCS/Meissner/London 的已知结果转为符号对象，其正确性来自实验与文献，
+> **不是**由 Lean 导出；Lean 导出的是这些定义所满足的运算性质。这正是本节标题
+> "三层严格区分"的含义：定义 ≠ 定理 ≠ 数值。`cqm_reduces_to_bcs` 一次注明为
+> 记号对应层，避免与"独立推导出 BCS"混淆。
 
 ### 1.3 朴素 CQM 异常（条件定理）
 
