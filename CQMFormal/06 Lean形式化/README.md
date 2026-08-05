@@ -4,7 +4,7 @@
 
 ## 编译状态
 
-✅ **全部 6 个库编译通过**（3313 jobs） | Lean 4.29.1 | **零 CQM 警告**
+✅ **全部 9 个库编译通过**（3334 jobs） | Lean 4.29.1 | **零 CQM 警告**
 
 > 注：构建过程中 8 条 Mathlib 内部 ProofWidgets 模块重复注册警告来自 Mathlib 4.29.1 上游，
 > 非 CQM 代码问题，无法从本项目消除。`lake build` 完全成功。 -/
@@ -19,6 +19,7 @@
 | **SpectralGeometry** | `Basic.lean`, `Mathieu.lean`, `RiemannXi.lean` | `spectralQuantum`、`mathieuParameter`、`goldenRatio`、`adeleCycle`、Sierra-CQM 耦谱、黎曼 ξ 函数 |
 | **Decoherence** | `Basic.lean` | `confinementScale`、`CausalLayer`、三层结构 |
 | **PhysicalConstants** | `Basic.lean` | `GN_spectral_formula`、`alpha_inverse_SU5`、CODATA 偏差 |
+| **Superconductivity** | `Ontology.lean`, `Gravity.lean`, `Mechanism.lean`, `Integral.lean`, `TransitionTemperature.lean`, `StrongGravity.lean`, `Reduction.lean` | 强引力超导：有限本体论、τ_res/ω_causal、三方因果闭环、涌现积分、T_c、T_grav、**BCS 退化与还原** |
 
 ## 形式化推导链
 
@@ -101,7 +102,8 @@ Axioms
 | SpectralGeometry | 81 | 4 |
 | Decoherence | 6 | 0 |
 | PhysicalConstants | 20 | 0 |
-| **总计** | **180** | **8** |
+| Superconductivity | 59 | 5 |
+| **总计** | **239** | **13** |
 
 ## 已知缺口
 
@@ -124,6 +126,7 @@ lake build                    # 编译全部
 lake build CausalSet          # 编译单个库
 lake build CartanAlgebra      # 编译嘉当代数库
 lake build SpectralGeometry   # 编译谱几何库（含 Mathieu）
+lake build Superconductivity  # 编译强引力超导库（7 模块）
 ```
 
 ## 理论对应
@@ -136,6 +139,25 @@ lake build SpectralGeometry   # 编译谱几何库（含 Mathieu）
 | 谱几何与 Mathieu 方程 | `SpectralGeometry` | 81 |
 | 禁闭-退相干等价 | `Decoherence` | 6 |
 | G_N 谱公式与 α⁻¹ | `PhysicalConstants` | 20 |
+| 强引力超导涌现 | `Superconductivity` | 59 |
+
+## 本次更新亮点 (v0.5.3)
+
+- **BCS 退化与还原**：新增 `Reduction.lean`（19 定理 + 1 引理）；`cqm_reduces_to_bcs` / `cqm_debye_reduction` 为记号对应层定理；`criticalTemperature` 改用精确 BCS 常数 2e^γ/π（`bcsExactConstant`，文献 1.13 是其三位近似）
+- **能隙方程的严格推导**：`bcs_gap_equation` / `bcs_gap_equation_unique` 从 T=0 能隙方程 1 = λ·arsinh(ω_D/Δ) 导出唯一闭式解 Δ = ω_D/sinh(1/λ)；`bcs_gap_weak_coupling_limit` 证明 λ→0⁺ 时闭式解渐近于 BCS 标准式 2ω_D·e^{−1/λ}（极限定理，非有限 λ 等式）
+- **普适能隙比（精确）**：2Δ₀/k_BT_c = 2πe^{−γ} ≈ 3.5278（文献 3.53、旧公式 4/1.13 均为数值近似）——`bcs_universal_gap_ratio`
+- **同位素定律**：α = 1/2（`criticalTemperature_isotope_shift`）、氢/氘位移 T_c(D) = T_c(H)/√2（`hydrogen_deuterium_isotope_shift`）
+- **朴素 CQM 异常（条件定理）**：`naive_cqm_isotope_anomaly` 只证明朴素替换下 T_c 随质量单调不减、与实验相反；它标示、而非证明退化的必要性
+- **严格性整治**：消除 4/1.13 循环论证；能隙公式从凭空定义改为能隙方程推导；所有数值近似（1.13、3.53、0.707、1.2、1.04）在文档字符串中如实标注，不冒充定理结论
+- **金属氢机制文档与计算器**：`08 超导/CQM 超导 金属氢机制与计算框架.md`（H3S 203 K / LaH10 250 K / MgB2 39 K 验证）+ `CQM超导Tc计算器.py`（BCS/McMillan–Dynes/同位素）
+- **室温方向文档**：`08 超导/CQM 室温超导方向.md`（三条路线 + 同位素指数 α(P) 判别性实验）
+
+## 本次更新亮点 (v0.5.2)
+
+- **新增强引力超导库**：`Superconductivity`（6 模块，38 定理 / 5 公理），对应 [08 超导](../08%20超导/) 两卷文档
+- **分层映射**：Ontology（第 1–2 层有限本体论）→ Gravity（第 3 层引力因果限制场）→ Mechanism（第 4–5 层超导机制）→ Integral（第 6–7 层涌现积分）→ TransitionTemperature（第 8 层 T_c）→ StrongGravity（第 9 层强引力修正）
+- **核心定理**：`fourSimplex_euler_char_zero`、`causalCutoff_eq_two_pi_over_resolution`（ω_causal=2π/τ_res）、`strong_gravity_does_not_lower_causal_cutoff`、`superconductivity_requires_relation_network`、`tripleLoopStrength_locked_pos`、`emergenceIntegral_pos`、`criticalTemperature_pos`、`neutronStar_cutoff_blueshift`
+- **新公理**：5 条 `physical_hypothesis`（有限本体/缺陷体/禁闭几何/内部量子引力/电子封装），沿用 CausalSet.Axioms 不透明公理模式
 
 ## 本次更新亮点 (v0.5.0)
 
@@ -159,7 +181,7 @@ lake build SpectralGeometry   # 编译谱几何库（含 Mathieu）
 
 ## 版本
 
-- **项目版本**: 0.5.1
+- **项目版本**: 0.5.3
 - **Lean 版本**: 4.29.1
 - **依赖**: mathlib, physlib
-- **最后更新**: 2026-08-02
+- **最后更新**: 2026-08-05
