@@ -253,7 +253,7 @@
 
 CQM 对旧层级本体论的根本修正在于：**因果结构不是层级诞生时先验自带的，而是从物质自我展开过程中历史建立的**。
 
-**阶段一：耦合前**。物质以潜能形式存在（随附密度 $\rho(\lambda)$）。此时不存在独立的因果结构——因为"因果"意味着"一个事件对另一个事件的约束关系"，而独立事件尚未分化。存在的是全局幺正性的统一体，但这个统一体尚未展开为因果链。
+**阶段一：耦合前**。物质以潜能形式存在（随附属性空间 $\mathcal{S}(\lambda)$）。这个空间是物质结构内禀的可能性条件，可能是无限的、不可穷尽的。此时不存在独立的因果结构——因为"因果"意味着"一个事件对另一个事件的约束关系"，而独立事件尚未分化。存在的是全局幺正性的统一体，但这个统一体尚未展开为因果链。只有在特定有限本体 $\lambda_i$ 中，才能谈论一个有限的、可实际化的随附属性子集及其局部密度。
 
 **阶段二：耦合中**。当物质在耦合常数空间中发生深耦合时，**因果结构开始分化建立**。耦合过程不是"发现预存的因果链"，而是**建立因果链**——通过再生产频率 $\Gamma(\xi)$ 将瞬时的耦合模式锁定为持续的因果约束。因果结构 = 被再生产锁定的耦合拓扑。
 
@@ -366,15 +366,34 @@ $$\text{涌现属性} = \underbrace{\text{随附属性}}_{\text{本体论基础}
 $$\mathcal{O}_{\text{emergent}} = \int_{\mathcal{M}} \underbrace{\rho(\lambda)}_{\text{随附密度}} \cdot \underbrace{\mathcal{P}(\lambda)}_{\text{因果潜能分布}} \cdot \underbrace{\mathcal{K}(\lambda, \xi)}_{\text{耦合核}} \cdot \underbrace{e^{-\Gamma(\xi) \tau}}_{\text{再生产衰减}} \, d\lambda \, d\xi$$
 
 其中：
-- $\rho(\lambda)$：随附于物质结构 $\lambda$ 的属性密度。属性已在，不是无中生有。
+- $\rho(\lambda_i)$：**特定有限本体** $\lambda_i$ 中的局部随附密度。它不是全局静态函数，而是只在当前可实际化的有限属性集上有意义；**在特定有限本体确立之后，该密度即固定不变**，只有该本体发展为别的有限本体时，密度才会改变。属性已在，不是无中生有。
 - $\mathcal{P}(\lambda)$：状态内禀的因果潜能分布——同一随附基底可展开的多种因果方式。
 - $\mathcal{K}(\lambda, \xi)$：耦合核，描述基础层 $\lambda$ 与上层结构 $\xi$ 的耦合强度。耦合筛选潜能。
 - $\Gamma(\xi)$：再生产衰减率，描述属性在耦合结构 $\xi$ 中的稳定性。再生产使之稳。
+- $I(\lambda_i, \text{attr})$：**属性照亮程度**，取值于 $[0,1]$，$1$ 表示该属性在特定有限本体 $\lambda_i$ 中被理想照亮（完全实现），$0$ 表示完全未照亮。
+- $\delta(\lambda_i, \text{attr}) = 1 - I(\lambda_i, \text{attr})$：**再生产偏移**，度量属性相对于理想照亮程度的偏离。偏移为 $0$ 时属性被稳定锁定；偏移越大，属性越不稳定。
 
 **这个公式的关键含义**：
-- 如果 $\mathcal{K} = 0$（无耦合），涌现属性为零——但随附密度 $\rho$ 和因果潜能 $\mathcal{P}$ 不为零。这对应于"属性随附但尚未显现"。
-- 如果 $\Gamma \to \infty$（再生产衰减），涌现属性衰减——但随附密度、因果潜能和耦合核仍然存在。这对应于"属性的相对偏移"（修正后的 CQM 术语），而非"属性的消失"。
+- 如果 $\mathcal{K} = 0$（无耦合），涌现属性为零——但随附属性空间（全局可能性条件）、局部随附密度 $\rho$、照亮程度和因果潜能 $\mathcal{P}$ 不为零。这对应于"属性随附但尚未显现"。
+- 如果 $\Gamma \to \infty$（再生产衰减），涌现属性衰减——但随附属性空间、局部密度、照亮程度、耦合核和因果潜能仍然存在。这对应于"属性的相对偏移"（修正后的 CQM 术语），而非"属性的消失"。
 - 如果 $\mathcal{K}$ 和 $\Gamma$ 都有限且非零，涌现属性稳定存在——这是"属性随附但显现为关系性"的定量表达。
+
+**关于"随附密度"的辩证限定**：
+- 随附密度**不是**一个适用于所有可能属性的全局静态函数（那种函数不可推测，且其定义域可能无限）；
+- 随附密度**是**特定有限本体 $\lambda_i$ 中可实际化属性集的局部权重；
+- **在固定有限本体内，随附密度是稳定的、不变的**；它的变化只发生在该本体向别的特定有限本体发展之时；
+- 特定有限本体存在**上限**（可实际化属性集有限），但它本身会**发展**为别的特定有限本体，因此局部密度是历史性的、动态的。
+
+**关于"再生产偏移"的相对性**：
+- 再生产衰减 $\Gamma$ 不应被理解为绝对的时间流逝率，而应被理解为**相对于属性理想照亮程度的集体偏移**；
+- 对单个属性，再生产偏移 $\delta = 1 - I$；对上层结构 $\xi$，$\Gamma(\xi)$ 是其可实际化属性的再生产偏移的综合效应；
+- 理想照亮（$I = 1$）对应偏移 $\delta = 0$，即属性被完全锁定、无相对偏移。
+
+**关于涌现的关系性-组合性本质**：
+- **属性先在**：随附属性内禀于物质结构，不是从无中生有地"涌现"出来的；
+- **涌现的是关系性-组合性结构**：绝大多数属性的"实现"不是单个属性被单独点亮，而是多个属性、因果潜能、耦合深度和再生产锁定共同构成的**关系性-组合性结构**在深耦合中被实现；
+- **不能指定单一涌现属性**：因此不能问"是哪一个特定属性在涌现"，只能问"在该物质结构、上层结构和耦合时间下，是否存在某种关系性-组合性结构能够实现自身"；
+- 公式中的积分号 `∫` 正是这种**组合性综合**的形式表达，而非对某个指定属性的测量。
 
 ### 6.9 贝尔实验的 CQM 解读
 
@@ -567,17 +586,50 @@ CQM 严格区分**全局**与**局部**：
 | 层级非还原论 | `Decoherence.DeepCoupling.layerNonReductionism` | ✅ 已形式化 |
 | 能动性 | `Decoherence.DeepCoupling.Agency` | ✅ 已形式化 |
 | 基础层级 = 约束/条件/原料层 | `Decoherence.DeepCoupling.baseLayerIsConstraintConditionMaterial` | ✅ 已形式化 |
-| 涌现属性积分公式 | `Methodology.Basic.emergentProperty` | 🔄 初步形式化 |
+| 涌现属性结构性关系 | `Methodology.Basic.emergentProperty` | 🔄 初步形式化 |
+| 随附属性空间（全局可能性条件） | `Methodology.Basic.SubsidiaryAttributeSpace` | 🔄 抽象占位 |
+| 特定有限本体 | `Methodology.Basic.FiniteOntology` | 🔄 初步形式化 |
+| 可实际化属性集（有限） | `Methodology.Basic.actualizableAttributes` | 🔄 抽象占位 |
+| 局部随附密度（固定于有限本体） | `Methodology.Basic.subsidiaryDensity` | 🔄 初步形式化 |
+| 随附密度由有限本体确定 | `Methodology.Basic.subsidiaryDensity_determined_by_ontology` | ✅ 已证明 |
+| 属性照亮程度 | `Methodology.Basic.illuminationDegree` | 🔄 初步形式化 |
+| 再生产偏移 | `Methodology.Basic.reproductionOffset` | 🔄 初步形式化 |
+| 本体发展关系 | `Methodology.Basic.ontologyDevelopsInto` | 🔄 抽象占位 |
 | 庸俗隐变量分解 vs CQM 深耦合 | `Methodology.Basic.vulgarHVTDecomposition` / `cqmDeepCouplingForm` | 🔄 初步形式化 |
 | 互信息变化度量 | `Methodology.Basic.mutualInformationChange` | 🔄 占位 |
 | 因果结构的过程性生成 | — | ❌ 待形式化 |
 | 引力因果限制场的几何约束 | — | ❌ 待形式化 |
 | 层（sheaf）类比 | — | ❌ 数学化待完成 |
 
+### 关于"随附密度"的形式化修正
+
+文档正文第 6.8 节将涌现公式写作积分形式：
+
+$$\mathcal{O}_{\text{emergent}} = \int_{\mathcal{M}} \rho(\lambda) \cdot \mathcal{P}(\lambda) \cdot \mathcal{K}(\lambda, \xi) \cdot e^{-\Gamma(\xi) \tau} \, d\lambda \, d\xi$$
+
+这个表述中，$\rho(\lambda)$ 被称为"随附密度"。**这一术语需要严格限定**：
+
+- **全局静态的随附密度不成立**：如果把 $\rho$ 理解为适用于一切可能属性的普通函数，那么它不可推测、可能无限、不可从基础层读取；
+- **局部历史性的随附密度成立**：在**特定有限本体** $\lambda_i$ 中，可实际化的随附属性子集是有限的，此时可以定义一个局部的、非负的随附密度 $\rho(\lambda_i)$；
+- **随附密度在固定有限本体内稳定**：一旦特定有限本体确立，其随附密度即固定不变；密度变化只发生在该本体向别的特定有限本体发展之时；
+- **特定有限本体是发展的**：每个特定有限本体都有其上限（可实际化属性集有限），但它本身会发展为别的特定有限本体，因此局部密度是历史性的、动态的；
+- **再生产偏移是相对的**：再生产衰减/偏移不是绝对量，而是相对于属性**照亮程度** $I(\lambda_i, \text{attr})$ 的偏离；$I = 1$ 为理想照亮，对应偏移 $\delta = 1 - I = 0$；
+- **涌现是关系性-组合性的**：属性先在，但涌现不是"某个特定属性被单独点亮"，而是多个属性、因果潜能、耦合和再生产共同构成的关系性-组合性结构被实现；因此不能指定单一属性为"涌现的那个属性"，只能断言存在某种关系性-组合性结构能够实现自身。
+
+因此，公式中的积分号 $\int$ 应理解为**多重约束的结构性综合**，而不是勒贝格积分。Lean 形式化中：
+
+- 将**全局**随附属性空间抽象为 `SubsidiaryAttributeSpace`（可能性条件，可能无限）；
+- 引入 `FiniteOntology` 表示特定有限本体；
+- 声明每个有限本体具有**有限的可实际化属性集** `actualizableAttributes`；
+- 在有限本体上定义**局部随附密度** `subsidiaryDensity`，并证明 `subsidiaryDensity_determined_by_ontology`：同一有限本体内密度稳定；
+- 定义属性**照亮程度** `illuminationDegree`（$[0,1]$，理想为 1）和**再生产偏移** `reproductionOffset`（$\delta = 1 - I$）；
+- 引入**本体发展关系** `ontologyDevelopsInto` 表达有限本体的历史转化；
+- 将涌现属性 `emergentProperty` 处理为一个关系性命题，而非数值积分。
+
 ### 形式化模块说明
 
 - `Decoherence.DeepCoupling`：严格区分深耦合与浅耦合，形式化能动性、唯一性、自举深耦合与情景深耦合等机制。
-- `Methodology.Basic`（新增）：形式化涌现公式的数学结构——随附密度 `ρ(λ)`、因果潜能 `𝒫(λ)`、耦合核 `𝒦(λ, ξ)`、再生产衰减 `Γ(ξ)`，以及涌现属性 `𝒪_emergent` 的积分表达。
+- `Methodology.Basic`（新增）：形式化涌现公式的**结构性关系**——全局随附属性空间 `SubsidiaryAttributeSpace`、特定有限本体 `FiniteOntology`、可实际化属性集 `actualizableAttributes`、局部随附密度 `subsidiaryDensity`、随附密度的有限本体确定性 `subsidiaryDensity_determined_by_ontology`、属性照亮程度 `illuminationDegree`、再生产偏移 `reproductionOffset`、本体发展关系 `ontologyDevelopsInto`、因果潜能集合 `causalPotential`、耦合深度 `couplingDepth`、再生产衰减 `reproductionDecay`，以及涌现属性 `emergentProperty` 作为关系性-组合性命题（存在量词断言，不指定单一属性）。
 
 ### 形式化局限
 

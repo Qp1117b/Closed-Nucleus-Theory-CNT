@@ -1,18 +1,36 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Nat.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.Data.Set.Finite.Basic
 import Mathlib.Tactic
 
 /-! # CQM 方法论基础 (Methodology)
 
 本模块形式化《资本主义、旧物理学与层级还原论：CQM 重构版》一文中
-可数学化的方法论结构，特别是涌现公式的积分表达与庸俗隐变量分解的对比。
+可数学化的方法论结构，特别是涌现公式的结构性表达与庸俗隐变量分解的对比。
 
 ## 形式化范围
 
-- 涌现属性的四维结构：随附密度、因果潜能、耦合核、再生产衰减
+- 涌现属性的四维结构：随附属性空间、因果潜能、耦合深度、再生产衰减
 - 庸俗隐变量分解（正题） vs CQM 深耦合形式（合题）
 - 互信息变化度量（占位）
+
+## 关于"随附密度"的修正
+
+本文档中的涌现公式原写作积分形式 O = ∫ ρ(λ) · ... dλ，其中 ρ(λ) 被称为
+"随附密度"。这个表述需要严格限定：
+
+- **全局静态的** ρ（作为适用于一切可能属性的普通函数）是不成立的，因为
+  随附属性空间可能是无限的、不可穷尽的、不可从基础层读取的；
+- **局部历史性的** ρ 可以成立：在特定有限本体（直接以物质结构 λ 和下标 i
+  确定，记作 λ_i）中，可实际化的随附属性子集是有限的，此时可以谈论一个
+  **局部的、历史性的随附密度**；
+- 特定有限本体本身会**发展**为别的特定有限本体，因此局部密度不是静态的，
+  而是随本体的历史展开而改变的。
+
+因此，积分号 ∫ 应理解为"多重约束的结构性综合"，不是勒贝格积分。
+本模块将全局随附属性空间抽象为 `SubsidiaryAttributeSpace`，同时为
+特定有限本体引入局部随附密度 `subsidiaryDensity` 和本体发展关系
+`ontologyDevelopsInto`。
 
 ## 诚实性声明
 
@@ -37,77 +55,232 @@ namespace CQM
 
 open scoped BigOperators
 
-/-! ## 涌现公式的数学结构
+/-! ## 涌现公式的结构性表达
 
 文档中的涌现公式：
 
   O_emergent = ∫ ρ(λ) · 𝒫(λ) · 𝒦(λ, ξ) · exp(-Γ(ξ)·τ) dλ dξ
 
-其中：
-- ρ(λ)：随附于物质结构 λ 的属性密度
-- 𝒫(λ)：状态内禀的因果潜能分布
-- 𝒦(λ, ξ)：耦合核，描述 λ 与 ξ 的耦合强度
-- Γ(ξ)：再生产衰减率
-- τ：耦合时间
+**重要修正**：这个公式不应被理解为对全局密度 ρ(λ) 的实际测量积分。
+全局的随附属性空间表示"随附于物质结构的可能性条件"，它本身：
+- **不可推测**：不是可以从基础层读取的经验分布；
+- **可能无限**：属性可能性空间可能是不可穷尽的、不可数的；
+- **非还原**：不是基础层的"统计累加"，而是上层相对独立存在的前提条件。
 
-在 Lean 中，我们用有限支撑函数和黎曼积分近似，避免测度论的复杂性。 -/
+但是，在**特定有限本体**（直接以物质结构 λ 和下标 i 确定，记作 λ_i）中，
+可实际化的随附属性子集是有限的，此时可以定义一个**局部的、历史性的
+随附密度** `subsidiaryDensity`。这个密度不是静态的：当有限本体发展为
+别的有限本体时，相应的局部密度也随之改变。
 
-/-- 物质结构参数空间。用实数作为简化模型。 -/
-abbrev MaterialStructure := ℝ
+因此，下面的 Lean 形式化：
+1. 将**全局**随附属性空间处理为抽象类型 `SubsidiaryAttributeSpace`；
+2. 引入 `FiniteOntology` 表示特定有限本体；
+3. 对每个有限本体声明**有限的可实际化属性集** `actualizableAttributes`；
+4. 在有限本体上定义**局部随附密度** `subsidiaryDensity`；
+5. 引入**本体发展关系** `ontologyDevelopsInto`，表达有限本体的历史转化。
 
-/-- 上层结构参数空间。用实数作为简化模型。 -/
-abbrev UpperStructure := ℝ
+涌现属性 `emergentProperty` 仍保持为一个结构性关系命题，但它现在
+可以与局部密度和发展关系共同构成更完整的辩证结构。
 
-/-- 随附密度 ρ(λ)：属性随附于物质结构 λ 的密度。
-    属性已在，不是无中生有。 -/
-def subsidiaryDensity (_lambda : MaterialStructure) : ℝ :=
-  -- 占位：完整形式化需具体物质模型
-  0
+公式中的积分号 ∫ 应理解为"多重约束的结构性综合"，不是勒贝格积分。
+-/
 
-/-- 因果潜能 𝒫(λ)：同一随附基底可承载的多种因果展开方式。
-    潜能不是属性本身，而是属性在因果维度上的展开可能性。 -/
-def causalPotential (_lambda : MaterialStructure) : ℝ :=
+/-- 物质结构类型。抽象类型，不承诺可参数化。 -/
+abbrev MaterialStructure := Type
+
+/-- 上层结构类型。抽象类型。 -/
+abbrev UpperStructure := Type
+
+/-- 随附属性空间：物质结构内禀的可能性条件。
+
+    关键声明：
+    - 这是**全局抽象空间**，不是可计算密度函数；
+    - 它可能是无限的、不可穷尽的；
+    - 它保证属性不是"无中生有"，但也不可被还原为基础层数据。
+
+    注意：局部的、历史性的随附密度定义在 `FiniteOntology` 上，见下文。 -/
+abbrev SubsidiaryAttributeSpace := Type
+
+
+/-! ### 特定有限本体与局部随附密度
+
+随附属性空间作为全局可能性条件可能是无限的，但**特定有限本体**
+（直接以物质结构 λ 和下标 i 确定，记作 λ_i）只能实际化有限多种属性。
+在这个局部范围内，可以定义一个非负的随附密度；当本体发展为别的
+有限本体时，这个密度也随之改变。 -/
+
+/-- 特定有限本体：直接以物质结构 lambda 和下标 index 确定的历史性
+    有限存在环节，记作 lambda_i。它不是静态实体，而是可以发展为
+    其他有限本体的过程性节点。 -/
+structure FiniteOntology where
+  lambda : MaterialStructure
+  index : ℕ
+
+/-- 可实际化属性集：在特定有限本体 omega 中，能够进入当前因果结构的
+    随附属性子集。公理保证其有限性。 -/
+axiom actualizableAttributes (omega : FiniteOntology) : Set SubsidiaryAttributeSpace
+
+/-- [AXIOM] 可实际化属性集的有限性：每个特定有限本体只能承载
+    有限多种属性的实际化。这对应"特定有限本体存在上限"。 -/
+axiom actualizableAttributes_finite (omega : FiniteOntology) :
+  (actualizableAttributes omega).Finite
+
+/-- 局部随附密度：在特定有限本体 omega 上定义的非负实值函数。
+    它只对当前可实际化的属性子集有意义，不是全局函数。
+
+    关键稳定性声明：随附密度在**同一特定有限本体内是固定不变的**。
+    它只在该有限本体发展为另一个有限本体时才发生改变。 -/
+def subsidiaryDensity (_omega : FiniteOntology) (_attr : SubsidiaryAttributeSpace) : ℝ := 0
+
+/-- [AXIOM] 局部密度的非负性。 -/
+axiom subsidiaryDensity_nonneg
+  (omega : FiniteOntology) (attr : SubsidiaryAttributeSpace) :
+  subsidiaryDensity omega attr ≥ 0
+
+/-- [AXIOM] 局部密度的支集包含于可实际化属性集：只有可实际化的属性
+    才能具有正密度。 -/
+axiom subsidiaryDensity_support
+  (omega : FiniteOntology) (attr : SubsidiaryAttributeSpace) :
+  subsidiaryDensity omega attr > 0 → attr ∈ actualizableAttributes omega
+
+/-- 随附密度由有限本体完全确定：同一物质结构、同一下标下，
+    不存在两个不同的密度。这形式化"有限本体一确立，随附密度即稳定"。 -/
+theorem subsidiaryDensity_determined_by_ontology
+    (omega1 omega2 : FiniteOntology)
+    (hL : omega1.lambda = omega2.lambda)
+    (hI : omega1.index = omega2.index)
+    (attr : SubsidiaryAttributeSpace) :
+    subsidiaryDensity omega1 attr = subsidiaryDensity omega2 attr := by
+  have hEq : omega1 = omega2 := by
+    cases omega1
+    cases omega2
+    simp_all
+  rw [hEq]
+
+/-- 属性照亮程度：属性在特定有限本体中的实现/显现程度。
+    1 表示理想照亮（完全实现），0 表示完全未照亮。 -/
+def illuminationDegree (_omega : FiniteOntology) (_attr : SubsidiaryAttributeSpace) : ℝ := 1
+
+/-- [AXIOM] 照亮程度在 [0,1] 区间内。 -/
+axiom illuminationDegree_range
+  (omega : FiniteOntology) (attr : SubsidiaryAttributeSpace) :
+  0 ≤ illuminationDegree omega attr ∧ illuminationDegree omega attr ≤ 1
+
+/-- 再生产偏移：属性相对于理想照亮程度 1 的偏离。
+    偏移为 0 表示属性被理想照亮并稳定锁定；偏移越大，属性越不稳定。 -/
+def reproductionOffset (omega : FiniteOntology) (attr : SubsidiaryAttributeSpace) : ℝ :=
+  1 - illuminationDegree omega attr
+
+/-- 理想照亮时，再生产偏移为 0。 -/
+theorem reproductionOffset_zero_when_ideal
+    (omega : FiniteOntology) (attr : SubsidiaryAttributeSpace)
+    (h : illuminationDegree omega attr = 1) :
+    reproductionOffset omega attr = 0 := by
+  unfold reproductionOffset
+  rw [h]
+  norm_num
+
+/-- 完全未照亮时，再生产偏移为 1。 -/
+theorem reproductionOffset_one_when_unlit
+    (omega : FiniteOntology) (attr : SubsidiaryAttributeSpace)
+    (h : illuminationDegree omega attr = 0) :
+    reproductionOffset omega attr = 1 := by
+  unfold reproductionOffset
+  rw [h]
+  norm_num
+
+/-- 本体发展关系：omega1 可以发展为 omega2。
+    对应"特定有限本体本身也会发展成别的特定有限本体"。 -/
+axiom ontologyDevelopsInto : FiniteOntology → FiniteOntology → Prop
+
+/-- [AXIOM] 发展的非自反性：一个有限本体不能严格发展为自己。 -/
+axiom ontologyDevelopsInto_irreflexive
+  (omega : FiniteOntology) : ¬ ontologyDevelopsInto omega omega
+
+/-- 发展必然指向另一个不同的有限本体。 -/
+theorem ontologyDevelopsInto_distinct
+    (omega1 omega2 : FiniteOntology)
+    (h : ontologyDevelopsInto omega1 omega2) :
+    omega1 ≠ omega2 := by
+  intro heq
+  rw [heq] at h
+  exact ontologyDevelopsInto_irreflexive omega2 h
+
+/-- 因果潜能：从随附属性空间到上层结构的潜在因果展开方式集合。
+    同一随附基底可以承载多种因果展开方式。 -/
+def causalPotential (_lambda : MaterialStructure) (_attr : SubsidiaryAttributeSpace) :
+    Set UpperStructure :=
   -- 占位：完整形式化需因果网络模型
-  0
+  ∅
 
-/-- 耦合核 𝒦(λ, ξ)：描述基础层 λ 与上层结构 ξ 的耦合强度。
-    耦合筛选潜能。 -/
-def couplingKernel (_lambda : MaterialStructure) (_xi : UpperStructure) : ℝ :=
-  -- 占位：完整形式化需耦合常数空间几何
-  0
+/-- 耦合深度：基础层与上层结构之间的耦合强度。
+    用非负实数表示；深度为 0 表示无耦合。 -/
+def couplingDepth (_lambda : MaterialStructure) (_xi : UpperStructure) : ℝ := 0
 
-/-- 再生产衰减率 Γ(ξ)：描述属性在耦合结构 ξ 中的稳定性。 -/
-def reproductionDecay (_xi : UpperStructure) : ℝ :=
-  -- 占位：完整形式化需再生产动力学
-  0
+/-- 再生产衰减率 Γ(ξ)：描述属性在耦合结构 ξ 中的稳定性。
+    在完整形式化中，它应由该上层结构所实际化属性的再生产偏移
+    `reproductionOffset` 综合决定；当前为占位。 -/
+def reproductionDecay (_xi : UpperStructure) : ℝ := 0
 
-/-- 涌现属性 𝒪_emergent 的有限区间近似。
-    由于完整积分涉及测度论，这里用区间 [a,b] × [c,d] 上的黎曼积分近似。 -/
-noncomputable def emergentPropertyApprox
-    (a b c d tau : ℝ) (_ha : a < b) (_hc : c < d) : ℝ :=
-  ∫ x in a..b, ∫ y in c..d,
-    subsidiaryDensity x * causalPotential x * couplingKernel x y * Real.exp (-reproductionDecay y * tau)
+/-- 涌现属性：一个命题，表示在给定物质结构、上层结构和耦合时间下，
+    某种关系性-组合性结构作为深耦合的产物而显现。
 
-/-- [AXIOM] 无耦合时涌现属性为零：若耦合核恒为零，则涌现属性为零。
-    但随附密度 ρ 和因果潜能 𝒫 不为零——对应"属性随附但尚未显现"。 -/
-axiom emergentProperty_zero_when_no_coupling :
-    ∀ (a b c d tau : ℝ) (_ha : a < b) (_hc : c < d),
-      (∀ x y, couplingKernel x y = 0) → emergentPropertyApprox a b c d tau _ha _hc = 0
+    重要说明：属性本身是先在的（随附于物质结构），但涌现不是"某个特定属性
+    被单独点亮"，而是多个属性、因果潜能、耦合深度和再生产锁定共同构成的
+    关系性-组合性结构被实现。因此 `emergentProperty` 用存在量词断言：
+    存在某个随附属性参与构成了这种关系性显现。
 
-/-- [AXIOM] 强衰减时涌现属性衰减：Γ → ∞ 时，涌现属性趋于零。
-    但随附密度、因果潜能和耦合核仍然存在——对应"属性的相对偏移"。 -/
-axiom emergentProperty_decay_when_infinite_reproductionDecay :
-    ∀ (a b c d tau : ℝ) (_ha : a < b) (_hc : c < d) (_x : MaterialStructure) (y : UpperStructure),
-      tau > 0 → reproductionDecay y > 0 →
-      Real.exp (-reproductionDecay y * tau) < 1
+    这不是一个数值积分，而是一个关系性断言：
+    当且仅当存在随附属性、 causalPotential 非空、耦合深度足够大、
+    再生产衰减有限时，涌现属性成立。 -/
+def emergentProperty
+    (lambda : MaterialStructure) (xi : UpperStructure) (tau : ℝ) : Prop :=
+  ∃ (attr : SubsidiaryAttributeSpace),
+    causalPotential lambda attr ≠ ∅ ∧
+    couplingDepth lambda xi > 0 ∧
+    reproductionDecay xi ≥ 0 ∧
+    tau ≥ 0
 
-/-- 涌现属性稳定存在的条件：耦合核非零且再生产衰减有限。
-    这是"属性随附但显现为关系性"的定量表达。 -/
-theorem emergentProperty_stable_when_coupled_and_finite_decay
-    (_x : MaterialStructure) (y : UpperStructure) (_tau : ℝ)
-    (_hK : couplingKernel _x y ≠ 0) (_hGamma : reproductionDecay y > 0) (_htau : _tau > 0) :
-    Real.exp (-reproductionDecay y * _tau) > 0 := by
-  apply Real.exp_pos
+/-- [AXIOM] 无耦合时无涌现：若耦合深度恒为 0，则涌现属性不成立。
+    但随附属性空间和因果潜能仍然存在——对应"属性随附但尚未显现"。 -/
+axiom emergentProperty_false_when_no_coupling :
+    ∀ (lambda : MaterialStructure) (xi : UpperStructure) (tau : ℝ),
+      couplingDepth lambda xi = 0 → ¬ emergentProperty lambda xi tau
+
+/-- [AXIOM] 强衰减时涌现属性不稳定：Γ → ∞ 时，涌现属性无法维持。
+    但随附属性空间和因果潜能仍然存在——对应"属性的相对偏移"。 -/
+axiom emergentProperty_unstable_when_infinite_decay :
+    ∀ (_lambda : MaterialStructure) (xi : UpperStructure) (tau : ℝ),
+      tau > 0 → reproductionDecay xi > 0 →
+      Real.exp (-reproductionDecay xi * tau) < 1
+
+/-- 涌现属性显现的必要条件：耦合深度为正且再生产衰减有限。
+    这是"属性随附但显现为关系性"的形式表达。 -/
+theorem emergentProperty_requires_coupling
+    (lambda : MaterialStructure) (xi : UpperStructure) (tau : ℝ)
+    (hE : emergentProperty lambda xi tau) :
+    couplingDepth lambda xi > 0 := by
+  unfold emergentProperty at hE
+  rcases hE with ⟨_, _, hdepth, _, _⟩
+  exact hdepth
+
+/-- 局部随附密度参与关系性涌现：若某属性在有限本体中具有正密度，
+    且其因果潜能非空、耦合深度为正、衰减有限，则该属性可以参与构成
+    一个涌现属性。
+
+    注意：这不是说"属性 attr 单独涌现"，而是说 attr 作为关系性-组合性
+    涌现结构中的一个参与者，使得整个结构能够实现自身。 -/
+theorem subsidiaryDensity_contributes_to_emergence
+    (omega : FiniteOntology) (xi : UpperStructure) (attr : SubsidiaryAttributeSpace)
+    (tau : ℝ)
+    (_hρ : subsidiaryDensity omega attr > 0)
+    (hP : causalPotential omega.lambda attr ≠ ∅)
+    (hK : couplingDepth omega.lambda xi > 0)
+    (hΓ : reproductionDecay xi ≥ 0)
+    (hτ : tau ≥ 0) :
+    emergentProperty omega.lambda xi tau := by
+  unfold emergentProperty
+  exact ⟨attr, hP, hK, hΓ, hτ⟩
 
 
 /-! ## 庸俗隐变量 vs CQM 深耦合的数学形式
@@ -210,7 +383,9 @@ theorem cqmSublation :
 
 本模块仅形式化了文档中可数学化的部分：
 
-1. 涌现公式的积分结构（占位实现）
+1. 涌现公式的结构性关系（全局随附属性空间 `SubsidiaryAttributeSpace`、
+   局部有限本体 `FiniteOntology`、局部随附密度 `subsidiaryDensity`、
+   本体发展关系 `ontologyDevelopsInto`）
 2. 庸俗隐变量分解与 CQM 深耦合的概率形式对比
 3. 互信息变化的占位
 4. 三种层级世界观的命题分类
