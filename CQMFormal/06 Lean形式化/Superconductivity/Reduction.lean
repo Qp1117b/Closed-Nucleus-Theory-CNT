@@ -31,14 +31,22 @@ open Filter
 1. 配对通道的因果截断频率取晶格德拜频率：ω_causal → ω_D = √(k/M_ion)
 2. 态密度×耦合乘积取 BCS 耦合常数：N(0)·V ≡ d·c
 
-## 还原的公式
+## 还原的公式（推导地位：方程是物理内容，公式是方程的解）
 - BCS 临界温度：k_B T_c = (2e^γ/π)·ħω_D·exp(−1/(N(0)V))，其中 2e^γ/π ≈ 1.1339
-  （文献公式常写 1.13，那是该系数的三位近似）
+  （文献公式常写 1.13，那是该系数的三位近似）。
+  它是弱耦合 T_c 方程 1 = λ·ln((2e^γ/π)·ω_D/(k_B T_c)) 的唯一正解
+  （`bcsTcEquation_solved`、`bcsTcEquation_unique`）——**公式是方程的解，
+  不是任意定义**；方程本身（含系数）是 BCS 物理内容，其"积分→对数方程"
+  渐近未形式化（G13）。
 - BCS 零温能隙：由 T=0 能隙方程 1 = λ·arsinh(ω_D/Δ) 精确解得
   Δ = ω_D/sinh(1/λ)（见 `bcs_gap_equation`、`bcs_gap_equation_unique`）；
   弱耦合极限 λ→0⁺ 时该解渐近于 BCS 标准式 Δ₀ = 2·ħω_D·exp(−1/λ)
-  （见 `bcs_gap_weak_coupling_limit`，这是极限定理而非有限 λ 的等式）
-- 普适能隙比：2Δ₀/(k_B T_c) = 2πe^{−γ} ≈ 3.5278（文献数值 3.53 为近似）
+  （见 `bcs_gap_weak_coupling_limit`，这是极限定理而非有限 λ 的等式；
+  记号 `bcsGap` 即此渐近形式，不是独立定义）。
+- 普适能隙比：2Δ₀/(k_B T_c) 由能隙方程解与 T_c 方程解之比在 λ→0⁺ 的
+  极限给出 = 2πe^{−γ} ≈ 3.5278（文献数值 3.53 为近似）。
+  这是**极限定理**（`bcs_universal_gap_ratio`）：强耦合下能隙比偏离 3.53，
+  不存在"对所有 λ 精确等于 2πe^{−γ}"的恒等式。
 - 同位素定律：T_c ∝ M^(−1/2)（α = 1/2）
 - McMillan–Dynes 强耦合公式
 - London 穿透深度、BCS 相干长度、磁通量子
@@ -65,7 +73,14 @@ namespace CQM
 
 /-- BCS 临界温度：k_B T_c = (2e^γ/π)·ħω_D·exp(−1/(N(0)·V))。
      `bcsExactConstant = 2e^γ/π ≈ 1.1339`，文献公式常写 1.13（三位近似）。
-     与 CQM 的 `criticalTemperature` 同构（见退化定理）。 -/
+     与 CQM 的 `criticalTemperature` 同构（见退化定理）。
+
+     **推导地位（不是定义）**：本式是弱耦合 T_c 方程
+         1 = λ·ln((2e^γ/π)·ω_D/(k_B T_c))
+     的唯一正解（见 `bcsTcEquation_solved`、`bcsTcEquation_unique`）。
+     方程本身（含系数 2e^γ/π）是 BCS 平均场在对数近似下的物理内容；
+     其"配对积分 → 对数方程"的渐近推导未形式化（缺口 G13），
+     但**方程的解是严格定理**。 -/
 noncomputable def bcsCriticalTemperature (wDebye n0V : ℝ) : ℝ :=
   bcsExactConstant * wDebye * Real.exp (-1 / n0V)
 
@@ -75,9 +90,77 @@ theorem bcsCriticalTemperature_pos {wDebye n0V : ℝ} (hw : wDebye > 0) :
   unfold bcsCriticalTemperature
   exact mul_pos (mul_pos bcsExactConstant_pos hw) (Real.exp_pos _)
 
-/-- BCS 零温能隙（弱耦合极限形式）：Δ₀ = 2·ħω_D·exp(−1/(N(0)·V))。
-     严格路径见 `bcsGapFromGapEquation`（能隙方程精确解）与
-     `bcs_gap_weak_coupling_limit`（λ→0⁺ 时精确解渐近于本式）。 -/
+/-- [推导] 弱耦合 T_c 方程的解：T_c = (2e^γ/π)·ω_D·exp(−1/λ) 精确满足
+     1 = λ·ln((2e^γ/π)·ω_D/(k_B T_c))。 -/
+theorem bcsTcEquation_solved {wDebye n0V : ℝ} (hw : wDebye > 0) (hn : n0V > 0) :
+    n0V * Real.log (bcsExactConstant * wDebye / bcsCriticalTemperature wDebye n0V) = 1 := by
+  have hrew : Real.exp (-1 / n0V) = Real.exp (-(1 / n0V)) := by
+    congr 1
+    ring
+  have harg : bcsExactConstant * wDebye /
+      (bcsExactConstant * wDebye * Real.exp (-(1 / n0V))) = Real.exp (1 / n0V) := by
+    field_simp [ne_of_gt bcsExactConstant_pos, ne_of_gt hw, Real.exp_ne_zero _]
+    rw [← Real.exp_add, neg_add_cancel, Real.exp_zero]
+  calc
+    n0V * Real.log (bcsExactConstant * wDebye / bcsCriticalTemperature wDebye n0V)
+        = n0V * Real.log (Real.exp (1 / n0V)) := by
+        rw [bcsCriticalTemperature, hrew, harg]
+    _ = n0V * (1 / n0V) := by
+        rw [Real.log_exp]
+    _ = 1 := by
+        field_simp [ne_of_gt hn]
+
+/-- [推导] 弱耦合 T_c 方程的唯一正解：凡满足
+     1 = λ·ln((2e^γ/π)·ω_D/(k_B T_c)) 的正 T_c 必等于闭式解。
+     与 `bcsTcEquation_solved` 合起来说明：T_c 公式是方程的**解**，
+     而非任意选定的定义。 -/
+theorem bcsTcEquation_unique {wDebye n0V Tc : ℝ} (hw : wDebye > 0) (hn : n0V > 0)
+    (hTc : Tc > 0) (h : n0V * Real.log (bcsExactConstant * wDebye / Tc) = 1) :
+    Tc = bcsCriticalTemperature wDebye n0V := by
+  have h1 : Real.log (bcsExactConstant * wDebye / Tc) = 1 / n0V := by
+    calc
+      Real.log (bcsExactConstant * wDebye / Tc)
+          = (1 / n0V) * (n0V * Real.log (bcsExactConstant * wDebye / Tc)) := by
+          field_simp [ne_of_gt hn]
+      _ = (1 / n0V) * 1 := by
+          rw [h]
+      _ = 1 / n0V := by
+          ring
+  have h2 : Real.log (bcsExactConstant * wDebye / bcsCriticalTemperature wDebye n0V) = 1 / n0V := by
+    have hs := bcsTcEquation_solved hw hn
+    calc
+      Real.log (bcsExactConstant * wDebye / bcsCriticalTemperature wDebye n0V)
+          = (1 / n0V) * (n0V * Real.log (bcsExactConstant * wDebye / bcsCriticalTemperature wDebye n0V)) := by
+          field_simp [ne_of_gt hn]
+      _ = (1 / n0V) * 1 := by
+          rw [hs]
+      _ = 1 / n0V := by
+          ring
+  have harg1 : 0 < bcsExactConstant * wDebye / Tc :=
+    div_pos (mul_pos bcsExactConstant_pos hw) hTc
+  have harg2 : 0 < bcsExactConstant * wDebye / bcsCriticalTemperature wDebye n0V := by
+    exact div_pos (mul_pos bcsExactConstant_pos hw) (bcsCriticalTemperature_pos hw)
+  have hratio : bcsExactConstant * wDebye / Tc =
+      bcsExactConstant * wDebye / bcsCriticalTemperature wDebye n0V :=
+    Real.log_injOn_pos harg1 harg2 (by rw [h1, h2])
+  have hw' : wDebye ≠ 0 := ne_of_gt hw
+  have hb : bcsCriticalTemperature wDebye n0V ≠ 0 :=
+    ne_of_gt (bcsCriticalTemperature_pos hw)
+  calc
+    Tc = bcsExactConstant * wDebye / (bcsExactConstant * wDebye / Tc) := by
+        field_simp [hw', ne_of_gt bcsExactConstant_pos]
+    _ = bcsExactConstant * wDebye /
+          (bcsExactConstant * wDebye / bcsCriticalTemperature wDebye n0V) := by
+        rw [hratio]
+    _ = bcsCriticalTemperature wDebye n0V := by
+        field_simp [ne_of_gt bcsExactConstant_pos, hb, hw']
+
+/-- BCS 零温能隙的弱耦合记号（渐近形式）：Δ₀ ≈ 2·ħω_D·exp(−1/(N(0)·V))。
+     这不是独立定义，而是能隙方程精确解 `bcsGapFromGapEquation` 在
+     λ→0⁺ 的**极限记号**（见 `bcs_gap_weak_coupling_limit`）。
+     严格路径：能隙方程 1 = λ·arsinh(ω_D/Δ)（`bcs_gap_equation`、
+     `bcs_gap_equation_unique`）→ 闭式解 Δ = ω_D/sinh(1/λ)
+     → 弱耦合极限渐近于本记号。 -/
 noncomputable def bcsGap (wDebye n0V : ℝ) : ℝ :=
   2 * wDebye * Real.exp (-1 / n0V)
 
@@ -130,9 +213,9 @@ theorem bcs_gap_equation_unique {w lam Δ : ℝ} (hw : w ≠ 0) (hlam : lam ≠ 
     Δ = w / (w / Δ) := by field_simp [hw]
     _ = w / Real.sinh (1 / lam) := by rw [← hstep]
 
-/-- 精确恒等式：能隙方程精确解与弱耦合极限式之比 = (1 − e^{−2/λ})⁻¹。
-     λ→0⁺ 时修正因子 → 1，即弱耦合极限退化为 BCS 标准式
-     （见 `bcs_gap_weak_coupling_limit`）。 -/
+/-- 恒等式（推导的中间步）：能隙方程精确解与弱耦合记号之比 = (1 − e^{−2/λ})⁻¹。
+      该因子在 λ→0⁺ 时 → 1（见 `bcs_gap_weak_coupling_limit`），
+      也用于能隙比极限定理（见 `bcs_gap_ratio_closed_form`）。 -/
 lemma bcs_gap_ratio_eq {w lam : ℝ} (hw : w ≠ 0) (hlam : lam ≠ 0) :
     bcsGapFromGapEquation w lam / bcsGap w lam = (1 - Real.exp (-2 / lam))⁻¹ := by
   unfold bcsGapFromGapEquation bcsGap
@@ -189,17 +272,91 @@ theorem bcs_gap_weak_coupling_limit {w : ℝ} (hw : w > 0) :
   filter_upwards [self_mem_nhdsWithin] with lam hlam
   exact (bcs_gap_ratio_eq (ne_of_gt hw) (ne_of_gt hlam)).symm
 
-/-- BCS 普适能隙比（精确）：2Δ₀/(k_B T_c) = 2πe^{−γ}。
-     数值 2πe^{−γ} ≈ 3.5278，文献常写 3.53（为三位近似）。
-     比值与材料参数（ω_D、耦合常数）无关，故称"普适"。 -/
-theorem bcs_universal_gap_ratio (wDebye n0V : ℝ) (hw : wDebye ≠ 0) :
-    2 * bcsGap wDebye n0V / bcsCriticalTemperature wDebye n0V =
-      2 * Real.pi * Real.exp (-Real.eulerMascheroniConstant) := by
-  unfold bcsGap bcsCriticalTemperature bcsExactConstant
-  rw [Real.exp_neg]
-  have he : Real.exp (-1 / n0V) ≠ 0 := Real.exp_ne_zero _
-  have heγ : Real.exp Real.eulerMascheroniConstant ≠ 0 := Real.exp_ne_zero _
-  field_simp [hw, he, heγ, Real.pi_pos.ne']
+/-- [推导] 能隙比的闭式恒等式（有限 λ，非极限）：对任意 λ > 0，
+     2Δ₀/(k_B T_c) = 2πe^{−γ} · (1 − e^{−2/λ})⁻¹。
+     这是 `bcs_universal_gap_ratio`（λ→0⁺ 极限）的有限 λ 版本；
+     因子 (1 − e^{−2/λ})⁻¹ > 1，故有限 λ 下能隙比恒大于弱耦合极限
+     2πe^{−γ}（强耦合偏离，见 `bcs_gap_ratio_strong_coupling_excess`）。 -/
+lemma bcs_gap_ratio_closed_form {wDebye lam : ℝ} (hw : wDebye > 0) (hlam : lam > 0) :
+    2 * bcsGapFromGapEquation wDebye lam / bcsCriticalTemperature wDebye lam =
+      2 * Real.pi * Real.exp (-Real.eulerMascheroniConstant) *
+        (1 - Real.exp (-2 / lam))⁻¹ := by
+  have hratio := bcs_gap_ratio_eq (ne_of_gt hw) (ne_of_gt hlam)
+  have htc : bcsGap wDebye lam / bcsCriticalTemperature wDebye lam =
+      Real.pi * Real.exp (-Real.eulerMascheroniConstant) := by
+    unfold bcsGap bcsCriticalTemperature bcsExactConstant
+    rw [Real.exp_neg]
+    field_simp [ne_of_gt hw, Real.exp_ne_zero _, Real.exp_ne_zero _]
+  calc
+    2 * bcsGapFromGapEquation wDebye lam / bcsCriticalTemperature wDebye lam
+        = 2 * (bcsGapFromGapEquation wDebye lam / bcsGap wDebye lam *
+            (bcsGap wDebye lam / bcsCriticalTemperature wDebye lam)) := by
+            field_simp [ne_of_gt hw, bcsCriticalTemperature_pos hw,
+              ne_of_gt (bcsGap_pos hw)]
+      _ = 2 * ((1 - Real.exp (-2 / lam))⁻¹ *
+            (Real.pi * Real.exp (-Real.eulerMascheroniConstant))) := by
+            rw [hratio, htc]
+      _ = 2 * Real.pi * Real.exp (-Real.eulerMascheroniConstant) *
+            (1 - Real.exp (-2 / lam))⁻¹ := by
+            ring
+
+/-- [推导] 强耦合偏离：对任意有限 λ > 0，能隙比 2Δ₀/(k_B T_c) 严格大于
+     弱耦合极限 2πe^{−γ}（≈ 3.5278，文献 3.53）。
+     即 3.53 只是弱耦合渐近值：耦合越强（λ 越大），能隙比越大、
+     偏离 BCS 弱耦合值越远（与 BCS/Eliashberg 文献一致）。 -/
+theorem bcs_gap_ratio_strong_coupling_excess {wDebye lam : ℝ} (hw : wDebye > 0)
+    (hlam : lam > 0) :
+    2 * Real.pi * Real.exp (-Real.eulerMascheroniConstant) <
+      2 * bcsGapFromGapEquation wDebye lam / bcsCriticalTemperature wDebye lam := by
+  have hclosed := bcs_gap_ratio_closed_form hw hlam
+  rw [hclosed]
+  have h1 : Real.exp (-2 / lam) < 1 := by
+    rw [Real.exp_lt_one_iff]
+    exact div_neg_of_neg_of_pos (by norm_num : (-2 : ℝ) < 0) hlam
+  have hpos : 0 < 1 - Real.exp (-2 / lam) := sub_pos.2 h1
+  have hlt : 1 - Real.exp (-2 / lam) < 1 := by
+    rw [sub_lt_self_iff]
+    exact Real.exp_pos _
+  have hinv : 1 < (1 - Real.exp (-2 / lam))⁻¹ := (one_lt_inv₀ hpos).2 hlt
+  have hconst : 0 < 2 * Real.pi * Real.exp (-Real.eulerMascheroniConstant) := by
+    positivity
+  exact lt_mul_of_one_lt_right hconst hinv
+
+/-- [推导] 能隙比的弱耦合极限：2Δ₀/(k_B T_c) → 2πe^{−γ}（≈ 3.5278，
+     文献数值 3.53 为近似）。
+     推导路径：Δ₀ 取能隙方程精确解 `bcsGapFromGapEquation`，
+     T_c 取 T_c 方程解 `bcsCriticalTemperature`，两者比值经
+     `bcs_gap_ratio_eq` 化为 (1 − e^{−2/λ})⁻¹ · 2πe^{−γ}，
+     在 λ→0⁺ 时趋于 2πe^{−γ}。
+     注意：这是**极限定理**，不是对任意 λ 的精确恒等式——
+     能隙比 3.53 只描述弱耦合极限，强耦合下会偏离
+     （与 BCS 文献一致，强耦合能隙比大于 3.53）。 -/
+theorem bcs_universal_gap_ratio (wDebye : ℝ) (hw : wDebye > 0) :
+    Tendsto
+      (fun lam : ℝ =>
+        2 * bcsGapFromGapEquation wDebye lam / bcsCriticalTemperature wDebye lam)
+      (𝓝[>] 0) (𝓝 (2 * Real.pi * Real.exp (-Real.eulerMascheroniConstant))) := by
+  have h₁ : Tendsto (fun lam : ℝ => 1 / lam) (𝓝[>] 0) atTop := by
+    simpa [div_eq_mul_inv] using (tendsto_inv_nhdsGT_zero (𝕜 := ℝ))
+  have h₂ : Tendsto (fun lam : ℝ => -2 / lam) (𝓝[>] 0) atBot := by
+    have hm : Tendsto (fun lam : ℝ => -2 * (1 / lam)) (𝓝[>] 0) atBot :=
+      (Filter.tendsto_const_mul_atBot_of_neg (by norm_num : (-2 : ℝ) < 0)).mpr h₁
+    simpa [div_eq_mul_inv] using hm
+  have h₅ : Tendsto (fun lam : ℝ => Real.exp (-2 / lam)) (𝓝[>] 0) (𝓝 0) :=
+    Real.tendsto_exp_atBot.comp h₂
+  have h₆ : Tendsto (fun lam : ℝ => 1 - Real.exp (-2 / lam)) (𝓝[>] 0) (𝓝 1) := by
+    simpa using tendsto_const_nhds.sub h₅
+  have h₇ : Tendsto (fun lam : ℝ => (1 - Real.exp (-2 / lam))⁻¹) (𝓝[>] 0) (𝓝 1) := by
+    simpa using h₆.inv₀ (by norm_num : (1 : ℝ) ≠ 0)
+  have hc : Tendsto
+      (fun lam : ℝ =>
+        2 * Real.pi * Real.exp (-Real.eulerMascheroniConstant) *
+          (1 - Real.exp (-2 / lam))⁻¹)
+      (𝓝[>] 0) (𝓝 (2 * Real.pi * Real.exp (-Real.eulerMascheroniConstant))) := by
+    simpa [div_eq_mul_inv] using tendsto_const_nhds.mul h₇
+  apply hc.congr'
+  filter_upwards [self_mem_nhdsWithin] with lam hlam
+  exact (bcs_gap_ratio_closed_form hw hlam).symm
 
 /-! ## 退化定理：CQM → BCS -/
 

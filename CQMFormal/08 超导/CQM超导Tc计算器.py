@@ -131,7 +131,7 @@ def main():
           f"(见验证表) —— 这正是 CQM 退化核心之外需要强耦合扩展的原因")
     gap_ratio = 2 * math.pi * math.exp(-EULER_GAMMA)   # 2πe^−γ
     print(f"  普适能隙比: 2*Delta0/(k_B*T_c) = 2πe^−γ = {gap_ratio:.4f}"
-          f" (Lean: bcs_universal_gap_ratio 精确定理；文献常写 3.53，为数值近似)")
+          f" (Lean: bcs_universal_gap_ratio 弱耦合极限定理；文献常写 3.53，为数值近似)")
     print(f"  氢/氘同位素定律: T_c(D)/T_c(H) = sqrt(1/2) = {isotope_tc_ratio(1, 2):.4f}"
           " (Lean: hydrogen_deuterium_isotope_shift)")
 

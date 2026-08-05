@@ -55,12 +55,12 @@ $$k_B T_c = \frac{2e^\gamma}{\pi} \cdot \hbar\omega_{\text{causal}} \cdot \exp\l
 
 | BCS 公式 | 数值（文献近似） | Lean 定义 | 性质定理（已证） |
 |:---|:---|:---|:---|
-| T_c = (2e^γ/π)·ω_D·exp(−1/(N(0)V)) | 2e^γ/π ≈ 1.1339（文献写 1.13） | `bcsCriticalTemperature`、`criticalTemperature` | `bcsCriticalTemperature_pos`、`criticalTemperature_pos`、`criticalTemperature_monotone_in_cutoff` |
+| T_c = (2e^γ/π)·ω_D·exp(−1/(N(0)V)) | 2e^γ/π ≈ 1.1339（文献写 1.13） | `bcsCriticalTemperature`、`criticalTemperature` | `bcsCriticalTemperature_pos`、`criticalTemperature_pos`、`criticalTemperature_monotone_in_cutoff`、**`bcsTcEquation_solved`（公式确为 T_c 方程 1 = λ·ln((2e^γ/π)ω_D/k_B T_c) 的解）、`bcsTcEquation_unique`（方程唯一正解）** |
 | CQM→BCS 退化（记号对应） | — | `cqm_reduces_to_bcs`、`cqm_debye_reduction` | 两个都只是 `rfl`/定义展开的记号等同，**不是** BCS 物理的独立推导 |
 | 零温能隙 Δ₀ = 2·ω_D·exp(−1/(N(0)V)) | — | `bcsGap` | `bcsGap_pos`（弱耦合极限式，有限 λ 的逼近见下两行） |
 | 能隙方程闭式解 Δ = ω_D/sinh(1/λ) | — | `bcsGapFromGapEquation` | `bcs_gap_equation`（确为能隙方程的解）、`bcs_gap_equation_unique`（唯一解） |
 | 弱耦合退化 | — | — | `bcs_gap_weak_coupling_limit`（λ→0⁺ 精确解/标准式 → 1，极限定理非等式）、`bcs_gap_ratio_eq`（比值恒等式 (1−e^{−2/λ})⁻¹） |
-| **普适能隙比** 2Δ₀/(k_B T_c) | 2πe^{−γ} ≈ **3.5278**（文献常写 3.53） | — | `bcs_universal_gap_ratio`（精确定理，与 ω_D、N(0)V 无关） |
+| **普适能隙比** 2Δ₀/(k_B T_c) | 2πe^{−γ} ≈ **3.5278**（文献常写 3.53） | — | `bcs_gap_ratio_closed_form`（有限 λ 闭式 = 2πe^{−γ}·(1−e^{−2/λ})⁻¹）、`bcs_universal_gap_ratio`（λ→0⁺ **弱耦合极限定理** `Tendsto`）、`bcs_gap_ratio_strong_coupling_excess`（**有限 λ 能隙比恒大于 2πe^{−γ}，强耦合偏离 3.53**） |
 | **同位素定律** T_c ∝ M^(−1/2) | α = 1/2 | `debyeFrequency` | `debyeFrequency_decreases_with_mass`、`criticalTemperature_isotope_shift`、`criticalTemperature_decreases_with_ion_mass` |
 | 氢/氘位移 T_c(D) = T_c(H)/√2 | √(1/2) ≈ 0.707 | — | `hydrogen_deuterium_isotope_shift` |
 | McMillan–Dynes 强耦合 | 1.2 与 1.04 为文献经验系数 | `mcmillanDynesTc` | `mcmillanDynesTc_pos`、`mcmillan_strong_coupling_condition` |

@@ -40,8 +40,10 @@ CQM 中"强引力场下的超导态"的完整形式化框架。理论文档见
 - `cqm_reduces_to_bcs` / `cqm_debye_reduction`：CQM 退化为 BCS（晶格扇区）
 - `bcsExactConstant_pos`：BCS 精确系数 2e^γ/π > 0（γ 为欧拉-马歇罗尼常数；文献 1.13 为其三位近似）
 - `bcs_gap_equation` / `bcs_gap_equation_unique`：能隙方程 1 = λ·arsinh(ω_D/Δ) 的唯一闭式解 Δ = ω_D/sinh(1/λ)
+- `bcsTcEquation_solved` / `bcsTcEquation_unique`：T_c 方程 1 = λ·ln((2e^γ/π)ω_D/k_B T_c) 的解与唯一正解
 - `bcs_gap_weak_coupling_limit`：λ→0⁺ 时闭式解渐近于 BCS 标准式 2ω_D·e^{−1/λ}（极限定理）
-- `bcs_universal_gap_ratio`：普适能隙比 2Δ₀/(k_B T_c) = 2πe^{−γ}（≈ 3.5278，文献 3.53 为近似）
+- `bcs_universal_gap_ratio`：能隙比 2Δ₀/(k_B T_c) 的**弱耦合极限**趋于 2πe^{−γ}（≈ 3.5278，文献 3.53 为近似；极限定理 `Tendsto`，强耦合下偏离）
+- `bcs_gap_ratio_closed_form` / `bcs_gap_ratio_strong_coupling_excess`：能隙比有限 λ 闭式恒等式 = 2πe^{−γ}·(1−e^{−2/λ})⁻¹，且有限 λ 下恒大于弱耦合极限（强耦合偏离 3.53）
 - `criticalTemperature_isotope_shift`：同位素定律 T_c ∝ M^(−1/2)（α = 1/2）
 - `hydrogen_deuterium_isotope_shift`：T_c(D) = T_c(H)/√2（H3S/D3S 实验 0.72 ≈ 0.707）
 - `naive_cqm_isotope_anomaly`：朴素 CQM（ω_causal ∝ M）下 T_c 随质量单调不减、与实验相反（条件定理；标示而非证明退化的必要性）

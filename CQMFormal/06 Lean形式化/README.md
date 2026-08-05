@@ -143,9 +143,10 @@ lake build Superconductivity  # 编译强引力超导库（7 模块）
 
 ## 本次更新亮点 (v0.5.3)
 
-- **BCS 退化与还原**：新增 `Reduction.lean`（19 定理 + 1 引理）；`cqm_reduces_to_bcs` / `cqm_debye_reduction` 为记号对应层定理；`criticalTemperature` 改用精确 BCS 常数 2e^γ/π（`bcsExactConstant`，文献 1.13 是其三位近似）
+- **BCS 退化与还原**：新增 `Reduction.lean`（22 定理 + 2 引理）；`cqm_reduces_to_bcs` / `cqm_debye_reduction` 为记号对应层定理；`criticalTemperature` 改用精确 BCS 常数 2e^γ/π（`bcsExactConstant`，文献 1.13 是其三位近似）
 - **能隙方程的严格推导**：`bcs_gap_equation` / `bcs_gap_equation_unique` 从 T=0 能隙方程 1 = λ·arsinh(ω_D/Δ) 导出唯一闭式解 Δ = ω_D/sinh(1/λ)；`bcs_gap_weak_coupling_limit` 证明 λ→0⁺ 时闭式解渐近于 BCS 标准式 2ω_D·e^{−1/λ}（极限定理，非有限 λ 等式）
-- **普适能隙比（精确）**：2Δ₀/k_BT_c = 2πe^{−γ} ≈ 3.5278（文献 3.53、旧公式 4/1.13 均为数值近似）——`bcs_universal_gap_ratio`
+- **T_c 方程的严格推导**：`bcsTcEquation_solved`（T_c = (2e^γ/π)·ω_D·e^{−1/λ} 精确满足弱耦合 T_c 方程 1 = λ·ln((2e^γ/π)·ω_D/k_B T_c)）、`bcsTcEquation_unique`（该方程唯一正解）——T_c 公式是方程的**解**而非任意定义
+- **普适能隙比（弱耦合极限定理）**：2Δ₀/k_BT_c → 2πe^{−γ} ≈ 3.5278（文献 3.53、旧公式 4/1.13 均为数值近似）——`bcs_universal_gap_ratio` 为 λ→0⁺ 极限定理（`Tendsto`）、`bcs_gap_ratio_closed_form` 为有限 λ 闭式恒等式、`bcs_gap_ratio_strong_coupling_excess` 证明有限 λ 下能隙比恒大于弱耦合极限（强耦合偏离 3.53）
 - **同位素定律**：α = 1/2（`criticalTemperature_isotope_shift`）、氢/氘位移 T_c(D) = T_c(H)/√2（`hydrogen_deuterium_isotope_shift`）
 - **朴素 CQM 异常（条件定理）**：`naive_cqm_isotope_anomaly` 只证明朴素替换下 T_c 随质量单调不减、与实验相反；它标示、而非证明退化的必要性
 - **严格性整治**：消除 4/1.13 循环论证；能隙公式从凭空定义改为能隙方程推导；所有数值近似（1.13、3.53、0.707、1.2、1.04）在文档字符串中如实标注，不冒充定理结论
