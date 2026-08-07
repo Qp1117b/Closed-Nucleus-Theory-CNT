@@ -269,6 +269,17 @@ def b1_truncated (q : ℝ) : ℝ := 1 + q - q^2/8 - q^3/64 - q^4/1536
     因此 q⁵/3000 是截断误差 |R₅(q)| 的安全上界。
     
     对于 q ≤ 1，级数绝对收敛，且 |R₅(q)| ≤ (11/36864)·q⁵/(1-q/4) < q⁵/3000。 -/
+
+/-- [辅助定理] 截断误差安全上界的严格化：11/36864 < 1/3000。
+
+    这是 `b1_perturbation_lower_bound` 文档中数值估计
+    "≈ -0.000298 > -0.000333" 的机器可验证版本——
+    把原文的手摇近似替换为真正可证明的不等式，
+    以明确标记该处为诚实算术（非 Mathieu 函数理论的物理推导）。 -/
+theorem b1_trunc_error_bound_safe : (11 : ℝ) / 36864 < 1 / 3000 := by
+  field_simp
+  norm_num
+
 axiom b1_perturbation_lower_bound (q : ℝ) (hq0 : 0 ≤ q) (hq1 : q ≤ 1) :
     b1 q ≥ b1_truncated q - q^5/3000
 

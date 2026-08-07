@@ -61,7 +61,7 @@ CQM 是建立在**因果集**、**关系量子力学**与**圈量子引力**三�
 
 | 文档 | 内容 |
 |:---|:---|
-| [06 Lean形式化/](06 Lean形式化/) | CQM 的 Lean 4 形式化验证项目。9 库全部编译通过：CausalSet（因果集公理）、CouplingSpace（耦合空间）、CartanAlgebra（嘉当矩阵）、SpectralGeometry（谱几何）、Decoherence（退相干）、PhysicalConstants（物理常数）、PrimeGeometry（素数几何）、Methodology（方法论）、Superconductivity（强引力超导：本体论/引力因果场/超导机制/涌现积分/T_c/强引力修正） |
+| [06 Lean形式化/](06 Lean形式化/) | CQM 的 Lean 4 形式化验证项目。9 库全部编译通过：CausalSet、CouplingSpace、CartanAlgebra、SpectralGeometry、Decoherence、PhysicalConstants、PrimeGeometry、Methodology、Superconductivity（16 模块，317 定理，涵盖：本体论、BCS 退化与还原、嘉当张量超导方程、第一性推导链、SPAF 半唯像框架、压强-温度几何构型、BCS 渐近分析 G13 闭合、桥接定理、元素嘉当矩阵 CQM→BCS 退化、分子几何→Regge 亏角→GR 有效度规） |
 
 ### 07 推导与数学
 
@@ -83,6 +83,7 @@ CQM 是建立在**因果集**、**关系量子力学**与**圈量子引力**三�
 | [CQM 超导 涌现积分](08 超导/CQM 超导 涌现积分.md) | 涌现积分公式层（下卷）：ψ(r,T)=∫d³k D_lattice·P_electron·C_triple·K_causal·e^{−Γ|τ|} 七因子逐项推导、T_c≈(2e^γ/π)ħω_causal·exp(−1/N(0)V₀)（2e^γ/π≈1.1339，1.13 为文献近似）、同位素效应与几何因子、强引力扩展（T_grav、中子星修正）、G9–G12 缺口表与 Lean 形式化状态 |
 | [CQM 超导 金属氢机制与计算框架](08 超导/CQM 超导 金属氢机制与计算框架.md) | 第二步：CQM 完整超导机制与计算框架。金属氢 = 最纯有限本体网络（单个氢 = 单个质子有限本体）；CQM→BCS 退化条件与还原的公式表（能隙比 2πe^{−γ}≈3.5278（3.53 为文献近似）、同位素 α=1/2、McMillan–Dynes）；H3S(203K)/LaH10(250K)/MgB2(39K) 数值验证表 + T_c 计算器 |
 | [CQM 室温超导方向](08 超导/CQM 室温超导方向.md) | 第三步：室温超导方向。三条路线（金属氢本体/富氢化合物/亚稳工程）；CQM 判别性实验 = 高压同位素效应 α(P)；路线图 |
+| [CQM SPAF 半唯像应用框架](08 超导/CQM%20SPAF%20半唯像应用框架.md) | 半唯像应用框架（SPAF，v0.5.9）：从理想因果积木到室温超导材料设计的可计算管线。新增 RQM 唯物化基础（属性随附、因果自组织、电子去特权化）、六层探索架构（质子/中子→元素→单元素→分子→Regge→牛顿退化）、元素主次结构与 BCS 退化方向。公理化清单、五阶段计算管线（含阶段 0 元素层级）、分材料体系标定路径、证伪标准。Lean 形式化已覆盖 7 个模块（SPAF/SPAF_PT/SPAF_PTH/ElementCartan/MolecularGeometry/BridgeTheorems/BCSIntegralAsymptotic，共 220+ 定理） |
 
 ### 归档 CNT
 

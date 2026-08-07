@@ -111,9 +111,11 @@ $$A_{ij} = \frac{2\langle\alpha_i,\alpha_j\rangle}{\langle\alpha_j,\alpha_j\rang
 
 $A_4$ 本征值 $\lambda_k$ 对应 4-单纯形的离散 Laplacian 谱。$A_4$ 的逆矩阵 $A_4^{-1}$ 的迹：
 
-$$\text{Tr}(A_4^{-1}) = 2$$
+$$\text{Tr}(A_4^{-1}) = 4$$
 
-该值直接出现在谱间隙 $E_0 = c^2/4$ 的 Friedrichs 扩张推导中。
+该值直接出现在谱间隙 $E_0 = c^2/4$ 的 Friedrichs 扩张推导中（$1/\text{Tr}(A_4^{-1}) = 1/4$）。
+（勘误：本版由 2 更正为 4，与 Lean 定理 `cartanInvTrace_eq_four` 直接计算
+$\text{Tr}(A_4^{-1}) = (4+6+6+4)/5 = 4$ 一致。）
 
 ### 4.3 与连续极限的对应
 

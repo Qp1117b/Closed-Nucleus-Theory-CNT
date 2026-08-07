@@ -1,13 +1,31 @@
-# CQM 超导：金属氢机制与计算框架
+﻿# CQM 超导：金属氢机制与计算框架
 
-> **上承**：[CQM 超导 涌现论](./CQM%20超导%20涌现论.md)（第 1–5 层本体论与机制）、[CQM 超导 涌现积分](./CQM%20超导%20涌现积分.md)（第 6–9 层公式）
+> **上承**：[CQM 超导 涌现论](./CQM%20超导%20涌现论.md)（第 0–5 层本体论与机制）、[CQM 超导 涌现积分](./CQM%20超导%20涌现积分.md)（第 6–9 层公式）
 > **下启**：[CQM 室温超导方向](./CQM%20室温超导方向.md)（第三步）
-> **Lean 形式化**：`06 Lean形式化/Superconductivity/Reduction.lean`（第一步：BCS 退化与还原）
-> **计算器**：[CQM超导Tc计算器.py](./CQM超导Tc计算器.py)
+> **SPAF 框架**：[CQM SPAF 半唯像应用框架](./CQM%20SPAF%20半唯像应用框架.md)（v0.5.9，六层探索架构、元素主次结构、BCS 退化方向）
+> **Lean 形式化**（v0.5.9，16 模块，317 定理）：`Reduction.lean`（第一步：BCS 退化与还原）、`FirstPrinciples.lean`（第一性数值例链：A₄ 标度→刚度→声子→能隙闭式→校准标定）、`ElementCartan.lean`（元素层级：质/中子主次结构、同位素效应、CQM→BCS 退化）、`SPAF_PT.lean`（压强-温度几何构型）、`MolecularGeometry.lean`（分子几何→Weyl嵌入→Regge亏角→GR度规）
+> **计算器**：[CQM超导Tc计算器.py](./CQM超导Tc计算器.py)、[CQM_SPAF_唯项计算.py](./CQM_SPAF_唯项计算.py)（SPAF 核心唯项计算）、[CQM_SPAF_PT_唯项计算.py](./CQM_SPAF_PT_唯项计算.py)（压强-温度几何构型）、[CQM_Molecular_Geometry_唯项计算.py](./CQM_Molecular_Geometry_唯项计算.py)（分子几何→Regge亏角）
 
 ---
 
 ## 0. 为什么金属氢是 CQM 的理想推导对象
+
+### 0.0 元素主次结构与 BCS 退化方向（v0.5.9 新增）
+
+在进入具体材料分析之前，必须从 CQM 的元素层级理解金属氢的特殊地位。根据 SPAF 框架的六层架构（§2.5），元素——而非质子或中子——才是超导理论中的**理想因果积木**。BCS 理论揭示同位素对 T_c 的影响极大，其根源在于**元素内部存在主次结构**：
+
+- **质子扇区（主结构）**：⊕^Z A₄，纯 A₄ 块对角，谱间隙 λ₁ = (3−√5)/2
+- **中子扇区（次结构）**：⊕^N C_n(ε)，缺陷 A₄ 块对角，中子缺陷参数 ε(N) = ε₀·(1+β·(N−N_ref)/N_ref)
+
+主次结构直接指向 **BCS 退化方向**——往单元素材料上退化。理由如下：
+
+- BCS 理论虽然适用范围广泛，但**单元素超导体（如 Pb、Nb、Hg）是最第一性的 BCS 对象**——它们没有跨元素种类的因果耦合复杂性
+- 在单元素材料中，若中子缺陷 ε→0（即所有中子扇区趋于纯 A4），则 CQM 超导理论严格退化为 BCS——这是 `ElementCartan.singleElement_BCS_degeneracy` 定理的物理内涵
+- **金属氢（Z=1, N=0）是这一退化方向的极限**：氢核 = 单个质子，无中子扇区，ε 恒为 0，CQM 与 BCS 在金属氢中**精确重合**
+
+这一元素层级视角揭示了金属氢在 CQM 框架中的独特地位——它不仅是"最轻的元素"，更是**唯一一个主次结构退化为纯主结构的元素**。
+
+### 0.1 为什么金属氢是 CQM 的理想推导对象
 
 CQM 的本体论基石是**质子 = 有限本体**（自再产生因果环，`proton_is_finite_ontology`）。
 在这个本体论下，一切材料的超导能力都来自**有限本体网络的密度与完整性**：
@@ -201,6 +219,44 @@ BCS（弱耦合核心，cqm_reduces_to_bcs）→ McMillan–Dynes（强耦合，
 **CQM 的独特预言**：若几何因子 f(M) 引入额外质量标度，同位素指数可系统性偏离 1/2
 （计算器演示：f(D)/f(H) = 0.9 时 α → 0.65）——同位素实验是区分 CQM 几何因子
 与非谐效应的**判别性实验**。
+
+### 3.6 第一性数值例链（金属氢 = 单质子 A₄ 直接拼接）
+
+对大量金属氢材料的理想性：氢核 = 单个质子有限本体，禁闭几何**直接**是正四单纯型，
+无需跨种类有限本体拼接——A₄ 谱间隙（`spectralGap`）直接标定晶格刚度、
+离子质量 = 质子质量（`protonMass`），德拜频率完全由 CQM 第一性量决定
+（`hydrogenPhononFrequency`、`hydrogenPhononFrequency_pos`）。
+
+**"大量氢 = A₄ 直接拼接"已严格化**（`cartanA4Stack` = n 份 A₄ 块对角拼接，
+索引 Fin 4 × Fin n）：
+- `cartanA4Stack_zero_of_proton_ne`：不同质子之间零耦合——A₄ 直接拼接不引入
+  跨本体矩阵元（网络关系由声子通道另建）；
+- `cartanA4Stack_block_eq` / `cartanA4Stack_diag`：每个质子块内仍是一个 A₄、
+  顶点 2-自环保持——单个质子的禁闭几何不因拼接改变；
+- `cartanA4Stack_trace_eq`：Tr(⨁A₄) = 8·n——谱和（能动张量迹）按质子数线性累加；
+- `cartanA4Stack_det_eq`：det(⨁A₄) = 5ⁿ——正四单纯型的"禁闭体积"尺度
+  不因拼接稀释（n = 质子数）。
+
+**数值例链的标定锚定（以主流 α²F(ω) 输入为标定，非独立预测）**：
+
+$$k_0 = \frac{(\omega_D^{\text{target}})^2\, M_p}{\lambda_1} \qquad
+\left(\text{`stiffnessRefCalibrated`，反解 A₄ 循环刚度参考标度}\right)$$
+
+- `hydrogenPhononFrequency_calibrated_eq`：以主流 ω_D 标定 k₀ 后，金属氢链精确还原
+  该输入德拜频率（H3S/LaH10 的 ω_ln = 1330/1147 K 即此类输入）；
+- `hydrogenBcsGap`：金属氢能隙闭式 Δ_H = ω_D^H/sinh(1/λ)；
+- `hydrogen_bcs_gap_equation_solved`：该闭式**精确满足能隙积分方程**
+   1 = λ·arsinh(ω_D^H/Δ_H)（第一性解实例化，不依赖经验截断）；
+- `hydrogenCriticalTemperature_calibrated_eq`：该目标 ω_D 下金属氢 T_c 闭式
+   = BCS 闭式（记号还原：输入主流 ω_D/λ，输出与主流 BCS 计算一致）；
+- `hydrogen_phonon_higher_than_deuterium`：同位素方向 T_c(D) < T_c(H)
+   （D = 2·M_p，谱截止不高于氢）。
+
+> **严格性范围**：CQM 第一性层不预言 ω_D/λ（它们来自第一性 α²F(ω) 计算或实验，
+> 列为输入）；Lean 证明的是——在此输入下，金属氢第一性链与主流 BCS
+> **记号还原**（`hydrogenCriticalTemperature_calibrated_eq`），且能隙闭式为
+> 能隙积分方程的严格解。数值偏离（BCS 弱耦合闭式 vs Eliashberg）由 G13 与
+> 强耦合修正（McMillan–Dynes / Allen–Dynes）承载，如实列入缺口。
 
 ---
 

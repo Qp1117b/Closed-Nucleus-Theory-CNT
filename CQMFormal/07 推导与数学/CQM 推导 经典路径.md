@@ -287,7 +287,7 @@ $$\frac{1}{(\Delta u)^2}(A\psi)_i \;\xrightarrow{\mathcal{C}}\; \left(-\partial_
 
 ### 10.4 谱间隙涌出
 
-嘉当矩阵谱 $\lambda_k = 2 - 2\cos(k\pi/5)$。通过 Friedrichs 扩张的边界参数与迹 $\text{Tr}(A^{-1}) = 2$，连续化后有效边界势：
+嘉当矩阵谱 $\lambda_k = 2 - 2\cos(k\pi/5)$。通过 Friedrichs 扩张的边界参数与迹 $\text{Tr}(A^{-1}) = 4$，连续化后有效边界势：
 
 $$V_{\text{eff}}(0) = \frac{c^2}{(\Delta u)^2}\cdot\frac{1}{\text{Tr}(A^{-1})} = \frac{c^2}{4}$$
 

@@ -270,7 +270,13 @@ BCS 文献结果。Lean 中只形式化了其中的**单个符号对象**：`cau
 `criticalTemperature`（即下述 $T_c$ 公式，TransitionTemperature 模块，是定义），
 以及它们的运算性质（正性、单调、同位素位移）——**没有**一个 Lean 定理把
 `emergenceIntegral` 的极限过程推到这个 $T_c$。若要补上，需先形式化 BCS 配分
-函数/自洽方程（属于超出当前 7 模块的扩展，记录为 G 类缺口）。
+函数/自洽方程（属于超出当前模块的扩展，记录为 G 类缺口）。另见
+`Superconductivity.CartanSuperconductivity`：把 §6.8 张量涌现公式在 A₄ 本征谱上
+展开为张量超导序参量（A₄ 谱权重 × 谱系数 × 锁定因子，全体正性为定理）；
+`Superconductivity.FirstPrinciples`：把 BCS 能隙积分方程的"∫ → arsinh"台阶
+严格化——`gapIntegral_pr` 用微积分基本定理严格证明
+∫₀^{ω_D} dξ/√(ξ²+Δ²) = arsinh(ω_D/Δ)，积分方程 ⟺ arsinh 方程并给出第一性解
+Δ = ω_D/sinh(1/λ)。（"积分 → T_c（对数）"渐近仍是 G13 缺口。）
 
 在上述三个假设下、按 BCS 文献得到：
 
@@ -356,28 +362,47 @@ CQM 的修正：
 
 ---
 
-## 形式化状态与缺口
+## 形式化状态与缺口（v0.5.9）
 
-### Lean 形式化库（`06 Lean形式化/Superconductivity/`）
+### Lean 形式化库（`06 Lean形式化/Superconductivity/`，16 模块，317 定理）
 
-| 模块 | 覆盖层 | 关键对象 |
-|:---|:---|:---|
-| `Ontology` | 第一、二层 | 有限本体公理、电子封装 |
-| `Gravity` | 第三层 | `causalResolutionTime`、`causalCutoffFrequency`、`causalCutoffKernel`、`causalResonanceWindow` |
-| `Mechanism` | 第四、五层 | `tripleLoopStrength`、`PairingSymmetry`、`StrongGravityType` |
-| `Integral` | 第六、七层 | `orderParameterKernel`、`emergenceIntegral`、正性定理 |
-| `TransitionTemperature` | 第八层 | `criticalTemperature`、同位素（几何因子） |
-| `StrongGravity` | 第九层 | `gravitationalTopologyFactor`、`correctedCausalResolution`、中子星蓝移 |
+| 模块 | 覆盖层 | 关键对象 | 定理数 |
+|:---|:---|:---|:---:|
+| `Ontology` | 第一、二层 | 有限本体公理、电子封装 | 8 |
+| `Gravity` | 第三层 | `causalResolutionTime`、`causalCutoffFrequency`、`causalCutoffKernel`、`causalResonanceWindow` | 6 |
+| `Mechanism` | 第四、五层 | `tripleLoopStrength`、`PairingSymmetry`、`StrongGravityType` | 7 |
+| `Integral` | 第六、七层 | `orderParameterKernel`、`emergenceIntegral`、正性定理 | 8 |
+| `TransitionTemperature` | 第八层 | `criticalTemperature`、同位素（几何因子） | 5 |
+| `StrongGravity` | 第九层 | `gravitationalTopologyFactor`、`correctedCausalResolution`、中子星蓝移 | 5 |
+| `Reduction` | 公式层 | BCS 退化与还原、能隙方程、T_c 方程、普适能隙比、同位素 α=1/2 | 22 |
+| `CartanSuperconductivity` | 张量层 | A₄ 谱分解、序参量正性（`superconductingOrderTensor_pos`） | 15 |
+| `FirstPrinciples` | 第一性链 | A₄→晶格声子→耦合→能隙→T_c、`gapIntegral_pr`（∫→arsinh 严格化） | 18 |
+| `SPAF` | 半唯像框架 | 因果耦合族、组装对称性、中子缺陷（`neutronCartan_quadratic` SOS 分解） | 53 |
+| `SPAF_PT` | 压强-温度 | 几何压缩因子 χ(P)、再生产因子 R(T)、自洽 T_c 方程 | 29 |
+| `SPAF_PTH` | 三相框架 | 压强-温度-磁场 | 5 |
+| `BCSIntegralAsymptotic` | BCS 渐近 | G13 闭合：`bcsTcFromIntegral_solved`（积分方程唯一正解） | 9 |
+| `BridgeTheorems` | 跨模块桥接 | 谱间隙↔BCS↔Regge↔GR（`spectralGap_bcsTc_bound` 等） | 23 |
+| `ElementCartan` | 元素层级 | 质/中子主次结构、同位素效应 ε(N)、CQM→BCS 退化 | 39 |
+| `MolecularGeometry` | 分子几何 | Weyl嵌入→Regge亏角→GR有效度规（`effectiveGRMetric`） | 62 |
+| **总计** | **16 模块** | | **317** |
 
 ### 严格性缺口
 
-| 缺口 | 内容 | 优先级 |
-|:---|:---|---:|
-| **G9** | 因果截断共振窗口 $\sigma$ 的第一性来源与数值标定 | 🔴 |
-| **G10** | $\Theta_{\text{loop}}$ 闭环条件函数的动力学形式 | 🔴 |
-| **G11** | $\mathcal{D}_{\text{lattice}}$ 从正四单纯型组合构型到声子谱的具体推导 | 🔴 |
-| **G12** | 引力拓扑因子 $\mathcal{T}_{\text{grav}}$ 的完整度规依赖形式 | 🔴 |
-| 底层 | 黎曼猜想同构（禁闭退相干）与 GN 实验——均遥遥无期，超导为当前最优实验突破口 | — |
+| 缺口 | 内容 | 优先级 | 状态 |
+|:---|:---|---:|:---:|
+| **G9** | 因果截断共振窗口 $\sigma$ 的第一性来源与数值标定 | 🔴 | 未闭合 |
+| **G10** | $\Theta_{\text{loop}}$ 闭环条件函数的动力学形式 | 🔴 | 未闭合 |
+| **G11** | $\mathcal{D}_{\text{lattice}}$ 从正四单纯型组合构型到声子谱的具体推导 | 🔴 | 未闭合 |
+| **G12** | 引力拓扑因子 $\mathcal{T}_{\text{grav}}$ 的完整度规依赖形式 | 🔴 | 未闭合 |
+| **G13** | BCS 积分方程 tanh→对数渐近（"积分→T_c"） | 🔴 | **已闭合（v0.5.8）**：`BCSIntegralAsymptotic.bcsTcFromIntegral_solved` |
+| **G20-ext** | 两质子耦合精确阈值 | 🔴 | **已闭合（v0.5.8）**：`MolecularGeometry.twoProtonCoupling_exactThreshold` |
+| **G14** | 次结构谱间隙闭式 | 🟡 | 新增（v0.5.9） |
+| **G15** | 主次结构谱间隙差→同位素效应映射 | 🟡 | 新增（v0.5.9） |
+| **G16** | 因果分辨率的形式化 | 🔴 | 新增（v0.5.9） |
+| **G17** | 牛顿引力退化定理 | 🔴 | 新增（v0.5.9） |
+| 底层 | 黎曼猜想同构（禁闭退相干）与 GN 实验——均遥遥无期，超导为当前最优实验突破口 | — | — |
+
+> **注**：涌现积分 §8.2 的"积分→T_c（对数渐近）"步骤在 v0.5.8 中已通过 `BCSIntegralAsymptotic.lean` 闭合（G13）。`FirstPrinciples.lean` 中的 `gapIntegral_pr` 已将 BCS 能隙积分方程的"∫→arsinh"台阶严格化。六层探索架构（§2.5 of SPAF 框架文档）为涌现积分提供了从元素嘉当矩阵到 GR 有效度规的完整管线。新的唯项计算脚本（`CQM_SPAF_PT_唯项计算.py`、`CQM_Molecular_Geometry_唯项计算.py`）已将压强-温度几何构型与分子几何→Regge 亏角管线实现为可执行数值计算。
 
 ---
 

@@ -1,7 +1,9 @@
 # CQM 室温超导方向
 
 > **上承**：[CQM 超导 涌现论](./CQM%20超导%20涌现论.md)、[CQM 超导 涌现积分](./CQM%20超导%20涌现积分.md)、[CQM 超导 金属氢机制与计算框架](./CQM%20超导%20金属氢机制与计算框架.md)
-> **Lean 形式化**：`06 Lean形式化/Superconductivity/Reduction.lean`
+> **SPAF 框架**：[CQM SPAF 半唯像应用框架](./CQM%20SPAF%20半唯像应用框架.md)（v0.5.9，六层探索架构、元素主次结构、BCS 退化方向）
+> **Lean 形式化**（v0.5.9，16 模块，317 定理）：`Reduction.lean`、`FirstPrinciples.lean`（第一性链 + 室温方向双单调骨架 + 室温可行域量化判据）、`SPAF_PT.lean`（压强-温度几何构型：χ(P)、R(T)、自洽 T_c）、`ElementCartan.lean`（元素主次结构、CQM→BCS 退化）、`MolecularGeometry.lean`（分子几何→Regge亏角→GR度规）
+> **唯项计算**：[CQM_SPAF_PT_唯项计算.py](./CQM_SPAF_PT_唯项计算.py)（压强标度律、T_c(P) 穹顶、最优压强、室温可行域）、[test_metallic_hydrogen_800GPa_300K.py](./test_metallic_hydrogen_800GPa_300K.py)（金属氢 800 GPa/300 K 测试）
 
 ---
 
@@ -12,6 +14,21 @@ CQM 退化到 BCS 后的 T_c 公式（自然单位）：
 $$k_B T_c = \frac{2e^\gamma}{\pi} \cdot \omega_D \cdot \exp\left(-\frac{1}{N(0)V}\right), \qquad \omega_D = \sqrt{\frac{k}{M_{\text{ion}}}}$$
 
 （2e^γ/π ≈ 1.1339；文献公式常写 1.13，那只是三位数值近似。）
+
+**方向骨架已形式化**（`bcsCriticalTemperature_mono_in_debye` /
+`bcsCriticalTemperature_mono_in_coupling`）：T_c = 常·ω_D·e^{−1/λ} 对 ω_D 与 λ
+**均为单调不减**——室温路线只可能沿两个坐标：提高 ω_D（轻晶格 + 高压硬化）与
+提高 λ（强耦合）。凡声称的室温材料都必须落在这一双单调骨架内。
+
+**室温可行域量化判据（新严格化）**（`roomTemperature_iff_debyeLowerBound`
+`roomTemperatureDebyeLowerBound_antitone_in_coupling`）：给定目标室温 T_room，
+
+$$T_c(\omega_D, \lambda) \geq T_{room} \iff \omega_D \geq \frac{T_{room}}{2e^\gamma/\pi}\, e^{1/\lambda}$$
+
+左边是室温可行域，右边给出达成室温**必需的德拜频率下界** f(λ) = (T_room/2e^γ/π)·e^{1/λ}。
+推论（已严格证明）：f(λ) 随 λ **反单调**——强耦合系统性降低所需的 ω_D 下界。于是
+两大室温杠杆可沿等值下界互换/叠加：轻晶格 + 高压（把 ω_D 抬过某个 λ 下的下界）与
+强耦合（把下界本身压低）是同一不等式两侧的两种等价发力方向。
 
 室温目标（T_c ≥ 300 K）立即给出**三条可操作的杠杆**：
 
@@ -104,6 +121,16 @@ f(D)/f(H) = 0.9 ⇒ α ≈ 0.65；Lean 未形式化此预言——它依赖未�
 （实验：LaH10 在 170–210 GPa 以 6±1 K/40 GPa 下降；理论：16 K/40 GPa）
 与 CQM 的"引力只增强、压力竞争项决定斜率"解释相容。
 
+> **CQM 特有方向（引力退相干不破坏、反而支撑超导）**：CQM 中引力场是
+> **因果限制退相干场**（G2 禁闭-退相干等价），对电子基础自由度做关系性筛选
+> （P_C 投影）后才涌现超导新自由度（[CQM 超导 涌现积分](./CQM%20超导%20涌现积分.md)）。
+> 因此强引力场不仅不必然破坏超导，反而是"退相干筛选 → 涌现"链路的必要环节
+> （`strong_gravity_does_not_lower_causal_cutoff`、
+> `strong_gravity_keeps_pairing_channels`）。室温方向的 CQM 推论：
+> 超导态必须在高压（强引力）环境中**持续再生产**——锁定因子 e^{−Γ|τ|} 随
+> 再生产间隔衰减（`phaseLockingFactor_tendsto_zero`），高压下因果耦合事件密度高、
+> 有效 Γ 大，恰好满足"反复维持"条件（坍缩难题②的确定性由再生产机制承载）。
+
 ### 3.3 网络完整性定理
 
 `superconductivity_requires_relation_network`：网络通道数为零则无超导。
@@ -112,11 +139,19 @@ f(D)/f(H) = 0.9 ⇒ α ≈ 0.65；Lean 未形式化此预言——它依赖未�
 
 ---
 
-## 4. 路线图
+## 4. 路线图（v0.5.9 更新）
 
 ```
-第一步（已完成，形式化）   CQM → BCS 退化与还原（Reduction.lean，16 定理）
+第一步（已完成，形式化）   CQM→BCS 退化与还原（Reduction.lean，22 定理）
+                           + 第一性推导链（FirstPrinciples.lean，18 定理）
+                           + BCS 积分渐近（BCSIntegralAsymptotic.lean，G13 闭合）
+                           + 桥接定理（BridgeTheorems.lean，谱间隙↔BCS↔Regge）
 第二步（已完成，框架）     金属氢机制 + T_c 计算框架 + 计算器（H3S/LaH10 验证）
+                           + 第一性数值例链（校准标定）
+                           + 元素嘉当矩阵（ElementCartan.lean，质/中子主次结构）
+                           + 分子几何→Regge 亏角（MolecularGeometry.lean，62 定理）
+                           + 压强-温度几何构型（SPAF_PT.lean，29 定理）
+                           + 唯项计算管线（4 个 Python 脚本，覆盖全部计算层级）
 第三步（本文件）           室温超导方向：A 金属氢 / B 富氢化合物 / C 亚稳工程
                           ↓
    近期（实验室可达）
@@ -127,6 +162,13 @@ f(D)/f(H) = 0.9 ⇒ α ≈ 0.65；Lean 未形式化此预言——它依赖未�
    5. 缺陷/非晶化对 T_c 的量化压低实验（网络完整性检验）
    6. 金属氢（400-500 GPa）的 T_c 测量与同位素实验 —— 终极检验
    7. 常压方向：氢富集薄膜 + 应变工程的亚稳候选搜索
+   中期（形式化推进）
+   8. 次结构谱间隙闭式（G14）：C_n(ε) 最低本征值解析表达式
+   9. 主次结构谱间隙差→同位素效应映射（G15）：Δλ(Z,N) → α 的严格推导
+   10. 牛顿引力退化定理（G17）：Regge 有效度规→Poisson 方程
+   长期（理论与实验交汇）
+   11. 因果分辨率的形式化（G16）：Regge 亏角密度→Ricci 标量，τ_res 作为截断参数
+   12. 完整六层管线端到端数值验证：元素→分子→Regge→GR→超导 T_c
 ```
 
 ---
