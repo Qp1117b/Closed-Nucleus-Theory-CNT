@@ -3,8 +3,8 @@
 > **上承**：[CQM 超导 涌现论](./CQM%20超导%20涌现论.md)（第 0–5 层本体论与机制）、[CQM 超导 涌现积分](./CQM%20超导%20涌现积分.md)（第 6–9 层公式）
 > **下启**：[CQM 室温超导方向](./CQM%20室温超导方向.md)（第三步）
 > **SPAF 框架**：[CQM SPAF 半唯像应用框架](./CQM%20SPAF%20半唯像应用框架.md)（v0.5.9，六层探索架构、元素主次结构、BCS 退化方向）
-> **Lean 形式化**（v0.5.9，16 模块，317 定理）：`Reduction.lean`（第一步：BCS 退化与还原）、`FirstPrinciples.lean`（第一性数值例链：A₄ 标度→刚度→声子→能隙闭式→校准标定）、`ElementCartan.lean`（元素层级：质/中子主次结构、同位素效应、CQM→BCS 退化）、`SPAF_PT.lean`（压强-温度几何构型）、`MolecularGeometry.lean`（分子几何→Weyl嵌入→Regge亏角→GR度规）
-> **计算器**：[CQM超导Tc计算器.py](./CQM超导Tc计算器.py)、[CQM_SPAF_唯项计算.py](./CQM_SPAF_唯项计算.py)（SPAF 核心唯项计算）、[CQM_SPAF_PT_唯项计算.py](./CQM_SPAF_PT_唯项计算.py)（压强-温度几何构型）、[CQM_Molecular_Geometry_唯项计算.py](./CQM_Molecular_Geometry_唯项计算.py)（分子几何→Regge亏角）
+> **Lean 形式化**（v0.5.9，16 模块，310 定理）：`Reduction.lean`（第一步：BCS 退化与还原）、`FirstPrinciples.lean`（第一性数值例链：A₄ 标度→刚度→声子→能隙闭式→校准标定）、`ElementCartan.lean`（元素层级：质/中子主次结构、同位素效应、CQM→BCS 退化）、`SPAF_PT.lean`（压强-温度几何构型）、`MolecularGeometry.lean`（分子几何→Weyl嵌入→Regge亏角→GR度规）
+> **数值验证**：原 Python 计算器（CQM超导Tc计算器、CQM_SPAF_唯项计算、CQM_SPAF_PT_唯项计算、CQM_Molecular_Geometry_唯项计算）已作为落后脚本删除，其数值验证功能现由 `06 Lean形式化/Superconductivity/` 下的已证定理覆盖（见下文 §3.4–§3.6 与 §5 的 Lean 逐项映射）。
 
 ---
 
@@ -194,7 +194,7 @@ BCS（弱耦合核心，cqm_reduces_to_bcs）→ McMillan–Dynes（强耦合，
 - 压力升高 → 体积压缩 → 力常数 k 增大 → ω_D 增大（实验：LaH10 的 ω_log 随压力从 467 升到 932 cm⁻¹）
 - 同时 λ 随压力下降（LaH10: 220 GPa 时 λ=4.24 → 300 GPa 时 1.86）——两者竞争决定最佳压力窗口
 
-### 3.4 数值验证表（`python "CQM超导Tc计算器.py"` 输出）
+### 3.4 数值验证表（数据取自主流 Eliashberg 计算与实验值；CQM 公式层对应见 `Reduction.lean`）
 
 | 材料 | P/GPa | ω_ln/K | λ | μ* | McMillan/K | 实验/K | 备注 |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---|
@@ -217,7 +217,7 @@ BCS（弱耦合核心，cqm_reduces_to_bcs）→ McMillan–Dynes（强耦合，
 
 α = 0.466 偏离 0.5 的来源：S 亚晶格不随 H→D 变化 + 强非谐性。
 **CQM 的独特预言**：若几何因子 f(M) 引入额外质量标度，同位素指数可系统性偏离 1/2
-（计算器演示：f(D)/f(H) = 0.9 时 α → 0.65）——同位素实验是区分 CQM 几何因子
+（模型演示：几何因子取 f(D)/f(H) = 0.9 时，同位素指数 α → 0.65）——同位素实验是区分 CQM 几何因子
 与非谐效应的**判别性实验**。
 
 ### 3.6 第一性数值例链（金属氢 = 单质子 A₄ 直接拼接）
@@ -279,15 +279,12 @@ $$k_0 = \frac{(\omega_D^{\text{target}})^2\, M_p}{\lambda_1} \qquad
 
 ---
 
-## 5. 计算器使用说明
+## 5. 公式层与 Lean 形式化对应
 
-```bash
-cd "08 超导"
-python "CQM超导Tc计算器.py"                        # 验证表 + 同位素 + CQM 预言
-python "CQM超导Tc计算器.py" 1330 1.94 0.123        # 自定义: ω_ln(K) λ μ*
-```
+> 原 Python 计算器已删除，其数值验证功能由 `06 Lean形式化/Superconductivity/Reduction.lean` 的已证定理覆盖。编译验证：
+> `cd "06 Lean形式化" && lake build Superconductivity`
 
-公式与 `06 Lean形式化/Superconductivity/Reduction.lean` 逐项对应
+公式与 `Reduction.lean` 逐项对应
 （bcs_tc ↔ `bcsCriticalTemperature`，mcmillan_dynes_tc ↔ `mcmillanDynesTc`，
 isotope_tc_ratio ↔ `criticalTemperature_isotope_shift`）。
 

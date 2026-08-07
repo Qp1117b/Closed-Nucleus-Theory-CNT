@@ -281,7 +281,7 @@ CQM 的独特预言：
 
 ## 形式化状态与缺口（v0.5.9）
 
-### Lean 形式化库（`06 Lean形式化/Superconductivity/`，16 模块，317 定理）
+### Lean 形式化库（`06 Lean形式化/Superconductivity/`，16 模块，310 定理）
 
 | 模块 | 覆盖层 | 关键对象 | 定理数 |
 |:---|:---|:---|:---:|
@@ -291,17 +291,17 @@ CQM 的独特预言：
 | `Integral` | 第六、七层 | `emergenceIntegral`、正性定理 | 8 |
 | `TransitionTemperature` | 第八层 | `criticalTemperature`、同位素 | 5 |
 | `StrongGravity` | 第九层 | `gravitationalTopologyFactor`、中子星蓝移 | 5 |
-| `Reduction` | 公式层 | BCS 退化与还原（22 定理） | 22 |
-| `CartanSuperconductivity` | 张量层 | A₄ 谱分解、序参量正性 | 15 |
-| `FirstPrinciples` | 第一性链 | A₄→晶格声子→能隙→T_c | 18 |
-| `SPAF` | 半唯像框架 | 因果耦合族、组装对称性、中子缺陷 | 53 |
+| `Reduction` | 公式层 | BCS 退化与还原（24 定理） | 24 |
+| `CartanSuperconductivity` | 张量层 | A₄ 谱分解、序参量正性 | 24 |
+| `FirstPrinciples` | 第一性链 | A₄→晶格声子→能隙→T_c | 26 |
+| `SPAF` | 半唯像框架 | 因果耦合族、组装对称性、中子缺陷 | 39 |
 | `SPAF_PT` | 压强-温度 | 几何压缩 χ(P)、再生产 R(T) | 29 |
 | `SPAF_PTH` | 三相框架 | 压强-温度-磁场 | 5 |
 | `BCSIntegralAsymptotic` | BCS 渐近 | G13 闭合（9 定理） | 9 |
-| `BridgeTheorems` | 跨模块桥接 | 谱间隙↔BCS↔Regge | 23 |
+| `BridgeTheorems` | 跨模块桥接 | 谱间隙↔BCS↔Regge | 25 |
 | `ElementCartan` | 元素层级 | 质/中子主次结构、同位素效应、CQM→BCS 退化 | 39 |
-| `MolecularGeometry` | 分子几何 | Weyl嵌入→Regge亏角→GR度规 | 62 |
-| **总计** | **16 模块** | | **317** |
+| `MolecularGeometry` | 分子几何 | Weyl嵌入→Regge亏角→GR度规 | 51 |
+| **总计** | **16 模块** | | **310** |
 
 ### 严格性缺口
 

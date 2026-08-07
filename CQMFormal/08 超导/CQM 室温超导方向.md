@@ -2,8 +2,8 @@
 
 > **上承**：[CQM 超导 涌现论](./CQM%20超导%20涌现论.md)、[CQM 超导 涌现积分](./CQM%20超导%20涌现积分.md)、[CQM 超导 金属氢机制与计算框架](./CQM%20超导%20金属氢机制与计算框架.md)
 > **SPAF 框架**：[CQM SPAF 半唯像应用框架](./CQM%20SPAF%20半唯像应用框架.md)（v0.5.9，六层探索架构、元素主次结构、BCS 退化方向）
-> **Lean 形式化**（v0.5.9，16 模块，317 定理）：`Reduction.lean`、`FirstPrinciples.lean`（第一性链 + 室温方向双单调骨架 + 室温可行域量化判据）、`SPAF_PT.lean`（压强-温度几何构型：χ(P)、R(T)、自洽 T_c）、`ElementCartan.lean`（元素主次结构、CQM→BCS 退化）、`MolecularGeometry.lean`（分子几何→Regge亏角→GR度规）
-> **唯项计算**：[CQM_SPAF_PT_唯项计算.py](./CQM_SPAF_PT_唯项计算.py)（压强标度律、T_c(P) 穹顶、最优压强、室温可行域）、[test_metallic_hydrogen_800GPa_300K.py](./test_metallic_hydrogen_800GPa_300K.py)（金属氢 800 GPa/300 K 测试）
+> **Lean 形式化**（v0.5.9，16 模块，310 定理）：`Reduction.lean`、`FirstPrinciples.lean`（第一性链 + 室温方向双单调骨架 + 室温可行域量化判据）、`SPAF_PT.lean`（压强-温度几何构型：χ(P)、R(T)、自洽 T_c）、`ElementCartan.lean`（元素主次结构、CQM→BCS 退化）、`MolecularGeometry.lean`（分子几何→Regge亏角→GR度规）
+> **数值实现**：原 Python 唯项计算脚本（CQM_SPAF_PT_唯项计算、test_metallic_hydrogen_800GPa_300K）已作为落后脚本删除，其压强标度律与 T_c(P) 穹顶的数值例现由 `SPAF_PT.lean` 的已证定理（几何压缩因子、自洽 T_c）覆盖。
 
 ---
 
@@ -106,7 +106,7 @@ CQM 本体论为这三条杠杆提供统一表述：**室温超导 = 最大化�
 
 BCS 谐波预言 α = 1/2。H3S/D3S 实测 α ≈ 0.466（偏差来自非谐 + S 亚晶格）。
 **CQM 预言**：几何因子 f(M) 引入质量标度时，α 系统性偏离 1/2，且偏离量随压力
-可调（计算器函数 `cqm_geometric_isotope_exponent`（Python，非 Lean 符号）：
+可调（模型函数 cqm_geometric_isotope_exponent（非 Lean 符号）：
 f(D)/f(H) = 0.9 ⇒ α ≈ 0.65；Lean 未形式化此预言——它依赖未标定的 f(M)）。
 
 > **判别性实验**：对同一材料（如 LaH10）在不同压力下做 H/D 同位素实验，
@@ -142,16 +142,16 @@ f(D)/f(H) = 0.9 ⇒ α ≈ 0.65；Lean 未形式化此预言——它依赖未�
 ## 4. 路线图（v0.5.9 更新）
 
 ```
-第一步（已完成，形式化）   CQM→BCS 退化与还原（Reduction.lean，22 定理）
-                           + 第一性推导链（FirstPrinciples.lean，18 定理）
+第一步（已完成，形式化）   CQM→BCS 退化与还原（Reduction.lean，24 定理）
+                           + 第一性推导链（FirstPrinciples.lean，26 定理）
                            + BCS 积分渐近（BCSIntegralAsymptotic.lean，G13 闭合）
                            + 桥接定理（BridgeTheorems.lean，谱间隙↔BCS↔Regge）
-第二步（已完成，框架）     金属氢机制 + T_c 计算框架 + 计算器（H3S/LaH10 验证）
+第二步（已完成，框架）     金属氢机制 + T_c 计算框架（H3S/LaH10 验证）
                            + 第一性数值例链（校准标定）
                            + 元素嘉当矩阵（ElementCartan.lean，质/中子主次结构）
-                           + 分子几何→Regge 亏角（MolecularGeometry.lean，62 定理）
+                           + 分子几何→Regge 亏角（MolecularGeometry.lean，51 定理）
                            + 压强-温度几何构型（SPAF_PT.lean，29 定理）
-                           + 唯项计算管线（4 个 Python 脚本，覆盖全部计算层级）
+                           + 数值例链（已由 SPAF_PT.lean / MolecularGeometry.lean / FirstPrinciples.lean 的已证定理覆盖，原 Python 唯项计算脚本已删除）
 第三步（本文件）           室温超导方向：A 金属氢 / B 富氢化合物 / C 亚稳工程
                           ↓
    近期（实验室可达）

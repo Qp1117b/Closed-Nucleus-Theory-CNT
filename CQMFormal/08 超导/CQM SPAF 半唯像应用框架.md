@@ -3,11 +3,11 @@
 **——从理想因果积木到室温超导材料设计的可计算管线**
 
 > Lean 形式化：可严格证明部分见 `06 Lean形式化/Superconductivity/` 下的多模块：
-> - `SPAF.lean`（53 定理，因果耦合族、组装对称性、中子缺陷、味概率流、Regge 边长）
+> - `SPAF.lean`（39 定理，因果耦合族、组装对称性、中子缺陷、味概率流、Regge 边长）
 > - `SPAF_PT.lean`（29 定理，压强-温度几何构型框架）
 > - `SPAF_PTH.lean`（5 定理，压强-温度-磁场三相框架）
 > - `ElementCartan.lean`（39 定理，质/中子层级嘉当矩阵、同位素效应、CQM→BCS 退化）
-> - `MolecularGeometry.lean`（62 定理，分子几何→Weyl嵌入→Regge亏角→GR有效度规）
+> - `MolecularGeometry.lean`（51 定理，分子几何→Weyl嵌入→Regge亏角→GR有效度规）
 > - `BridgeTheorems.lean`（23 定理，跨模块桥接定理）
 > - `BCSIntegralAsymptotic.lean`（9 定理，BCS 积分渐近分析，G13 闭合）
 > 
@@ -214,7 +214,7 @@ $$\mathcal{C}_{\text{mol}}^\dagger = \mathcal{C}_{\text{mol}}, \quad \mathcal{C}
 **步骤 0b：组装元素嘉当矩阵**
 - 直和组装：$\mathcal{C}_{\text{element}} = (\oplus^Z C_p) \oplus (\oplus^N C_n(\epsilon))$
 - 验证性质：对称性、迹 $= 8(Z+N)$、行列式 $= 5^Z \cdot \det(C_n)^N$、正定性（$\epsilon < 5/4$）
-- Lean 形式化：`ElementCartan.elementCartan`、`ElementCartan.elementCartan_symmetric`、`ElementCartan.elementCartan_trace`
+- Lean 形式化：`ElementCartan.elementCartanIdeal`（对称性即嘉当矩阵的正定性 `elementCartanIdeal_posDef`，迹 `elementCartanIdeal_trace`）
 
 **步骤 0c：主次结构识别**
 - 提取质子扇区（主结构）与中子扇区（次结构）的谱间隙
@@ -393,8 +393,8 @@ SPAF 标志着 CQM 从哲学纲领迈入**可计算、可验证、可证伪**的
 > 状态更新（v0.5.7 → v0.5.8）：以下新模块落地：
 > - `SPAF_PT.lean`（29 定理）——压强→几何压缩因子 χ(P)、温度→再生产因子 R(T)
 > - `ElementCartan.lean`（39 定理）——质/中子层级嘉当矩阵、同位素效应 ε(N)、CQM→BCS 退化
-> - `MolecularGeometry.lean`（62 定理）——分子→Weyl嵌入→Regge亏角→GR度规
-> - `BridgeTheorems.lean`（23 定理）——谱间隙↔BCS↔Regge 跨模块桥接
+> - `MolecularGeometry.lean`（51 定理）——分子→Weyl嵌入→Regge亏角→GR度规
+> - `BridgeTheorems.lean`（25 定理）——谱间隙↔BCS↔Regge 跨模块桥接
 > - `BCSIntegralAsymptotic.lean`（9 定理）——BCS 积分渐近（G13 闭合）
 > 
 > 缺口 3–5 进一步严格化：中子缺陷正定判据（SOS 分解）、双原子耦合正定性（Cauchy-Schwarz）、`bcsConstant_gt_one` 从公理升为定理。
@@ -415,11 +415,11 @@ SPAF 标志着 CQM 从哲学纲领迈入**可计算、可验证、可证伪**的
 | $\epsilon = \hbar/(\tau_n\Lambda_{\text{cas}}) \cdot f_{\text{bind}}(Z,A)$ | ✗ 依赖未定义量 $\tau_n$、$\Lambda_{\text{cas}}$；仅有 `PhysicalConstants` 质能常数锚点（$\epsilon$ 的微观赎回属 L0，SPAF 以参数输入处理） |
 | 因果耦合 $t_{ij} = t_0 e^{-d_{ij}/\lambda}\Theta(d_{\text{cut}}-d_{ij})$ | ✓ `SPAF.causalCoupling`（以 Heaviside 截断函数）：截断内严格正（`causalCoupling_pos`）、截断外恒零（`causalCoupling_zero_of_cutoff`）、对距离单调衰减（`causalCoupling_antitone_in_distance`，`Real.exp_monotone`）、全局非负（`causalCoupling_nonneg`） |
 | 全局幺正性 $\mathcal{C}_{\text{mol}}^\dagger=\mathcal{C}_{\text{mol}}$ | ✓ `SPAF.superCartan_symmetric`（对称矩阵叠加保对称）+ `SPAF.identityBlock_symmetric`（$T_{ij}=t_{ij}I_4$ 标量倍单位矩阵对称）+ `SPAF.cartanA4Stack_symmetric`（A₄ 直接拼接保实对称）；实对称矩阵即自伴 |
-| 质子/中子主次结构 | ✓ `ElementCartan.protonSector`（⊕^Z A₄ 纯 A₄ 块对角）+ `ElementCartan.neutronSector`（⊕^N C_n(ε) 缺陷 A₄）+ `ElementCartan.elementCartan`（直和组装） |
-| 同位素效应 ε(N) | ✓ `ElementCartan.isotopeDefect`（ε(N) = ε₀·(1+β·(N−N_ref)/N_ref)）+ `ElementCartan.singleElement_BCS_degeneracy`（ε→0 时 CQM→BCS）+ `ElementCartan.cqm_bcs_singleElement_bridge`（CQM↔BCS 桥接） |
-| 压强→几何压缩 χ(P) | ✓ `SPAF_PT.geometricCompression`（χ(P) = (P/P_ref)^(1/3)）+ `SPAF_PT.compressionToDebye`（χ(P)→ω_D(P) 桥接）+ `SPAF_PT.compressionToCoupling`（χ(P)→λ(P) 桥接） |
-| 温度→再生产衰减 R(T) | ✓ `SPAF_PT.reproductionFactor`（R(T) = exp(−Γ_eff(T)·τ)）+ `SPAF_PT.selfConsistentTc`（T_c^eff = (1−R(T))·T_c^BCS 自洽方程） |
-| 分子→Weyl 嵌入→Regge 亏角 | ✓ `MolecularGeometry.molecularSuperCartan` + `MolecularGeometry.weylEmbedding` + `MolecularGeometry.reggeDeficit` + `MolecularGeometry.effectiveGRMetric`（完整管线） |
+| 质子/中子主次结构 | ✓ `ElementCartan.protonSector`（⊕^Z A₄ 纯 A₄ 块对角）+ `ElementCartan.neutronSector`（⊕^N C_n(ε) 缺陷 A₄）+ `ElementCartan.elementCartanIdeal`（直和组装） |
+| 同位素效应 ε(N) | ✓ `ElementCartan.isotopeDefectParameter`（ε(N) = ε₀·(1+β·(N−N_ref)/N_ref)）+ `ElementCartan.singleElement_BCS_degeneracy`（ε→0 时 CQM→BCS）+ `ElementCartan.cqm_bcs_singleElement_bridge`（CQM↔BCS 桥接） |
+| 压强→几何压缩 χ(P) | ✓ `SPAF_PT.geometricCompressionFactor`（χ(P) = (P/P_ref)^(1/3)）+ `SPAF_PT.geometricCompression_to_debyeFrequency`（χ(P)→ω_D(P) 桥接）+ `SPAF_PT.geometricCompression_to_coupling`（χ(P)→λ(P) 桥接） |
+| 温度→再生产衰减 R(T) | ✓ `SPAF_PT.pairingReproductionFactor`（R(T) = exp(−Γ_eff(T)·τ)）+ `SPAF_PT.reproductionCorrectedTc`（T_c^eff = (1−R(T))·T_c^BCS 自洽方程） |
+| 分子→Weyl 嵌入→Regge 亏角 | ✓ `ElementCartan.molecularSuperCartan` + `MolecularGeometry.weylSpectralGap_twoAtom_bound`（Weyl 谱间隙下界）+ `MolecularGeometry.reggeDeficitAngle` + `MolecularGeometry.grEffectiveMetric`（完整管线） |
 | 两质子耦合正定性 | ✓ `MolecularGeometry.twoProtonCoupling_exactThreshold`（G20-ext 闭合，SOS 分解 + 黄金比例恒等式） |
 | 双原子超嘉当正定性 | ✓ `BridgeTheorems.twoAtomSuperCartan_quadratic_lowerBound`（Cauchy-Schwarz + AM-GM，|t| < λ_min 时正定） |
 | A₄ 谱间隙→BCS T_c 上限 | ✓ `BridgeTheorems.spectralGap_bcsTc_bound`（T_c ≤ (2e^γ/π)·ω_D·exp(−1/λ₁)） |
@@ -430,7 +430,7 @@ SPAF 标志着 CQM 从哲学纲领迈入**可计算、可验证、可证伪**的
 | 步骤 | 内容 | 状态与 Lean 对应 |
 |:--|:---|:---|
 | 0a. 质子/中子分配 | 按 $(Z, N)$ 分配 $C_p$、$C_n(\epsilon)$ | ✓ `ElementCartan.protonSector`（⊕^Z A₄）+ `ElementCartan.neutronSector`（⊕^N C_n(ε)） |
-| 0b. 元素嘉当矩阵组装 | $\mathcal{C}_{\text{element}} = (\oplus^Z C_p) \oplus (\oplus^N C_n)$ | ✓ `ElementCartan.elementCartan`（直和组装）+ `elementCartan_symmetric` / `elementCartan_trace` |
+| 0b. 元素嘉当矩阵组装 | $\mathcal{C}_{\text{element}} = (\oplus^Z C_p) \oplus (\oplus^N C_n)$ | ✓ `ElementCartan.elementCartanIdeal`（直和组装）+ `elementCartanIdeal_posDef` / `elementCartanIdeal_trace` |
 | 0c. 主次结构识别 | 质子扇区（主）vs 中子扇区（次）谱间隙 | ◐ 主结构谱间隙 λ₁ = (3−√5)/2 已知（`CartanAlgebra`）；次结构谱间隙偏移 δ(ε) 有界但未闭合 |
 | 0d. BCS 退化验证 | ε→0 时 CQM→BCS | ✓ `ElementCartan.singleElement_BCS_degeneracy` + `cqm_bcs_singleElement_bridge`（严格退化定理） |
 | 3. 组装 $\mathcal{C}_{\text{mol}}$（$\oplus$ 部分） | $\bigoplus C_i$（跨质子零耦合）全系已证 | ✓ `cartanA4Stack_zero_of_proton_ne` / `_block_eq` / `_diag` / `_trace_eq`（Tr=8n）/ `cartanA4Stack_det_eq`（det=5ⁿ）——大量金属氢的禁闭几何按质子数线性累加、不因拼接稀释 |
@@ -466,7 +466,7 @@ SPAF 标志着 CQM 从哲学纲领迈入**可计算、可验证、可证伪**的
 3. **[易→◐] 中子缺陷矩阵**：对称、$\epsilon=0$ 退化、对角元、$\epsilon<2$ 时缺陷位对角元为正、**正定判据已证**（`neutronCartan_*`）——SOS 二次型分解 $x^{\dagger}C_nx=(1-\epsilon)x_0^2+x_3^2+(x_0-x_1)^2+(x_1-x_2)^2+(x_2-x_3)^2$（`neutronCartan_quadratic`）；**正方向** $\epsilon<1$ 严格（`neutronCartan_posDef_of_lt_one`），因而判据原文 $\epsilon<\lambda_{\min}$（$\lambda_{\min}=(3-\sqrt5)/2\approx0.382$）亦然（`neutronCartan_posDef_of_lt_spectralGap`）；**反方向** $\epsilon\ge 5/4$ 非正定（见证 $(4,3,2,1)$：$x^{\dagger}C_n x=20-16\epsilon\le0$，`neutronCartan_not_posDef_of_five_fourths_le`）。**仍缺**：$\epsilon\in[1,5/4)$ 区间内正定保持（Sylvester 余子式族展开，数学库未直接建）；**原述「$\epsilon\ge\lambda_{\min}$ 即丧失正定」修正**：真正界是 $\epsilon<5/4$，$\lambda_{\min}\le\epsilon<1$ 区间仍正定；
 4. **[中→◐] 味空间概率流**：$\Gamma_{\text{rel}}\ge 0$ **已证**（`flavorFlowRate_nonneg`）；**仍缺**：$T_{\text{lock}}$ 定义与 $T_c\equiv T_{\text{lock}}$ 恒等式（动力学实现）；
 5. **[中→◐] Regge 边长正性**：$l_e=\kappa/\sqrt{\lambda_e}>0$ **已证**（`reggeEdgeLength_pos`）；**仍缺**：单位/谱正性嵌入与亏角/E-H 作用；
-6. **[中→✓] 压力线**：$P \to a(P) \to d_{ij} \to t_{ij}$ 的压缩增耦合单调线——**形式化**：`SPAF_PT.geometricCompression`（χ(P) = (P/P_ref)^(1/3)）+ `SPAF_PT.compressionToDebye` / `compressionToCoupling`（桥接定理）；**仍缺**：压力→Regge 亏角→GR 度规的数值闭环；
+6. **[中→✓] 压力线**：$P \to a(P) \to d_{ij} \to t_{ij}$ 的压缩增耦合单调线——**形式化**：`SPAF_PT.geometricCompressionFactor`（χ(P) = (P/P_ref)^(1/3)）+ `SPAF_PT.geometricCompression_to_debyeFrequency` / `geometricCompression_to_coupling`（桥接定理）；**仍缺**：压力→Regge 亏角→GR 度规的数值闭环；
 7. **[重] 凸包 A₄ 判定、拓扑不变量、Regge 运动方程、掺杂相图**：需新数学（凸包算法定理、陈数、Regge），暂不部署。
 8. ~~[重] 两质子耦合精确阈值~~：**已完成（MolecularGeometry.lean）**——`twoProtonCoupling_exactThreshold`（G20-ext 闭合，SOS 分解 + 黄金比例恒等式）；
 9. ~~[重] BCS 积分渐近（G13）~~：**已完成（BCSIntegralAsymptotic.lean）**——`bcsTcFromIntegral_solved`（积分方程→闭式 T_c 唯一正解）+ `bcsConstant_gt_one`（2e^γ/π > 1 定理）；
@@ -477,7 +477,7 @@ SPAF 标志着 CQM 从哲学纲领迈入**可计算、可验证、可证伪**的
 以下缺口对应 §2.5 六层架构中尚未形式化的部分：
 
 11. **[中] 次结构谱间隙闭式**：中子扇区 $C_n(\epsilon)$ 的最低本征值 $\lambda_1^{(n)}(\epsilon)$ 的精确闭式表达式。当前仅知其存在区间（$\epsilon < 5/4$ 时正定）和 $\epsilon=0$ 退化值 $\lambda_1 = (3-\sqrt{5})/2$，但 $\epsilon > 0$ 时的解析闭式未建立。
-12. **[中] 主次结构谱间隙差**：$\Delta\lambda(Z, N) = \lambda_1 - \lambda_1^{(n)}$ 作为 $(Z, N)$ 的函数，与同位素效应指数 $\alpha$ 的定量关系。当前仅通过 `ElementCartan.isotopeDefect` 建立了 $\epsilon(N)$ 的参数化，但 $\Delta\lambda \to \alpha$ 的映射未严格推导。
+12. **[中] 主次结构谱间隙差**：$\Delta\lambda(Z, N) = \lambda_1 - \lambda_1^{(n)}$ 作为 $(Z, N)$ 的函数，与同位素效应指数 $\alpha$ 的定量关系。当前仅通过 `ElementCartan.isotopeDefectParameter` 建立了 $\epsilon(N)$ 的参数化，但 $\Delta\lambda \to \alpha$ 的映射未严格推导。
 13. **[重] 因果分辨率的形式化**：§2.5 层级 VI 中"同一引力场在不同因果分辨率下细节不同"的物理陈述需要形式化。核心问题是：Regge 亏角密度 $\rho_{\delta}$ 与连续极限下的 Ricci 标量 $R$ 之间，因果分辨率 $\tau_{\text{res}}$ 如何作为截断参数进入。
 14. **[重] 牛顿引力退化定理**：在宏观弱场极限下，$g_{\mu\nu}^{\text{eff}}$ 退化到 Poisson 方程 $\nabla^2 \Phi = 4\pi G \rho$ 的严格证明。当前 `ElementCartan` 中仅有 `newtonianGravity_degeneracy` 诚实 `def` 占位。
 15. **[中] 单元素拼接规则特殊性**：单元素材料（$\epsilon \to 0$）的拼接规则与多元素材料的拼接规则之间的差异形式化。当前 `ElementCartan.singleElement_BCS_degeneracy` 仅证明退化极限存在，但退化路径（$\epsilon$ 以何种速率趋近于 0）未参数化。

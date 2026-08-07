@@ -106,8 +106,8 @@ Axioms
 | Decoherence | 15 | 2 |
 | PhysicalConstants | 20 | 0 |
 | Methodology | 6 | 11 |
-| Superconductivity | 317 | 5 |
-| **总计** | **624** | **30** |
+| Superconductivity | 310 | 5 |
+| **总计** | **617** | **30** |
 
 ## 已知缺口
 

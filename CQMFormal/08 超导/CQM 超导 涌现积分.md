@@ -364,7 +364,7 @@ CQM 的修正：
 
 ## 形式化状态与缺口（v0.5.9）
 
-### Lean 形式化库（`06 Lean形式化/Superconductivity/`，16 模块，317 定理）
+### Lean 形式化库（`06 Lean形式化/Superconductivity/`，16 模块，310 定理）
 
 | 模块 | 覆盖层 | 关键对象 | 定理数 |
 |:---|:---|:---|:---:|
@@ -374,17 +374,17 @@ CQM 的修正：
 | `Integral` | 第六、七层 | `orderParameterKernel`、`emergenceIntegral`、正性定理 | 8 |
 | `TransitionTemperature` | 第八层 | `criticalTemperature`、同位素（几何因子） | 5 |
 | `StrongGravity` | 第九层 | `gravitationalTopologyFactor`、`correctedCausalResolution`、中子星蓝移 | 5 |
-| `Reduction` | 公式层 | BCS 退化与还原、能隙方程、T_c 方程、普适能隙比、同位素 α=1/2 | 22 |
-| `CartanSuperconductivity` | 张量层 | A₄ 谱分解、序参量正性（`superconductingOrderTensor_pos`） | 15 |
-| `FirstPrinciples` | 第一性链 | A₄→晶格声子→耦合→能隙→T_c、`gapIntegral_pr`（∫→arsinh 严格化） | 18 |
-| `SPAF` | 半唯像框架 | 因果耦合族、组装对称性、中子缺陷（`neutronCartan_quadratic` SOS 分解） | 53 |
+| `Reduction` | 公式层 | BCS 退化与还原、能隙方程、T_c 方程、普适能隙比、同位素 α=1/2 | 24 |
+| `CartanSuperconductivity` | 张量层 | A₄ 谱分解、序参量正性（`superconductingOrderTensor_pos`） | 24 |
+| `FirstPrinciples` | 第一性链 | A₄→晶格声子→耦合→能隙→T_c、`gapIntegral_pr`（∫→arsinh 严格化） | 26 |
+| `SPAF` | 半唯像框架 | 因果耦合族、组装对称性、中子缺陷（`neutronCartan_quadratic` SOS 分解） | 39 |
 | `SPAF_PT` | 压强-温度 | 几何压缩因子 χ(P)、再生产因子 R(T)、自洽 T_c 方程 | 29 |
 | `SPAF_PTH` | 三相框架 | 压强-温度-磁场 | 5 |
 | `BCSIntegralAsymptotic` | BCS 渐近 | G13 闭合：`bcsTcFromIntegral_solved`（积分方程唯一正解） | 9 |
-| `BridgeTheorems` | 跨模块桥接 | 谱间隙↔BCS↔Regge↔GR（`spectralGap_bcsTc_bound` 等） | 23 |
+| `BridgeTheorems` | 跨模块桥接 | 谱间隙↔BCS↔Regge↔GR（`spectralGap_bcsTc_bound` 等） | 25 |
 | `ElementCartan` | 元素层级 | 质/中子主次结构、同位素效应 ε(N)、CQM→BCS 退化 | 39 |
-| `MolecularGeometry` | 分子几何 | Weyl嵌入→Regge亏角→GR有效度规（`effectiveGRMetric`） | 62 |
-| **总计** | **16 模块** | | **317** |
+| `MolecularGeometry` | 分子几何 | Weyl嵌入→Regge亏角→GR有效度规（`grEffectiveMetric`） | 51 |
+| **总计** | **16 模块** | | **310** |
 
 ### 严格性缺口
 
@@ -402,7 +402,7 @@ CQM 的修正：
 | **G17** | 牛顿引力退化定理 | 🔴 | 新增（v0.5.9） |
 | 底层 | 黎曼猜想同构（禁闭退相干）与 GN 实验——均遥遥无期，超导为当前最优实验突破口 | — | — |
 
-> **注**：涌现积分 §8.2 的"积分→T_c（对数渐近）"步骤在 v0.5.8 中已通过 `BCSIntegralAsymptotic.lean` 闭合（G13）。`FirstPrinciples.lean` 中的 `gapIntegral_pr` 已将 BCS 能隙积分方程的"∫→arsinh"台阶严格化。六层探索架构（§2.5 of SPAF 框架文档）为涌现积分提供了从元素嘉当矩阵到 GR 有效度规的完整管线。新的唯项计算脚本（`CQM_SPAF_PT_唯项计算.py`、`CQM_Molecular_Geometry_唯项计算.py`）已将压强-温度几何构型与分子几何→Regge 亏角管线实现为可执行数值计算。
+> **注**：涌现积分 §8.2 的"积分→T_c（对数渐近）"步骤在 v0.5.8 中已通过 `BCSIntegralAsymptotic.lean` 闭合（G13）。`FirstPrinciples.lean` 中的 `gapIntegral_pr` 已将 BCS 能隙积分方程的"∫→arsinh"台阶严格化。六层探索架构（§2.5 of SPAF 框架文档）为涌现积分提供了从元素嘉当矩阵到 GR 有效度规的完整管线。压强-温度几何构型与分子几何→Regge 亏角管线现已由 `SPAF_PT.lean`、`MolecularGeometry.lean` 的已证定理覆盖（原 Python 唯项计算脚本已删除）。
 
 ---
 
