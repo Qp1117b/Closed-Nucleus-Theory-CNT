@@ -40,7 +40,7 @@ import Superconductivity.BridgeTheorems
 
 ## 参考文献
 
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 - Regge (1961). General relativity without coordinates. Nuovo Cim. 19, 558.
 - 牛顿引力退化：Misner, Thorne, Wheeler (1973). Gravitation. §17.4.
 -/

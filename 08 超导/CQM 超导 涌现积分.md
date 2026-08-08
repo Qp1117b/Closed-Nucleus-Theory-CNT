@@ -408,7 +408,7 @@ CQM 的修正：
 
 ## 参考文献
 
-1. ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+1. ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 2. ruster (2026). CQM 超导 涌现论（上卷：本体论与涌现机制）.
 3. Bardeen, Cooper, Schrieffer (1957). Theory of Superconductivity.
 4. Sierra (2019). The Riemann zeros as spectrum and the Riemann hypothesis.

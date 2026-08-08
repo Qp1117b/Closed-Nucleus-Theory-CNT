@@ -21,7 +21,7 @@ Sprinkling 是 CQM 中因果集与连续耦合空间之间的桥梁。
 
 ## 参考文献
 - Bombelli, Lee, Meyer, Sorkin (1987).
-- ruster (2026). CQM 完整研究. Zenodo.
+- ruster (2026). CNT 完整研究. Zenodo.
 -/
 
 open CausalSet

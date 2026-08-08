@@ -101,7 +101,7 @@ CQM 中"强引力场下的超导态"的完整形式化框架。理论文档见
 
 ## 参考文献
 
-1. ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+1. ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 2. ruster (2026). CQM 超导 涌现论 / CQM 超导 涌现积分.
 3. Bardeen, Cooper, Schrieffer (1957). Theory of Superconductivity.
 4. Rovelli (1996). Relational Quantum Mechanics.

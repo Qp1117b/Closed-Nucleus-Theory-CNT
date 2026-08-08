@@ -1,4 +1,4 @@
-﻿# CQM 超导：金属氢机制与计算框架
+# CQM 超导：金属氢机制与计算框架
 
 > **上承**：[CQM 超导 涌现论](./CQM%20超导%20涌现论.md)（第 0–5 层本体论与机制）、[CQM 超导 涌现积分](./CQM%20超导%20涌现积分.md)（第 6–9 层公式）
 > **下启**：[CQM 室温超导方向](./CQM%20室温超导方向.md)（第三步）
@@ -301,4 +301,4 @@ isotope_tc_ratio ↔ `criticalTemperature_isotope_shift`）。
 7. Errea et al. (2020). Quantum crystal structure in the 250-kelvin superconducting phase of LaH10. *Nature* 578, 66.
 8. Szczęśniak, Durajski (2016). Migdal-Eliashberg equations — the effective model for superconducting state in H3S. arXiv:1609.06079.
 9. Liu et al. (2019). Microscopic mechanism of room-temperature superconductivity in compressed LaH10. *Phys. Rev. B* 99, 140501(R).
-10. ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+10. ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.

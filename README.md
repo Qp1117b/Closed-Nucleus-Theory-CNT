@@ -1,4 +1,4 @@
-﻿# 耦合常数量子力学（CQM）形式化框架
+# 耦合常数量子力学（CQM）形式化框架
 
 **Coupled Constant Quantum Mechanics — CQM**
 
@@ -190,4 +190,4 @@ CQMFormal/
 
 ## 参考文献
 
-核心文献参见各专题文档的参考文献章节。CQM 完整研究已发布于 Zenodo: DOI: 10.5281/zenodo.20804380。
+核心文献参见各专题文档的参考文献章节。CNT 完整研究已发布于 Zenodo: DOI: 10.5281/zenodo.20804380。

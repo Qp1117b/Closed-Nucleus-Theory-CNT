@@ -87,7 +87,7 @@ CQM 提出根本性的双重重新定位：
 
 ### 2.1 系统—尺度—层级递进框架
 
-CQM 严格限定于物理系统的费米—强子尺度：
+CQM 主要研究物理系统的费米—强子尺度：
 
 | 尺度 | 结构 | 因果算法 | 引力状态 | CQM 研究？ |
 |:---|:---|:---|:---|:---:|
@@ -558,4 +558,4 @@ $$\mathfrak{c}_1 \xrightarrow{G_N \text{ 公式}} G_N = \frac{I \cdot \lambda_c 
 10. 't Hooft, G. (1993). Dimensional reduction in quantum gravity. *arXiv:gr-qc/9310026*.
 11. Sorkin, R. D. (2009). Does locality fail at intermediate length-scales? *arXiv:0907.5398*.
 12. Dowker, F., Henson, J., & Sorkin, R. D. (2010). Discreteness and the transmission of scalar fields in causal set theory. *Phys. Rev. D*, 82, 104048.
-13. ruster. (2026). *CQM 完整研究*. Zenodo. DOI: 10.5281/zenodo.20804380.
+13. ruster. (2026). *CNT 完整研究*. Zenodo. DOI: 10.5281/zenodo.20804380.

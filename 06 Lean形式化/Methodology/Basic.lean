@@ -40,7 +40,7 @@ import Mathlib.Tactic
 ## 参考文献
 
 - ruster (2026). 资本主义、旧物理学与层级还原论：CQM 重构版.
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 - Bell, J. S. (1964). On the Einstein Podolsky Rosen paradox.
 - Rovelli, C. (1996). Relational quantum mechanics.
 - Kim, J. (1999). Making sense of emergence.
@@ -387,7 +387,7 @@ axiom mutualInformationChange_positive : mutualInformationChange > 0
 ## 参考文献
 
 - ruster (2026). 资本主义、旧物理学与层级还原论：CQM 重构版.
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 - Bell, J. S. (1964). On the Einstein Podolsky Rosen paradox.
 - Rovelli, C. (1996). Relational quantum mechanics.
 - Kim, J. (1999). Making sense of emergence.

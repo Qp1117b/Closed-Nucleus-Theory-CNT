@@ -198,4 +198,4 @@ f(D)/f(H) = 0.9 ⇒ α ≈ 0.65；Lean 未形式化此预言——它依赖未�
 5. Peng et al. (2017). High-temperature superconductivity in Y-H system. arXiv:1706.01234（YH10 理论预言 ≈ 303 K @ 400 GPa）.
 6. Liu et al. (2019). Microscopic mechanism of room-temperature superconductivity in compressed LaH10. *PRB* 99, 140501(R).
 7. Duan et al. (2014). Pressure-induced metallization of dense (H2S)2H2. *Sci. Rep.* 4, 6968.
-8. ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+8. ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.

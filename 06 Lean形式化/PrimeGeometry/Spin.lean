@@ -39,7 +39,7 @@ SU(2) → SO(3) 双覆盖完全一致。
 ## 参考文献
 
 - ruster (2026). 质数几何密度-三代粒子模型：因果时弯曲与康普顿波长猜想.
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 -/
 
 namespace CQM

@@ -28,7 +28,7 @@ dN/dτ → 0  ⇔  N(τ) → L  ⇔  u(τ) → ln L  ⇔  ρ(u) → ∞  ⇔  De
 两者同时发生，由同一因果集结构驱动。
 
 ## 参考文献
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 -/
 
 open CausalSet

@@ -14,7 +14,7 @@ CQM 的本体论基础：因果集是偏序的再生产事件集合，满足局�
 
 ## 参考文献
 - Bombelli, Lee, Meyer, Sorkin (1987). "Space-time as a causal set."
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 -/
 
 open Set

@@ -61,7 +61,7 @@ CQM 明确意识是物质发展到一定阶段的产物，物理层级中
 
 ## 参考文献
 
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 -/
 
 namespace CQM

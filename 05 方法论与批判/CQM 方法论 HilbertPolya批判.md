@@ -4,7 +4,7 @@
 
 **作者**：ruster
 
-**框架**：耦合常数量子力学（CQM）— 物理系统费米—强子尺度
+**框架**：耦合常数量子力学（CQM）— 物理系统，主要费米—强子尺度
 
 ---
 
@@ -173,6 +173,6 @@ CQM 提出对这一猜想的扬弃：保留其"厄米算符—实谱"的合理�
 5. Bombelli, L., Lee, J., Meyer, D., & Sorkin, R. D. (1987). Space-time as a causal set. *Phys. Rev. Lett.*, 59, 521.
 6. Feingold, A. J., & Nicolai, H. (2003). Hyperbolic Weyl groups and the four normed division algebras. *J. Algebra*, 250, 831.
 7. Endres, S., & Steiner, F. (2009). The Berry-Keating operator on $L^2(\mathbb{R}_+)$. *J. Math. Phys.*, 50, 083504.
-8. ruster. (2026). *CQM 完整研究*. Zenodo. DOI: 10.5281/zenodo.20804380.
+8. ruster. (2026). *CNT 完整研究*. Zenodo. DOI: 10.5281/zenodo.20804380.
 9. Marx, K. (1867). *Das Kapital: Kritik der politischen Ökonomik*. Hamburg: Otto Meissner.
 10. Hegel, G. W. F. (1807). *Phänomenologie des Geistes*.

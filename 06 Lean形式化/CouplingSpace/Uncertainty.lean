@@ -21,7 +21,7 @@ Robertson 不确定性关系。
 
 ## 参考文献
 - Robertson, H. P. (1929). "The Uncertainty Principle." Phys. Rev. 34, 163.
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 -/
 
 noncomputable section

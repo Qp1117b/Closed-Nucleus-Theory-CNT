@@ -322,7 +322,7 @@ CQM 的独特预言：
 
 ## 参考文献
 
-1. ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+1. ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 2. ruster (2026). CQM 核心 集成理论 / CQM 核心 一证七联.
 3. ruster (2026). CQM 退相干 引力因果场 / CQM 退相干 跨层级深耦合与唯一性难题.
 4. Bardeen, Cooper, Schrieffer (1957). Theory of Superconductivity.

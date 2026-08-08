@@ -25,7 +25,7 @@ Mathieu 方程描述了耦合空间中的周期结构。
 决定了退相干相变的临界条件。
 
 ## 参考文献
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 - McLachlan, N.W. (1947). Theory and Application of Mathieu Functions.
 -/
 

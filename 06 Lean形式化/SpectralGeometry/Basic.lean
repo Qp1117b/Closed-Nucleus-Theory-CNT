@@ -34,7 +34,7 @@ A₄ 嘉当矩阵 → 本征值 → Mathieu 参数 → λ_c → 谱量子 C → 
 构成 G_N 谱公式、α⁻¹、质量谱等物理预言的数值基础。
 
 ## 参考文献
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 - Sierra, G. (2019). "The Riemann zeros as spectrum and the Riemann hypothesis."
 -/
 

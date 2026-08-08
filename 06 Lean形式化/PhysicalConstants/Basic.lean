@@ -30,7 +30,7 @@ CQM 从第一性原理推导物理常数。
 - α⁻¹_SU(5) ≈ 137.29
 
 ## 参考文献
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 - CODATA (2022). Internationally recommended values of the fundamental physical constants.
 -/
 

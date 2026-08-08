@@ -27,7 +27,7 @@ CQM 中 SU(5) 的嘉当矩阵 A₄ 及其代数结构。
 - Dynkin 指数 I = 5/3
 
 ## 参考文献
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 - Humphreys, J.E. (1972). Introduction to Lie Algebras and Representation Theory.
 -/
 

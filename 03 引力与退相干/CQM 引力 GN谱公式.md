@@ -2,7 +2,7 @@
 
 **作者**：ruster
 
-**框架**：耦合常数量子力学（CQM） — 物理系统费米—强子尺度
+**框架**：耦合常数量子力学（CQM） — 物理系统，主要费米—强子尺度
 
 ---
 
@@ -460,7 +460,7 @@ $$G_N = 6.708811657 \times 10^{-39}\ \text{GeV}^{-2} = 6.6742810045 \times 10^{-
 
 **量纲结构**：谱值 $\mathfrak{c}_n^{(R)}$ 严格无量纲。壳层坐标 $u$ 无量纲，谱算符 $\hat{H}$ 无量纲。全部物理量纲由唯一实验输入 $m_p$（量纲 $[M]$）在公式层面的幂次组合分配。$G_N$ 通过 $m_p^{-2}$ 获得 $[M]^{-2}$；规范耦合常数 $\alpha_i$ 通过无量纲组合保持无量纲。
 
-**CQM 定位**：本文所有推导严格限定于物理系统的费米—强子尺度。$G_N$ 作为物理系统普适因果背景场的组织参数，其严格稳定性是等效原理的基石，也是 CQM 最核心的可检验预言。
+**CQM 定位**：本文所有推导主要基于物理系统的费米—强子尺度。$G_N$ 作为物理系统普适因果背景场的组织参数，其严格稳定性是等效原理的基石，也是 CQM 最核心的可检验预言。
 
 ---
 
@@ -483,4 +483,4 @@ $$G_N = 6.708811657 \times 10^{-39}\ \text{GeV}^{-2} = 6.6742810045 \times 10^{-
 15. Branko, D., & Dragovich, B. (2020). Adeles in mathematical physics. *arXiv:2006.01154*.
 16. Particle Data Group (2022). Review of Particle Physics. *Prog. Theor. Exp. Phys.*, 083C01.
 17. Tiesinga, E., et al. (2021). CODATA Recommended Values of the Fundamental Physical Constants: 2018. *Rev. Mod. Phys.*, 93, 025010.
-18. ruster. (2026). *CQM 完整研究*. Zenodo. DOI: 10.5281/zenodo.20804380.
+18. ruster. (2026). *CNT 完整研究*. Zenodo. DOI: 10.5281/zenodo.20804380.

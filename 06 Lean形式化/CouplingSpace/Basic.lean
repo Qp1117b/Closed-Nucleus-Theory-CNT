@@ -22,7 +22,7 @@ CQM 的核心舞台：耦合常数空间取代位置空间成为量子化的基�
 - 从对易关系可推导不确定性关系
 
 ## 参考文献
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 -/
 
 open CausalSet

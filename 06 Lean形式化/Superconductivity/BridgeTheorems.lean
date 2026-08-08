@@ -45,7 +45,7 @@ import Superconductivity.BCSIntegralAsymptotic
 - [blockDiagonal_posDef_iff]：块对角正定 ⟺ 各块正定
 
 ## 参考文献
-- ruster (2026). CQM 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
+- ruster (2026). CNT 完整研究. Zenodo. DOI: 10.5281/zenodo.20804380.
 - Regge (1961). General relativity without coordinates. Nuovo Cim. 19, 558.
 - Bardeen, Cooper, Schrieffer (1957). Theory of Superconductivity.
 -/
